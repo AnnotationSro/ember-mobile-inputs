@@ -43,7 +43,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
       let that = this;
       pikadayFields.forEach((field)=> {
-        let pikadayConfig = Ember.merge({
+        let pikadayConfig = Ember.assign({
           field,
           format: format,
           onSelect: function (date) {
