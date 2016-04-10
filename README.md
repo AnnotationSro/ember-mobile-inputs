@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/AnnotationSro/ember-mobile-inputs.svg?branch=master)](https://travis-ci.org/AnnotationSro/ember-mobile-inputs)
 
+DEMO: http://annotationsro.github.io/ember-mobile-inputs/
+
 # Ember-mobile-inputs
 
 HTML 5 introduced input types that are really great for mobile devices, but not that great for the good old desktops. 
