@@ -1,0 +1,1 @@
+export { default } from 'ember-mobile-inputs/components/mobile-input';

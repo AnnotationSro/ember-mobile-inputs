@@ -1,0 +1,19 @@
+.ember-mobile-input .date-input {
+  display: inline-block;
+  position: relative;
+}
+
+.ember-mobile-input .date-input input {
+  text-indent: 10px;
+}
+
+.ember-mobile-input .calendar-button {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  width: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}

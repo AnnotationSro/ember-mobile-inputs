@@ -1,0 +1,47 @@
+<button {{action 'toggleDisabled'}}>Toggle disabled</button>
+
+<h2>Number</h2>
+
+<div>
+  {{mobile-input type='number' value=valueNumber disabled=disabled}}
+  {{valueNumber}}
+</div>
+
+
+<h2>Text</h2>
+<div>
+  {{mobile-input type='text' value=valueText disabled=disabled}}
+  {{valueText}}
+</div>
+
+
+<h2>Date</h2>
+<div>
+  {{mobile-input type='date' value=valueDate disabled=disabled}}
+  {{valueDate}}
+</div>
+
+<h3>Custom format YYYY-MM-DD</h3>
+<div>
+  {{mobile-input type='date' value=valueDateFormat format='YYYY-MM-DD' disabled=disabled}}
+  {{valueDateFormat}}
+</div>
+
+<h2>Different variations</h2>
+showOn="input"
+<div>
+  {{mobile-input type='date' value=valueDateInput showOn="input" disabled=disabled}}
+  {{valueDateInput}}
+</div>
+
+showOn="button"
+<div>
+  {{mobile-input type='date' value=valueDateButton showOn="button" disabled=disabled}}
+  {{valueDateButton}}
+</div>
+
+showOn="both"
+<div>
+  {{mobile-input type='date' value=valueDateBoth showOn="both" disabled=disabled}}
+  {{valueDateBoth}}
+</div>
