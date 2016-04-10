@@ -57,7 +57,7 @@ test('date input - default format invalid input', function (assert) {
 
   andThen(() => fillIn(DATE_INPUT, '04.10.201Y'));
   andThen(() => {
-    assert.equal(findWithAssert(DATE_INPUT).val(), '04.10.201Y', 'should update `input` value');
+    assert.ok(findWithAssert(DATE_INPUT).val() === '04.10.201Y' || findWithAssert(DATE_INPUT).val() === '04.10.201' , 'should update `input` value');
     assert.equal(findWithAssert('#dateResult').text().trim(), '', 'should update `dateResult` oninput or onchange');
   });
 });
