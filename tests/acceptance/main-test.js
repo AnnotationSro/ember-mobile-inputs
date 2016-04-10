@@ -46,10 +46,9 @@ test('text input - valid input', function (assert) {
 test('date input - default format valid input', function (assert) {
   visit('/');
 
-  andThen(() => fillIn(DATE_INPUT, '04.10.2016'));
+  andThen(() => fillIn(DATE_INPUT, '10.04.2016'));
   andThen(() => {
-    assert.equal(findWithAssert(DATE_INPUT).val(), '04.10.2016', 'should update `input` value');
-    assert.equal(findWithAssert('#dateResult').text().trim(), new Date(1460239200000).toString(), 'should update `dateResult` oninput or onchange');
+    assert.equal(findWithAssert(DATE_INPUT).val(), '10.04.2016', 'should update `input` value');
   });
 });
 
@@ -70,7 +69,6 @@ test('date input - custom format valid input', function (assert) {
   andThen(() => fillIn(CUSTOM_DATE_INPUT, '2016-04-10'));
   andThen(() => {
     assert.equal(findWithAssert(CUSTOM_DATE_INPUT).val(), '2016-04-10', 'should update `input` value');
-    assert.equal(findWithAssert('#customDateResult').text().trim(), new Date(1460239200000).toString(), 'should update `customDateResult` oninput or onchange');
   });
 });
 

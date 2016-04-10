@@ -5,7 +5,7 @@ import {isTouchDevice} from "../utils/mobile-utils";
 import moment from "moment";
 import configuration from "../configuration";
 
-const {get, set, isNone, getWithDefault} = Ember;
+const {get, set, isNone, getWithDefault, run} = Ember;
 
 export default Ember.Component.extend(MobileInputComponentMixin, {
   layout,
@@ -56,9 +56,10 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         new Pikaday(pikadayConfig);
       });
 
-      let {calendarButtonClass} = configuration.getConfig().date;
-      set(this, 'calendarClass', calendarButtonClass);
-
+      run.scheduleOnce('afterRender', this, function () {
+        let {calendarButtonClass} = configuration.getConfig().date;
+        set(this, 'calendarClass', calendarButtonClass);
+      });
     }
   }),
 
@@ -85,16 +86,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       return moment(value).format(this._getDateFormat());
     },
     set(key, value){
-
-      let dateEntered = get(this, 'format');
-      let formattedDate = moment(value, dateEntered, true);
+      let formattedDate = moment(value,  this._getDateFormat(), true);
       if (!formattedDate.isValid()) {
         set(this, 'value', null);
       } else {
         set(this, 'value', formattedDate.toDate());
       }
       return value;
-
     }
   }),
 
@@ -106,6 +104,9 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       return moment(get(this, 'value')).format('YYYY-MM-DD');
     },
     set(key, value){
+      if (isNone(value)){
+        return value;
+      }
       let formattedDate = moment(value, 'YYYY-MM-DD', true);
       if (!formattedDate.isValid()) {
         set(this, 'value', null);
