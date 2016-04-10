@@ -3,9 +3,9 @@
   position: relative;
 }
 
-.ember-mobile-input .date-input input {
-  text-indent: 10px;
-}
+/*.ember-mobile-input .date-input input {*/
+  /*text-indent: 10px;*/
+/*}*/
 
 .ember-mobile-input .calendar-button {
   position: absolute;

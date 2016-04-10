@@ -43,7 +43,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
       let that = this;
       pikadayFields.forEach((field)=> {
-        let pikadayConfig = Ember.assign({
+    /*    let pikadayConfig = Ember.assign({
           field,
           format: format,
           onSelect: function (date) {
@@ -51,20 +51,28 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
               set(that, 'value', date);
             });
           }
-        }, configuration.getConfig().date);
+        }, configuration.getConfig().date);*/
+        let pikadayConfig = configuration.getDateConfig();
+        pikadayConfig.onSelect = function (date) {
+          Ember.run(function () {
+            set(that, 'value', date);
+          });
+        };
+        pikadayConfig.field = field;
+        pikadayConfig.format = format;
 
         new Pikaday(pikadayConfig);
       });
 
       run.scheduleOnce('afterRender', this, function () {
-        let {calendarButtonClass} = configuration.getConfig().date;
+        let {calendarButtonClass} = configuration.getDateConfig();
         set(this, 'calendarClass', calendarButtonClass);
       });
     }
   }),
 
   _getDateFormat(){
-    return getWithDefault(this, 'format', configuration.getConfig().date.format);
+    return getWithDefault(this, 'format', configuration.getDateConfig().format);
   },
 
   showCalendarButton: Ember.computed('showOn', function () {
