@@ -3,45 +3,51 @@
 <h2>Number</h2>
 
 <div>
-  {{mobile-input type='number' value=valueNumber disabled=disabled}}
-  {{valueNumber}}
+  {{mobile-input id="numberInput" type='number' value=valueNumber disabled=disabled}}
+  <span id="numberResult">{{valueNumber}}</span>
 </div>
 
 
 <h2>Text</h2>
 <div>
-  {{mobile-input type='text' value=valueText disabled=disabled}}
-  {{valueText}}
+  {{mobile-input id="textInput" type='text' value=valueText disabled=disabled}}
+  <span id="textResult">{{valueText}}</span>
 </div>
 
 
 <h2>Date</h2>
 <div>
-  {{mobile-input type='date' value=valueDate disabled=disabled}}
-  {{valueDate}}
+  {{mobile-input id="dateInput" type='date' value=valueDate disabled=disabled}}
+  <span id="dateResult">{{valueDate}}</span>
 </div>
 
 <h3>Custom format YYYY-MM-DD</h3>
 <div>
-  {{mobile-input type='date' value=valueDateFormat format='YYYY-MM-DD' disabled=disabled}}
-  {{valueDateFormat}}
+  {{mobile-input id="customDateInput" type='date' value=valueDateFormat format='YYYY-MM-DD' disabled=disabled}}
+  <span id="customDateResult">{{valueDateFormat}}</span>
 </div>
 
 <h2>Different variations</h2>
 showOn="input"
 <div>
-  {{mobile-input type='date' value=valueDateInput showOn="input" disabled=disabled}}
+  {{mobile-input id="inputDateInput" type='date' value=valueDateInput showOn="input" disabled=disabled}}
   {{valueDateInput}}
 </div>
 
 showOn="button"
 <div>
-  {{mobile-input type='date' value=valueDateButton showOn="button" disabled=disabled}}
+  {{mobile-input id="buttonDateInput" type='date' value=valueDateButton showOn="button" disabled=disabled}}
   {{valueDateButton}}
 </div>
 
 showOn="both"
 <div>
-  {{mobile-input type='date' value=valueDateBoth showOn="both" disabled=disabled}}
+  {{mobile-input id="bothDateInput" type='date' value=valueDateBoth showOn="both" disabled=disabled}}
   {{valueDateBoth}}
+</div>
+
+showOn="none"
+<div>
+  {{mobile-input id="noneDateInput" type='date' value=valueDateNone showOn="none" disabled=disabled}}
+  {{valueDateNone}}
 </div>

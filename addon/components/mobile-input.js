@@ -6,6 +6,7 @@ const {set, getWithDefault} = Ember;
 export default Ember.Component.extend({
   classNames: ['ember-mobile-input'],
   tagName: 'span',
+  id: null,
   layout,
 
   type: 'text', //text, number, date

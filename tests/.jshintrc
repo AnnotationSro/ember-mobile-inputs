@@ -22,7 +22,9 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "Pikaday"
+    "Pikaday",
+    "andThen",
+    "findWithAssert"
   ],
   "node": false,
   "browser": false,
