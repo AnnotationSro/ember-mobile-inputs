@@ -7,7 +7,7 @@ DEMO: http://annotationsro.github.io/ember-mobile-inputs/
 HTML 5 introduced input types that are really great for mobile devices, but not that great for the good old desktops. 
 Mainly because every browser implements it in a little bit different way (speaking of UI), which is sometimes not that great (e.g. number input in Firefox on Windows
 is simply disgusting...). And of course they are sometimes a little bit buggy (looking at you Firefox....)
-Also, it would be sometimes nice to enhance or alter the way these inputs behave on desktop - give theme a little bit more glamour, right?
+Also, it would be sometimes nice to enhance or alter the way these inputs behave on desktop - give them a little bit more glamour, right?
 
 So what this addon does? On mobile (touch) devices it makes use of HTML5 power (renders a simple HTML `<input type="whatever">`) and on desktop it provides some extra fun:
 * input type **number** - decimal numbers only (pretty standard, but without the ugly stepper that I guess nobody uses anyway)
