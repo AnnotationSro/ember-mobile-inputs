@@ -14,6 +14,10 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnnotationSro/ember-mobile-inputs"
+  },
   "author": "Annotation",
   "license": "MIT",
   "devDependencies": {
