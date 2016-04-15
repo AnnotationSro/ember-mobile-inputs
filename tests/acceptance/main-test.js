@@ -2,12 +2,15 @@ import {test} from "qunit";
 import moduleForAcceptance from "../../tests/helpers/module-for-acceptance";
 
 const NUMBER_INPUT = '#numberInput input';
+const NUMBER_INPUT_COMMA = '#numberInputComma input';
+const NUMBER_INPUT_DOT = '#numberInputDot input';
 const TEXT_INPUT = '#textInput input';
 const DATE_INPUT = '#dateInput input';
 const CUSTOM_DATE_INPUT = '#customDateInput input';
 const DATE_INPUT_SHOWON_BOTH = '#bothDateInput';
 const DATE_INPUT_SHOWON_BUTTON = '#buttonDateInput';
 const DATE_INPUT_SHOWON_INPUT = '#inputDateInput';
+
 
 
 function isRunningInPhantom() {
@@ -34,6 +37,46 @@ test('number input - invalid input', function (assert) {
   andThen(() => {
     assert.equal(findWithAssert(NUMBER_INPUT).val(), '', 'should update `input` value');
     assert.equal(findWithAssert('#numberResult').text().trim(), '', 'should update `numberResult` oninput or onchange');
+  });
+});
+
+test('number input - dot separator - valid input', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_DOT, '12.5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_DOT).val(), '12.5', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultDot').text().trim(), '12.5', 'should update `numberResultDot` oninput or onchange');
+  });
+});
+
+test('number input - dot separator - invalid input', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_DOT, '12,5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_DOT).val(), '125', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultDot').text().trim(), '125', 'should update `numberResultDot` oninput or onchange');
+  });
+});
+
+test('number input - comma separator - valid input', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_COMMA, '12,5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_COMMA).val(), '12,5', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultComma').text().trim(), '12.5', 'should update `numberResultComma` oninput or onchange');
+  });
+});
+
+test('number input - comma separator - invalid input', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_COMMA, '12.5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_COMMA).val(), '125', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultComma').text().trim(), '125', 'should update `numberResultComma` oninput or onchange');
   });
 });
 
