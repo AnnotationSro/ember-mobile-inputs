@@ -14,6 +14,12 @@ So what this addon does? On mobile (touch) devices it makes use of HTML5 power (
 * input type **text** - well just a simple input, nothing fancy here
 * input type **date** - masked input with the ability to customize the format + [Pikaday](https://github.com/dbushell/Pikaday) calendar popup + nice calendar button
 
+# Install
+
+```
+ember install ember-mobile-inputs
+```
+
 # Usage
 
 do not forget: every input type has _id_ and _disabled_ attributes.
