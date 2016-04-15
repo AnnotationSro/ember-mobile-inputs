@@ -3,6 +3,11 @@
   position: relative;
 }
 
+
+.ember-mobile-input .date-input .desktop-input.desktop-input-empty{
+  color: gray;
+}
+
 /*.ember-mobile-input .date-input input {*/
   /*text-indent: 10px;*/
 /*}*/

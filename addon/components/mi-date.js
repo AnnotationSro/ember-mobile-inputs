@@ -5,7 +5,7 @@ import {isTouchDevice} from "../utils/mobile-utils";
 import moment from "moment";
 import configuration from "../configuration";
 
-const {get, set, isNone, getWithDefault, run} = Ember;
+const {get, set, isNone, getWithDefault, run, isEmpty} = Ember;
 
 export default Ember.Component.extend(MobileInputComponentMixin, {
   layout,
@@ -43,15 +43,6 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
       let that = this;
       pikadayFields.forEach((field)=> {
-    /*    let pikadayConfig = Ember.assign({
-          field,
-          format: format,
-          onSelect: function (date) {
-            Ember.run(function () {
-              set(that, 'value', date);
-            });
-          }
-        }, configuration.getConfig().date);*/
         let pikadayConfig = configuration.getDateConfig();
         pikadayConfig.onSelect = function (date) {
           Ember.run(function () {
@@ -82,6 +73,16 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
     return false;
   }),
+
+  desktopTextColorObserver: Ember.on('init', Ember.observer('desktopValue', function(){
+    Ember.run.scheduleOnce('afterRender', this, function () {
+      if (isEmpty(get(this, 'desktopValue'))){
+        Ember.$(this.element).find('.desktop-input').addClass('desktop-input-empty');
+      }else{
+        Ember.$(this.element).find('.desktop-input').removeClass('desktop-input-empty');
+      }
+    });
+  })),
 
 
   desktopValue: Ember.computed('value', {
