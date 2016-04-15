@@ -7,6 +7,8 @@ export default Ember.Controller.extend({
 
   disabled: false,
 
+  valueNumberController: 4.5,
+
   actions:{
     toggleDisabled(){
       this.toggleProperty('disabled');

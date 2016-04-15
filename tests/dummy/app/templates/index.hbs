@@ -4,9 +4,16 @@
 
 <h2>Number</h2>
 
+<h4>Default settings (comma and dot are allowed as decimal mark)</h4>
 <div>
   {{mobile-input id="numberInput" type='number' value=valueNumber disabled=disabled}}
   <span id="numberResult">{{valueNumber}}</span>
+</div>
+
+<h4>Value set from controller</h4>
+<div>
+  {{mobile-input id="numberInputController" type='number' value=valueNumberController disabled=disabled}}
+  <span id="numberControllerResult">{{valueNumberController}}</span>
 </div>
 
 <h4>With comma decimal mark</h4>

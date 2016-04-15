@@ -34,6 +34,17 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return `-?[0-9]+${decimalMarkPattern}[0-9]*`;
   },
 
+  _decimalMarkToChar(){
+    switch (this._getDecimalMark()) {
+      case 'dot':
+        return '.';
+      case 'comma':
+        return ',';
+      default:
+        return '.';
+    }
+  },
+
 
   desktopValue: Ember.computed('value', {
     get(){
@@ -42,11 +53,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      return String(value).replace(/[\.,]/, this._getDecimalMark());
+      return String(value).replace(/[\.,]/, this._decimalMarkToChar());
     },
     set(key, value){
       if (isPresent(value)){
-        set(this, 'value', parseFloat(value.replace(/[\.,]/, '.')));
+        if (value !== '-'){ //when value === '-' user started typing negative number - do not parseFloat such string.. yet
+          set(this, 'value', parseFloat(value.replace(/[\.,]/, '.')));
+        }
       }else{
         set(this, 'value', null);
       }
