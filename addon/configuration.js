@@ -4,7 +4,8 @@ let CONFIG_PROPERTIES = {
   date:{
     firstDay: 0,
     calendarButtonClass: 'fa fa-calendar',
-    format: 'DD.MM.YYYY'
+    format: 'DD.MM.YYYY',
+    showOn: 'both'
   },
   number:{
     decimalMark: 'both'
