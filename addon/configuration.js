@@ -13,7 +13,7 @@ let CONFIG_PROPERTIES = {
 
 export default {
   load(config) {
-    CONFIG_PROPERTIES = deepMerge(CONFIG_PROPERTIES, config);
+    CONFIG_PROPERTIES = Ember.$.extend(true, {}, CONFIG_PROPERTIES, config);
   },
 
   getDateConfig(){
@@ -28,15 +28,3 @@ export default {
     return CONFIG_PROPERTIES;
   }
 };
-
-
-function deepMerge(target, source) {
-  for (var prop in source){
-    if (prop in target){
-      deepMerge(target[prop], source[prop]);
-    } else {
-      target[prop] = source[prop];
-    }
-  }
-  return target;
-}
