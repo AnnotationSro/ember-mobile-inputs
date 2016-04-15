@@ -23,6 +23,11 @@ do not forget: every input type has _id_ and _disabled_ attributes.
 {{mobile-input id="numberInput" type='number' value=valueNumber}}
 ```
 
+You can customize the decimal point mark - whether to use comma or dot or both. You can do this by setting `decimalMark` attribute to:
+* _comma_
+* _dot_
+* _both_
+
 ### Text
 ```
 {{mobile-input id="textInput" type='text' value=valueText}}
