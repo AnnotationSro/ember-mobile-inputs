@@ -13,7 +13,12 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   format: null,
 
   mobileInputVisible: false,
-  showOn: 'both', //input, button, both, none
+  showOn: null, //input, button, both, none
+
+
+  _getShowOn(){
+    return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
+  },
 
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
@@ -25,7 +30,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       });
 
       let pikadayFields = [];
-      switch (get(this, 'showOn') || 'both') {
+      switch (this._getShowOn()) {
         case 'input':
           pikadayFields = [$input[0]];
           break;
@@ -38,7 +43,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         case 'none':
           break;
         default:
-          Ember.Logger.error(`ember-mobile-inputs: Unknown date showOn parameter: ${get(this, 'showOn')}`);
+          Ember.Logger.error(`ember-mobile-inputs: Unknown date showOn parameter: ${this._getShowOn()}`);
       }
 
       let that = this;
@@ -67,7 +72,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   },
 
   showCalendarButton: Ember.computed('showOn', function () {
-    let showOn = get(this, 'showOn');
+    let showOn = this._getShowOn();
     if (showOn === 'button' || showOn === 'both') {
       return true;
     }

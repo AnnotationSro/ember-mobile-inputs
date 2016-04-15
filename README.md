@@ -4,7 +4,7 @@ DEMO: http://annotationsro.github.io/ember-mobile-inputs/
 
 # Ember-mobile-inputs
 
-HTML 5 introduced input types that are really great for mobile devices, but not that great for the good old desktops. 
+HTML 5 introduced input types that are really great for mobile devices, but not that great for the good old desktops.
 Mainly because every browser implements it in a little bit different way (speaking of UI), which is sometimes not that great (e.g. number input in Firefox on Windows
 is simply disgusting...). And of course they are sometimes a little bit buggy (looking at you Firefox....)
 Also, it would be sometimes nice to enhance or alter the way these inputs behave on desktop - give them a little bit more glamour, right?
@@ -64,10 +64,14 @@ ENV['ember-mobile-inputs'] = {
   date:{
     firstDay: 0, // Pikaday configuration
     calendarButtonClass: 'fa fa-calendar', // font icon CSS classes to be used in place of calendar button
-    format: 'DD.MM.YYYY'
+    format: 'DD.MM.YYYY',
+    showOn: 'both' //available options: 'both', 'input', 'button', 'none'
+  },
+  number:{
+    decimalMark: 'both' //available options: 'comma', 'dot', 'both'
   }
 }
 ```
 
-For more Pikaday (calendar popup) configuration information, please have a look at the [Pikaday guide](https://github.com/dbushell/Pikaday#configuration). 
-You can use any configuration parameter, except _onSelect_ and _field_ that are used internally by this addon. 
+For more Pikaday (calendar popup) configuration information, please have a look at the [Pikaday guide](https://github.com/dbushell/Pikaday#configuration).
+You can use any configuration parameter, except _onSelect_ and _field_ that are used internally by this addon.

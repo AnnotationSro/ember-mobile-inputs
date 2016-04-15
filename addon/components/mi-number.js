@@ -31,7 +31,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         decimalMarkPattern = '[\.,]';
         break;
     }
-    return `[0-9]+${decimalMarkPattern}[0-9]*`;
+    return `-?[0-9]+${decimalMarkPattern}[0-9]*`;
   },
 
 
@@ -42,7 +42,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      return value.replace(/[\.,]/, this._getDecimalMark());
+      return String(value).replace(/[\.,]/, this._getDecimalMark());
     },
     set(key, value){
       if (isPresent(value)){
