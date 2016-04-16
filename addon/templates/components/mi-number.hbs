@@ -1,5 +1,5 @@
 {{#if mobileInputVisible}}
-    {{input class="native-input number-input" value=desktopValue type="number"}}
+    {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder}}
 {{else}}
-    <span {{action 'inputClicked'}}>{{input class="desktop-input" value=desktopValue disabled=disabled}}</span>
+    <span {{action 'inputClicked'}}>{{input class="desktop-input" value=desktopValue disabled=disabled placeholder=placeholder}}</span>
 {{/if}}

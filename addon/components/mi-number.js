@@ -45,6 +45,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   },
 
+  placeholder: Ember.computed('formattedPlaceholder', 'disabled', function(){
+    if (get(this, 'disabled')){
+      return "";
+    }else{
+      return get(this, 'formattedPlaceholder');
+    }
+  }),
 
   desktopValue: Ember.computed('value', {
     get(){
