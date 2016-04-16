@@ -8,10 +8,6 @@
   color: gray;
 }
 
-/*.ember-mobile-input .date-input input {*/
-  /*text-indent: 10px;*/
-/*}*/
-
 .ember-mobile-input .calendar-button {
   position: absolute;
   right: 0;

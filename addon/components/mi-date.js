@@ -14,51 +14,51 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
   mobileInputVisible: false,
   showOn: null, //input, button, both, none
+  pikadayCalendar: null,
 
 
   _getShowOn(){
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
   },
 
+  disabledObserver: Ember.observer('disabled', function () {
+    let $input = Ember.$(this.element).find('.desktop-input');
+
+    if (this.get('disabled')) {
+       get(this, 'pikadayCalendar').hide();
+       if (isNone(get(this, 'value'))){
+        $input.inputmask('remove');
+       }
+    }else{
+        let format = this._getDateFormat();
+      $input.inputmask(format.toLowerCase(), {
+        "placeholder": format.toUpperCase(),
+        "clearMaskOnLostFocus": false
+      });
+    }
+  }),
+
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
       let format = this._getDateFormat();
       $input.inputmask(format.toLowerCase(), {
-        "placeholder": format.toUpperCase(),
         "clearMaskOnLostFocus": false
       });
 
-      let pikadayFields = [];
-      switch (this._getShowOn()) {
-        case 'input':
-          pikadayFields = [$input[0]];
-          break;
-        case 'button':
-          pikadayFields = [Ember.$(this.element).find('.calendar-button')[0]];
-          break;
-        case 'both':
-          pikadayFields = [Ember.$(this.element).find('.calendar-button')[0], $input[0]];
-          break;
-        case 'none':
-          break;
-        default:
-          Ember.Logger.error(`ember-mobile-inputs: Unknown date showOn parameter: ${this._getShowOn()}`);
-      }
-
       let that = this;
-      pikadayFields.forEach((field)=> {
-        let pikadayConfig = configuration.getDateConfig();
-        pikadayConfig.onSelect = function (date) {
-          Ember.run(function () {
-            set(that, 'value', date);
-          });
-        };
-        pikadayConfig.field = field;
-        pikadayConfig.format = format;
+      let pikadayConfig = configuration.getDateConfig();
+      pikadayConfig.onSelect = function (date) {
+        Ember.run(function () {
+          set(that, 'value', date);
+        });
+      };
+      pikadayConfig.format = format;
 
-        new Pikaday(pikadayConfig);
-      });
+      if ((this._getShowOn() === 'input') || (this._getShowOn() === 'both')) {
+        pikadayConfig.field =  $input[0];
+      }
+      set(this, 'pikadayCalendar', new Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function () {
         let {calendarButtonClass} = configuration.getDateConfig();
@@ -130,5 +130,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       set(this, 'mobileInputVisible', false);
       return value;
     }
-  })
+  }),
+
+  actions:{
+    actionCalendarButton(){
+        if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
+          get(this, 'pikadayCalendar').show();
+        }
+    }
+  }
 });

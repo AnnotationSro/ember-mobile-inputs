@@ -5,7 +5,7 @@
     <div class="date-input" {{action 'inputClicked'}}>
       {{input class="desktop-input" value=desktopValue disabled=disabled}}
     {{#if showCalendarButton}}
-        <button class="calendar-button" disabled={{disabled}}><i class={{calendarClass}}></i></button>
+        <button class="calendar-button" disabled={{disabled}} {{action 'actionCalendarButton'}}><i class={{calendarClass}}></i></button>
     {{/if}}
     </div>
 {{/if}}
