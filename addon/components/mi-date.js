@@ -54,10 +54,12 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         });
       };
       pikadayConfig.format = format;
+      pikadayConfig.field =  $input[0];
 
-      if ((this._getShowOn() === 'input') || (this._getShowOn() === 'both')) {
-        pikadayConfig.field =  $input[0];
+      if (this._getShowOn() === 'button') {
+        pikadayConfig.trigger =  Ember.$(this.element).find('.calendar-button')[0];
       }
+
       set(this, 'pikadayCalendar', new Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function () {
@@ -135,7 +137,8 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   actions:{
     actionCalendarButton(){
         if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
-          get(this, 'pikadayCalendar').show();
+          let calendar = get(this, 'pikadayCalendar');
+          calendar.show();
         }
     }
   }

@@ -36,9 +36,23 @@
 
 
 <h2>Date</h2>
+
+<h4>Opens calendar on button click or input focus</h4>
 <div>
   {{mobile-input id="dateInput" type='date' value=valueDate disabled=disabled}}
   <span id="dateResult">{{valueDate}}</span>
+</div>
+
+<h4>Opens calendar only on button click</h4>
+<div>
+  {{mobile-input id="dateInputButton" type='date' value=valueDateButton disabled=disabled showOn="button"}}
+  <span id="dateResultButton">{{valueDateButton}}</span>
+</div>
+
+<h4>Opens calendar only on input focus</h4>
+<div>
+  {{mobile-input id="dateInputOnly" type='date' value=valueDateInput disabled=disabled showOn="input"}}
+  <span id="dateResultInput">{{valueDateInput}}</span>
 </div>
 
 <h3>Custom format YYYY-MM-DD</h3>
