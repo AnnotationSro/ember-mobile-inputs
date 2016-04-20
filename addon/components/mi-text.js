@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/mi-text';
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
 
-const {get} = Ember;
+const {get, getWithDefault} = Ember;
 
 
 export default Ember.Component.extend(MobileInputComponentMixin, {
@@ -13,7 +13,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     if (get(this, 'disabled')){
       return "";
     }else{
-      return get(this, 'formattedPlaceholder');
+      return getWithDefault(this, 'formattedPlaceholder', "");
     }
   }),
 });
