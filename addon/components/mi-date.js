@@ -30,24 +30,26 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         $input.inputmask('remove');
        }
     }else{
-      this._setupInputMask($input);
+       this._initDateMask();
     }
   }),
 
-  _setupInputMask($input){
-    let format = this._getDateFormat();
-    let options = {
-        "placeholder": format.toUpperCase(),
-        "clearMaskOnLostFocus": true
-    };
-    $input.inputmask(format.toLowerCase(), options);
-  },
+	_initDateMask(){
+		let format = this._getDateFormat();
+		let $input = Ember.$(this.element).find('.desktop-input');
+		$input.inputmask(format.toLowerCase(), {
+			"placeholder": format.toUpperCase(),
+			"clearMaskOnLostFocus": true
+		});
+	},
 
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
       let format = this._getDateFormat();
-      this._setupInputMask($input);
+		  if (!this.get('disabled')) {
+			  this._initDateMask();
+		  }
 
       let that = this;
       let pikadayConfig = configuration.getDateConfig();
@@ -57,10 +59,12 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         });
       };
       pikadayConfig.format = format;
+      pikadayConfig.field =  $input[0];
 
-      if ((this._getShowOn() === 'input') || (this._getShowOn() === 'both')) {
-        pikadayConfig.field =  $input[0];
+      if (this._getShowOn() === 'button') {
+        pikadayConfig.trigger =  Ember.$(this.element).find('.calendar-button')[0];
       }
+
       set(this, 'pikadayCalendar', new Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function () {
@@ -138,7 +142,8 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   actions:{
     actionCalendarButton(){
         if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
-          get(this, 'pikadayCalendar').show();
+          let calendar = get(this, 'pikadayCalendar');
+          calendar.show();
         }
     }
   }

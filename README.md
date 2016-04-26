@@ -22,11 +22,9 @@ ember install ember-mobile-inputs
 
 # Usage
 
-do not forget: every input type has _id_ and _disabled_ attributes.
-
 ### Number
 ```
-{{mobile-input id="numberInput" type='number' value=valueNumber}}
+{{mobile-input id="numberInput" type='number' value=valueNumber disabled=isDisabled}}
 ```
 
 You can customize the decimal point mark - whether to use comma or dot or both. You can do this by setting `decimalMark` attribute to:
@@ -36,18 +34,18 @@ You can customize the decimal point mark - whether to use comma or dot or both. 
 
 ### Text
 ```
-{{mobile-input id="textInput" type='text' value=valueText}}
+{{mobile-input id="textInput" type='text' value=valueText disabled=isDisabled}}
 ```
 
 ### Date
 With default date format - dd.mm.yyyy
 ```
-{{mobile-input id="dateInput" type='date' value=valueDate}}
+{{mobile-input id="dateInput" type='date' value=valueDate disabled=isDisabled}}
 ```
 
 With custom format
 ```
-{{mobile-input id="customDateInput" type='date' value=valueDateFormat format='YYYY-MM-DD'}}
+{{mobile-input id="customDateInput" type='date' value=valueDateFormat format='YYYY-MM-DD' disabled=isDisabled}}
 ```
 
 **showOn** attribute with possible values:

@@ -49,7 +49,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     if (get(this, 'disabled')){
       return "";
     }else{
-      return get(this, 'formattedPlaceholder');
+      return getWithDefault(this, 'formattedPlaceholder', "");
     }
   }),
 
