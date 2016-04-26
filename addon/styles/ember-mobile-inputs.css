@@ -3,11 +3,6 @@
   position: relative;
 }
 
-
-.ember-mobile-input .date-input .desktop-input.desktop-input-empty{
-  color: gray;
-}
-
 .ember-mobile-input .calendar-button {
   position: absolute;
   right: 0;

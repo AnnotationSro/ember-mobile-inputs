@@ -30,21 +30,24 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         $input.inputmask('remove');
        }
     }else{
-        let format = this._getDateFormat();
-      $input.inputmask(format.toLowerCase(), {
-        "placeholder": format.toUpperCase(),
-        "clearMaskOnLostFocus": false
-      });
+      this._setupInputMask($input);
     }
   }),
+
+  _setupInputMask($input){
+    let format = this._getDateFormat();
+    let options = {
+        "placeholder": format.toUpperCase(),
+        "clearMaskOnLostFocus": true
+    };
+    $input.inputmask(format.toLowerCase(), options);
+  },
 
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
       let format = this._getDateFormat();
-      $input.inputmask(format.toLowerCase(), {
-        "clearMaskOnLostFocus": false
-      });
+      this._setupInputMask($input);
 
       let that = this;
       let pikadayConfig = configuration.getDateConfig();
