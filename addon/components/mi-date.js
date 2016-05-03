@@ -38,7 +38,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 		let format = this._getDateFormat();
 		let $input = Ember.$(this.element).find('.desktop-input');
 		$input.inputmask(format.toLowerCase(), {
-			"placeholder": format.toUpperCase(),
+			"placeholder": '_',
 			"clearMaskOnLostFocus": true
 		});
 	},
