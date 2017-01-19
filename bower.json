@@ -8,6 +8,6 @@
     "pickadate": "~3.5.6",
     "pikaday": "~1.4.0",
     "moment": ">= 2.8.0",
-    "jquery.inputmask": "3.3.0"
+    "jquery.inputmask": "3.3.4"
   }
 }
