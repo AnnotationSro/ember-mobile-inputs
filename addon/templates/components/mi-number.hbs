@@ -1,5 +1,14 @@
 {{#if mobileInputVisible}}
-    {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder}}
+    {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder min=min max=max}}
 {{else}}
-    <span {{action 'inputClicked'}}>{{input class="desktop-input" value=desktopValue disabled=disabled placeholder=placeholder}}</span>
+    <span {{action 'inputClicked'}}>
+      <input class="desktop-input"
+      value={{desktopValue}}
+      disabled={{disabled}}
+      placeholder={{placeholder}}
+      min={{min}}
+      max={{max}}
+      oninput={{action "valueChanged" value="target.value"}}
+      >
+    </span>
 {{/if}}

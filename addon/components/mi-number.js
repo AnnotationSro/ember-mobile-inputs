@@ -12,6 +12,8 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
   mobileInputVisible: false,
   decimalMark: null,//comma, dot, both
+  min: null,
+  max: null,
 
 
   _getDecimalMark(){
@@ -64,16 +66,46 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     },
     set(key, value){
       if (isPresent(value)){
-        if (value !== '-'){ //when value === '-' user started typing negative number - do not parseFloat such string.. yet
-          set(this, 'value', parseFloat(value.replace(/[\.,]/, '.')));
+        let floatValue = value;
+        if (typeof value === 'string'){
+          if (value !== '-'){ //when value === '-' user started typing negative number - do not parseFloat such string.. yet
+            floatValue = this.stringToFloat(value);
+          }
         }
-      }else{
+        set(this, 'value', floatValue);
+      } else {
         set(this, 'value', null);
       }
       return value;
     }
   }),
 
+  rangeCheckValue(valueArg){
+    if (isNone(valueArg)){
+      return 0;
+    }
+
+    let value = valueArg;
+    if (typeof value === 'string'){
+      value = this.stringToFloat(valueArg);
+    }
+
+    let {min, max} = this.getProperties('min', 'max');
+    if (isPresent(min) && value < min){
+      return min;
+    }
+    if (isPresent(max) && value > max){
+      return max;
+    }
+    return value;
+  },
+
+  stringToFloat(value){
+    if (isNone(value)){
+      return 0;
+    }
+    return parseFloat(value.replace(/[\.,]/, '.'));
+  },
 
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
@@ -85,5 +117,24 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         }
       });
     }
-  })
+  }),
+
+  actions:{
+    valueChanged(newValue){
+      if (isPresent(newValue) && newValue.match(/.*[\.,]$/)){
+        //new value ends with dot or comma - ignore that
+        return;
+      }
+      if (newValue === ''){
+        this.set('value', null);
+        return;
+      }
+      let value =  this.rangeCheckValue(newValue);
+      this.set('value', value);
+      if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
+        //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
+        Ember.$(this.element).find('input').val(value);
+      }
+    }
+  }
 });

@@ -10,6 +10,12 @@
   <span id="numberResult">{{valueNumber}}</span>
 </div>
 
+<h4>Default settings (comma and dot are allowed as decimal mark) with min=0, max=10</h4>
+<div>
+  {{mobile-input id="minMaxNumberInput" type='number' value=valueNumber disabled=disabled min=0 max=10}}
+  <span id="minMaxNumberResult">{{minMaxValueNumber}}</span>
+</div>
+
 <h4>Value set from controller</h4>
 <div>
   {{mobile-input id="numberInputController" type='number' value=valueNumberController disabled=disabled placeholder="Some number here"}}

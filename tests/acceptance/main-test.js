@@ -2,6 +2,8 @@ import {test} from "qunit";
 import moduleForAcceptance from "../../tests/helpers/module-for-acceptance";
 
 const NUMBER_INPUT = '#numberInput input';
+const NUMBER_INPUT_MINMAX = '#minMaxNumberInput input';
+
 const NUMBER_INPUT_COMMA = '#numberInputComma input';
 const NUMBER_INPUT_DOT = '#numberInputDot input';
 const TEXT_INPUT = '#textInput input';
@@ -29,6 +31,26 @@ test('number input - valid input', function (assert) {
   });
 });
 
+test('number input - valid input - max value', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_MINMAX, 456));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_MINMAX).val(), 10, 'should update `input` value');
+    assert.equal(findWithAssert('#numberResult').text().trim(), '10', 'should update `minMaxNumberResult` oninput or onchange');
+  });
+});
+
+
+test('number input - valid input - min value', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_MINMAX, -100));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_MINMAX).val(), 0, 'should update `input` value');
+    assert.equal(findWithAssert('#numberResult').text().trim(), '0', 'should update `minMaxNumberResult` oninput or onchange');
+  });
+});
 
 test('number input - invalid input', function (assert) {
   visit('/');
