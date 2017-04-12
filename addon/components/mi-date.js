@@ -47,9 +47,9 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
       let format = this._getDateFormat();
-		  if (!this.get('disabled')) {
-			  this._initDateMask();
-		  }
+      if (!this.get('disabled')) {
+        this._initDateMask();
+      }
 
       let that = this;
       let pikadayConfig = configuration.getDateConfig();
@@ -65,7 +65,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         pikadayConfig.trigger =  Ember.$(this.element).find('.calendar-button')[0];
       }
 
-      set(this, 'pikadayCalendar', new Pikaday(pikadayConfig));
+      set(this, 'pikadayCalendar', new window.Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function () {
         let {calendarButtonClass} = configuration.getDateConfig();
