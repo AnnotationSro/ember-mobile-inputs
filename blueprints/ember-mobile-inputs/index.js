@@ -10,7 +10,7 @@ module.exports = {
         ]
     }).then(function(){
       return that.addBowerPackagesToProject([
-        {name: "jquery.inputmask", target: "3.3.0"},
+        {name: "jquery.inputmask", target: "3.3.6"},
         {name: "pikaday", target: "~1.4.0"}
       ]);
     });

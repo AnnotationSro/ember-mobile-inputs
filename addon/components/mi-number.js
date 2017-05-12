@@ -33,7 +33,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         decimalMarkPattern = '[\.,]';
         break;
     }
-    return `-?[0-9]+${decimalMarkPattern}[0-9]*`;
+    return `-?[0-9]*${decimalMarkPattern}?[0-9]*`;
   },
 
   _decimalMarkToChar(){
@@ -110,8 +110,10 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   setup: Ember.on('didInsertElement', function () {
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
-      $input.inputmask("Regex", {
+      $input.inputmask({
         regex: this._numberRegexPattern(),
+        showMaskOnHover: false,
+        showMaskOnFocus: false,
         isComplete: function (buffer, opts) {
           return new RegExp(opts.regex).test(buffer.join(''));
         }
