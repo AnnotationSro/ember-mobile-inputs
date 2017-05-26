@@ -6,7 +6,7 @@
 
 <h4>Default settings (comma and dot are allowed as decimal mark)</h4>
 <div>
-  {{mobile-input id="numberInput" type='number' value=valueNumber disabled=disabled}}
+  {{mobile-input id="numberInput" type='number' value=valueNumber disabled=disabled onValueChanged=(action 'valueChanged')}}
   <span id="numberResult">{{valueNumber}}</span>
 </div>
 
@@ -36,7 +36,7 @@
 
 <h2>Text</h2>
 <div>
-  {{mobile-input id="textInput" type='text' value=valueText disabled=disabled placeholder="Some text here"}}
+  {{mobile-input id="textInput" type='text' value=valueText disabled=disabled placeholder="Some text here"  onValueChanged=(action 'valueChanged')}}
   <span id="textResult">{{valueText}}</span>
 </div>
 
@@ -45,7 +45,7 @@
 
 <h4>Opens calendar on button click or input focus</h4>
 <div>
-  {{mobile-input id="dateInput" type='date' value=valueDate disabled=disabled}}
+  {{mobile-input id="dateInput" type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged')}}
   <span id="dateResult">{{valueDate}}</span>
 </div>
 

@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   type: 'text', //text, number, date
   value: null,
   disabled: false,
+  onValueChanged(){},
 
   //number input
   min: null,

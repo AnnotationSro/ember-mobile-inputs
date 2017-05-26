@@ -10,8 +10,13 @@ export default Ember.Controller.extend({
 
   valueNumberController: 4.5,
 
-  actions:{
-    toggleDisabled(){
+  actions: {
+
+    valueChanged(value) {
+      window.console.log(`updated value: ${value}`);
+    },
+
+    toggleDisabled() {
       this.toggleProperty('disabled');
     }
   }

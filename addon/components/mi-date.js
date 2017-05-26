@@ -15,6 +15,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   mobileInputVisible: false,
   showOn: null, //input, button, both, none
   pikadayCalendar: null,
+  onValueChanged(){},
 
 
   _getShowOn(){
@@ -37,9 +38,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 	_initDateMask(){
 		let format = this._getDateFormat();
 		let $input = Ember.$(this.element).find('.desktop-input');
+    let that = this;
 		$input.inputmask(format.toLowerCase(), {
 			"placeholder": '_',
-			"clearMaskOnLostFocus": true
+			"clearMaskOnLostFocus": true,
+      oncomplete(){
+        that.get('onValueChanged')(that.get('value'));
+      }
 		});
 	},
 
@@ -56,6 +61,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       pikadayConfig.onSelect = function (date) {
         Ember.run(function () {
           set(that, 'value', date);
+          that.onValueChanged(date);
         });
       };
       pikadayConfig.format = format;

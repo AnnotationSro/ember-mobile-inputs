@@ -14,6 +14,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   decimalMark: null,//comma, dot, both
   min: null,
   max: null,
+  onValueChanged(){},
 
 
   _getDecimalMark(){
@@ -132,6 +133,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         return;
       }
       let value =  this.rangeCheckValue(newValue);
+      this.get('onValueChanged')(value);
       this.set('value', value);
       if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
         //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
