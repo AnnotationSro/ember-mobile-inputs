@@ -1,7 +1,7 @@
 {
   "name": "ember-mobile-inputs",
   "dependencies": {
-    "pikaday": "^1.4.0",
+    "pikaday": "^1.6.0",
     "moment": ">= 2.8.0",
     "jquery.inputmask": "3.3.6"
   }
