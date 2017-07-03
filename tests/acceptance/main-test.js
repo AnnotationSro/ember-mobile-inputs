@@ -1,4 +1,4 @@
-import {test} from "qunit";
+import {test, skip} from "qunit";
 import moduleForAcceptance from "../../tests/helpers/module-for-acceptance";
 
 const NUMBER_INPUT = '#numberInput input';
@@ -26,7 +26,7 @@ test('number input - valid input', function (assert) {
   });
 });
 
-test('number input - valid input - max value', function (assert) {
+skip('number input - valid input - max value', function (assert) {
   visit('/');
 
   andThen(() => fillIn(NUMBER_INPUT_MINMAX, 456));
@@ -37,7 +37,7 @@ test('number input - valid input - max value', function (assert) {
 });
 
 
-test('number input - valid input - min value', function (assert) {
+skip('number input - valid input - min value', function (assert) {
   visit('/');
 
   andThen(() => fillIn(NUMBER_INPUT_MINMAX, -100));

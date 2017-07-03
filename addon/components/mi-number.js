@@ -133,12 +133,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         return;
       }
       // let value =  this.rangeCheckValue(newValue);
-      this.get('onValueChanged')(newValue);
-      this.set('value', newValue);
-      // if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
+      let value = this.stringToFloat(newValue);
+      this.get('onValueChanged')(value);
+      this.set('value', value);
+      //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
       //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
-      //   Ember.$(this.element).find('input').val(value);
-      // }
+        //  Ember.$(this.element).find('input').val(value);
+      //  }
     }
   }
 });
