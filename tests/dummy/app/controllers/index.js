@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
   valueText: null,
   valueDate: null,
   minMaxValueNumber: null,
+  nullValue: 0,
 
   disabled: false,
 

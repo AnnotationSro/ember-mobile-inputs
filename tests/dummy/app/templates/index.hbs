@@ -34,6 +34,12 @@
   <span id="numberResultDot">{{numberResultDot}}</span>
 </div>
 
+<h4>Do not change model for null value</h4>
+<div>
+  {{mobile-input id="numberInputNull" type='number' value=nullValue disabled=disabled decimalMark='both' min=10 max=50}}
+  <span id="numberResultNull">{{nullValue}}</span>
+</div>
+
 <h2>Text</h2>
 <div>
   {{mobile-input id="textInput" type='text' value=valueText disabled=disabled placeholder="Some text here"  onValueChanged=(action 'valueChanged')}}
