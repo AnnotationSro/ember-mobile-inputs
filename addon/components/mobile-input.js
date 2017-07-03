@@ -1,10 +1,17 @@
 import Ember from "ember";
 import layout from "../templates/components/mobile-input";
 
-const {set, getWithDefault} = Ember;
+const {
+  set,
+  getWithDefault
+} = Ember;
 
 export default Ember.Component.extend({
-  classNames: ['ember-mobile-input'],
+
+  classNameBindings: ['getClassNames'],
+  getClassNames: Ember.computed(function() {
+    return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+  }),
   tagName: 'span',
   id: null,
   layout,
@@ -12,7 +19,7 @@ export default Ember.Component.extend({
   type: 'text', //text, number, date
   value: null,
   disabled: false,
-  onValueChanged(){},
+  onValueChanged() {},
 
   //number input
   min: null,
