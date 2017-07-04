@@ -1,27 +1,40 @@
 import Ember from "ember";
 import layout from "../templates/components/mi-number";
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
-import {isTouchDevice} from "../utils/mobile-utils";
+import {
+  isTouchDevice
+} from "../utils/mobile-utils";
 import configuration from "../configuration";
 
-const {get, set, isNone, isPresent, getWithDefault} = Ember;
+const {
+  get,
+  set,
+  isNone,
+  isPresent,
+  getWithDefault
+} = Ember;
 
 
 export default Ember.Component.extend(MobileInputComponentMixin, {
   layout,
 
   mobileInputVisible: false,
-  decimalMark: null,//comma, dot, both
+  decimalMark: null, //comma, dot, both
   min: null,
   max: null,
-  onValueChanged(){},
+  onValueChanged() {},
+  selectOnClick: null,
 
 
-  _getDecimalMark(){
+  _getDecimalMark() {
     return getWithDefault(this, 'decimalMark', configuration.getNumberConfig().decimalMark);
   },
 
-  _numberRegexPattern(){
+  _getSelectOnClick() {
+    return getWithDefault(this, 'selectOnClick', configuration.getNumberConfig().selectOnClick);
+  },
+
+  _numberRegexPattern() {
     let decimalMarkPattern;
     switch (this._getDecimalMark()) {
       case 'dot':
@@ -37,7 +50,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return `-?[0-9]*${decimalMarkPattern}?[0-9]*`;
   },
 
-  _decimalMarkToChar(){
+  _decimalMarkToChar() {
     switch (this._getDecimalMark()) {
       case 'dot':
         return '.';
@@ -48,16 +61,16 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  placeholder: Ember.computed('formattedPlaceholder', 'disabled', function(){
-    if (get(this, 'disabled')){
+  placeholder: Ember.computed('formattedPlaceholder', 'disabled', function() {
+    if (get(this, 'disabled')) {
       return "";
-    }else{
+    } else {
       return getWithDefault(this, 'formattedPlaceholder', "");
     }
   }),
 
   desktopValue: Ember.computed('value', {
-    get(){
+    get() {
       let value = get(this, 'value');
       if (isNone(value)) {
         return null;
@@ -65,11 +78,11 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
       return String(value).replace(/[\.,]/, this._decimalMarkToChar());
     },
-    set(key, value){
-      if (isPresent(value)){
+    set(key, value) {
+      if (isPresent(value)) {
         let floatValue = value;
-        if (typeof value === 'string'){
-          if (value !== '-'){ //when value === '-' user started typing negative number - do not parseFloat such string.. yet
+        if (typeof value === 'string') {
+          if (value !== '-') { //when value === '-' user started typing negative number - do not parseFloat such string.. yet
             floatValue = this.stringToFloat(value);
           }
         }
@@ -81,54 +94,71 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   }),
 
-  rangeCheckValue(valueArg){
-    if (isNone(valueArg)){
+  rangeCheckValue(valueArg) {
+    if (isNone(valueArg)) {
       return 0;
     }
 
     let value = valueArg;
-    if (typeof value === 'string'){
+    if (typeof value === 'string') {
       value = this.stringToFloat(valueArg);
     }
 
-    let {min, max} = this.getProperties('min', 'max');
-    if (isPresent(min) && value < min){
+    let {
+      min,
+      max
+    } = this.getProperties('min', 'max');
+    if (isPresent(min) && value < min) {
       return min;
     }
-    if (isPresent(max) && value > max){
+    if (isPresent(max) && value > max) {
       return max;
     }
     return value;
   },
 
-  stringToFloat(value){
-    if (isNone(value)){
+  stringToFloat(value) {
+    if (isNone(value)) {
       return 0;
     }
     return parseFloat(value.replace(/[\.,]/, '.'));
   },
 
-  setup: Ember.on('didInsertElement', function () {
+  didInsertElement: function() {
+    this._super(...arguments);
+
     if (!isTouchDevice()) {
       let $input = Ember.$(this.element).find('.desktop-input');
       $input.inputmask({
         regex: this._numberRegexPattern(),
         showMaskOnHover: false,
         showMaskOnFocus: false,
-        isComplete: function (buffer, opts) {
+        isComplete: function(buffer, opts) {
           return new RegExp(opts.regex).test(buffer.join(''));
         }
       });
-    }
-  }),
 
-  actions:{
-    valueChanged(newValue){
-      if (isPresent(newValue) && newValue.match(/.*[\.,]$/)){
+      if (this._getSelectOnClick() === true) {
+        $input.on(`focus.ember-mobile-input-number--${this.elementId}`, function() {
+          this.setSelectionRange(0, this.value.length);
+        });
+      }
+    }
+  },
+
+  willDestroyElement: function() {
+    this._super(...arguments);
+    let $input = Ember.$(this.element).find('.desktop-input');
+    $input.off(`focus.ember-mobile-input-number--${this.elementId}`);
+  },
+
+  actions: {
+    valueChanged(newValue) {
+      if (isPresent(newValue) && newValue.match(/.*[\.,]$/)) {
         //new value ends with dot or comma - ignore that
         return;
       }
-      if (newValue === ''){
+      if (newValue === '') {
         this.set('value', null);
         return;
       }
@@ -138,7 +168,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       this.set('value', value);
       //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
       //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
-        //  Ember.$(this.element).find('input').val(value);
+      //  Ember.$(this.element).find('input').val(value);
       //  }
     }
   }

@@ -8,7 +8,11 @@ let CONFIG_PROPERTIES = {
     showOn: 'both'
   },
   number:{
-    decimalMark: 'both'
+    decimalMark: 'both',
+    selectOnClick: false
+  },
+  text: {
+    selectOnClick: false
   }
 };
 
@@ -23,6 +27,10 @@ export default {
 
   getNumberConfig(){
     return Ember.copy(CONFIG_PROPERTIES.number);
+  },
+
+  getTextConfig(){
+    return Ember.copy(CONFIG_PROPERTIES.text);
   },
 
   getConfig(){

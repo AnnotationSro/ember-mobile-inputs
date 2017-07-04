@@ -63,10 +63,14 @@ ENV['ember-mobile-inputs'] = {
     firstDay: 0, // Pikaday configuration
     calendarButtonClass: 'fa fa-calendar', // font icon CSS classes to be used in place of calendar button
     format: 'DD.MM.YYYY',
-    showOn: 'both' //available options: 'both', 'input', 'button', 'none'
+    showOn: 'both' //available options: 'both', 'input', 'button', 'none',
   },
   number:{
-    decimalMark: 'both' //available options: 'comma', 'dot', 'both'
+    decimalMark: 'both', //available options: 'comma', 'dot', 'both'
+    selectOnClick: false //selects the whole number on focus
+  },
+  text:{
+      selectOnClick: false //selects the whole text on focus
   }
 }
 ```
