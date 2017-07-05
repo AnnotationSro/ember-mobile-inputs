@@ -66,7 +66,7 @@ export default Ember.Component.extend({
           this.get('onBlurChanged')(this.get('value'), this.get('valueOnFocus'));
         }
         if (configuration.getConfig().eventOnBlurChanged === true) {
-          this.get('mobileInputEventBus').publish('blurChanged', this.get('value'), this.get('valueOnFocus'));
+          this.get('mobileInputEventBus').publish('blurChanged', this.get('value'), this.get('valueOnFocus'), this.element);
         }
       });
     }

@@ -91,7 +91,7 @@ _subscribe for events_
 ```
 mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
 
-this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue)=>{
+this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element)=>{
   window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}`);
 });
 ```
