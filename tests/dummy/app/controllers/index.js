@@ -10,6 +10,15 @@ export default Ember.Controller.extend({
   disabled: false,
 
   valueNumberController: 4.5,
+  mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
+
+
+  init(){
+    this._super(...arguments);
+    this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue)=>{
+      window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}`);
+    });
+  },
 
   actions: {
 

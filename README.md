@@ -79,3 +79,19 @@ For more Pikaday (calendar popup) configuration information, please have a look 
 You can use any configuration parameter, except _onSelect_ and _field_ that are used internally by this addon.
 
 There is an option to add callback `onBlurChanged` that will be called on input blur, but only when value has changed since on-focus event.
+There is a service `mobile-input-event-bus` where you can subscribe to input changes on input blur - don't forget to enable these events in the config:
+
+ _config/enbironment.js_
+```
+ENV['ember-mobile-inputs'] = {
+  eventOnBlurChanged: true
+}
+```
+_subscribe for events_
+```
+mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
+
+this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue)=>{
+  window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}`);
+});
+```

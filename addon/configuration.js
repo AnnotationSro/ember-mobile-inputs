@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 let CONFIG_PROPERTIES = {
+  eventOnBlurChanged: false,
   date:{
     firstDay: 0,
     calendarButtonClass: 'fa fa-calendar',

@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   getClassNames: Ember.computed(function() {
     return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
   }),
+  mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
   tagName: 'span',
   id: null,
   layout,
@@ -45,24 +46,27 @@ export default Ember.Component.extend({
 
     let $input = Ember.$(this.element).find('input');
 
-    if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged'))) {
+    if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
       let that = this;
-      $input.on(`focus.ember-mobile-input--${this.elementId}`,function(){
+      $input.on(`focus.ember-mobile-input--${this.elementId}`, function() {
         if (that._getSelectOnClick() === true) {
           this.setSelectionRange(0, this.value.length);
         }
 
-        if (isPresent(that.get('onBlurChanged'))) {
+        if (isPresent(that.get('onBlurChanged') || configuration.getConfig().eventOnBlurChanged === true)) {
           that.set('valueOnFocus', that.get('value'));
         }
 
       });
     }
 
-    if (isPresent(this.get('onBlurChanged'))) {
-      $input.on(`blur.ember-mobile-input--${this.elementId}`,() => {
+    if (isPresent(this.get('onBlurChanged') || configuration.getConfig().eventOnBlurChanged === true)) {
+      $input.on(`blur.ember-mobile-input--${this.elementId}`, () => {
         if (this.get('value') !== this.get('valueOnFocus')) {
           this.get('onBlurChanged')(this.get('value'), this.get('valueOnFocus'));
+        }
+        if (configuration.getConfig().eventOnBlurChanged === true) {
+          this.get('mobileInputEventBus').publish('blurChanged', this.get('value'), this.get('valueOnFocus'));
         }
       });
     }

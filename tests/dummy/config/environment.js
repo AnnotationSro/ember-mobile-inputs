@@ -23,6 +23,11 @@ module.exports = function(environment) {
     }
   };
 
+
+  ENV['ember-mobile-inputs'] = {
+    eventOnBlurChanged: true
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
