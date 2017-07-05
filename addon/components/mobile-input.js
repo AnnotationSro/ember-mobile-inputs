@@ -1,9 +1,11 @@
 import Ember from "ember";
 import layout from "../templates/components/mobile-input";
+import configuration from "../configuration";
 
 const {
   set,
-  getWithDefault
+  getWithDefault,
+  isPresent
 } = Ember;
 
 export default Ember.Component.extend({
@@ -19,7 +21,10 @@ export default Ember.Component.extend({
   type: 'text', //text, number, date
   value: null,
   disabled: false,
+  selectOnClick: null,
+
   onValueChanged() {},
+  onBlurChanged() {},
 
   //number input
   min: null,
@@ -29,6 +34,47 @@ export default Ember.Component.extend({
   //internals
   mobileInputVisible: false,
   oldValue: null,
+  valueOnFocus: null,
+
+  _getSelectOnClick() {
+    return getWithDefault(this, 'selectOnClick', configuration.getTextConfig().selectOnClick);
+  },
+
+  didInsertElement: function() {
+    this._super(...arguments);
+
+    let $input = Ember.$(this.element).find('input');
+
+    if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged'))) {
+      let that = this;
+      $input.on(`focus.ember-mobile-input--${this.elementId}`,function(){
+        if (that._getSelectOnClick() === true) {
+          this.setSelectionRange(0, this.value.length);
+        }
+
+        if (isPresent(that.get('onBlurChanged'))) {
+          that.set('valueOnFocus', that.get('value'));
+        }
+
+      });
+    }
+
+    if (isPresent(this.get('onBlurChanged'))) {
+      $input.on(`blur.ember-mobile-input--${this.elementId}`,() => {
+        if (this.get('value') !== this.get('valueOnFocus')) {
+          this.get('onBlurChanged')(this.get('value'), this.get('valueOnFocus'));
+        }
+      });
+    }
+
+  },
+
+  willDestroyElement: function() {
+    this._super(...arguments);
+    let $input = Ember.$(this.element).find('input');
+    $input.off(`focus.ember-mobile-input--${this.elementId}`);
+    $input.off(`blur.ember-mobile-input--${this.elementId}`);
+  },
 
   didReceiveAttrs() {
     this._super(...arguments);

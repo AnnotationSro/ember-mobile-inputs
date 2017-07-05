@@ -16,6 +16,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   showOn: null, //input, button, both, none
   pikadayCalendar: null,
   onValueChanged(){},
+  onBlurChanged() {},
 
 
   _getShowOn(){

@@ -19,6 +19,10 @@ export default Ember.Controller.extend({
 
     toggleDisabled() {
       this.toggleProperty('disabled');
+    },
+
+    onBlurChanged(newValue, oldValue){
+      window.console.log(`newValue: ${newValue}, oldValue: ${oldValue}`);
     }
   }
 });

@@ -30,10 +30,6 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'decimalMark', configuration.getNumberConfig().decimalMark);
   },
 
-  _getSelectOnClick() {
-    return getWithDefault(this, 'selectOnClick', configuration.getNumberConfig().selectOnClick);
-  },
-
   _numberRegexPattern() {
     let decimalMarkPattern;
     switch (this._getDecimalMark()) {
@@ -137,19 +133,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
           return new RegExp(opts.regex).test(buffer.join(''));
         }
       });
-
-      if (this._getSelectOnClick() === true) {
-        $input.on(`focus.ember-mobile-input-number--${this.elementId}`, function() {
-          this.setSelectionRange(0, this.value.length);
-        });
-      }
     }
-  },
-
-  willDestroyElement: function() {
-    this._super(...arguments);
-    let $input = Ember.$(this.element).find('.desktop-input');
-    $input.off(`focus.ember-mobile-input-number--${this.elementId}`);
   },
 
   actions: {
