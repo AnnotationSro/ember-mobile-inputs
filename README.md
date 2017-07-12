@@ -95,3 +95,15 @@ this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, el
   window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}`);
 });
 ```
+
+You can pass custom attributes to the element using `data-custom` attribute:
+```
+  {{mobile-input value=value data-custom="hello world"}}
+```
+
+which will render:
+```
+<span data-custom="hello world" class="ember-mobile-input ember-mobile-input-text ember-view">
+ <!-- some more stuff here -->
+</span>
+```

@@ -11,6 +11,7 @@ const {
 export default Ember.Component.extend({
 
   classNameBindings: ['getClassNames'],
+  attributeBindings: ['data-custom'],
   getClassNames: Ember.computed(function() {
     return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
   }),
@@ -18,6 +19,8 @@ export default Ember.Component.extend({
   tagName: 'span',
   id: null,
   layout,
+
+  dataCustom: null,
 
   type: 'text', //text, number, date
   value: null,
