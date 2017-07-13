@@ -14,7 +14,9 @@ const DATE_INPUT_SHOWON_BUTTON = '#buttonDateInput';
 const DATE_INPUT_SHOWON_INPUT = '#inputDateInput';
 
 
-moduleForAcceptance('Acceptance | main');
+moduleForAcceptance('Acceptance | main', {
+  needs: ['service:mobile-input-event-bus']
+});
 
 test('number input - valid input', function (assert) {
   visit('/');
