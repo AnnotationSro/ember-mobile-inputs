@@ -23,7 +23,6 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   min: null,
   max: null,
   onValueChanged() {},
-  selectOnClick: null,
 
 
   _getDecimalMark() {

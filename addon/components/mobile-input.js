@@ -41,7 +41,16 @@ export default Ember.Component.extend({
 	valueOnFocus: null,
 
 	_getSelectOnClick() {
-		return getWithDefault(this, 'selectOnClick', configuration.getTextConfig().selectOnClick);
+		let selectOnClick = this.get('selectOnClick');
+		if (Ember.isNone(selectOnClick)){
+			switch(this.get('type')){
+				case 'text':
+					return configuration.getTextConfig().selectOnClick;
+				case 'number':
+					return configuration.getNumberConfig().selectOnClick;
+			}
+		}
+		return selectOnClick;
 	},
 
 	didInsertElement: function() {

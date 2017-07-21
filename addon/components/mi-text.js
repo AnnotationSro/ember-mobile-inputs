@@ -13,7 +13,6 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   tagName: 'span',
   onValueChanged() {},
   oldValue: null,
-  selectOnClick: null,
 
   init() {
     this._super(...arguments);
