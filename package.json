@@ -1,6 +1,6 @@
 {
   "name": "ember-mobile-inputs",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "Mobile- and Desktop- friendly inputs",
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "test": "ember try:testall"
   },
   "engines": {
-     "node": "^4.5 || 6.* || >= 7.*"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
   "repository": {
     "type": "git",
