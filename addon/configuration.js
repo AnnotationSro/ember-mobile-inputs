@@ -10,7 +10,8 @@ let CONFIG_PROPERTIES = {
   },
   number:{
     decimalMark: 'both',
-    selectOnClick: false
+    selectOnClick: false,
+    formatOnDisabled: false
   },
   text: {
     selectOnClick: false

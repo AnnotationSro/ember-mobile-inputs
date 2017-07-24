@@ -3,6 +3,10 @@
   "dependencies": {
     "pikaday": "^1.6.0",
     "moment": ">= 2.8.0",
-    "jquery.inputmask": "3.3.6"
+    "jquery.inputmask": "3.3.6",
+    "ember": "components/ember#lts-2-4"
+  },
+  "resolutions": {
+    "ember": "lts-2-4"
   }
 }

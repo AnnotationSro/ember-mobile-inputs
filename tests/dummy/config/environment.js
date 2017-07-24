@@ -25,7 +25,10 @@ module.exports = function(environment) {
 
 
   ENV['ember-mobile-inputs'] = {
-    eventOnBlurChanged: true
+    eventOnBlurChanged: true,
+    number:{
+      formatOnDisabled: true
+    }
   };
 
   if (environment === 'development') {

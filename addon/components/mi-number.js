@@ -15,6 +15,18 @@ const {
 } = Ember;
 
 
+function groupNumber(nStr) {
+    nStr += '';
+    let x = nStr.split('.');
+    let x1 = x[0];
+    let x2 = x.length > 1 ? '.' + x[1] : '';
+    let rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+    }
+    return x1 + x2;
+}
+
 export default Ember.Component.extend(MobileInputComponentMixin, {
   layout,
 
@@ -56,6 +68,20 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   },
 
+  formatOnDisabled: Ember.computed(function(){
+      return configuration.getNumberConfig().formatOnDisabled;
+  }),
+
+  formatOnDisabledValue: Ember.computed('value', function(){
+    let value = this.get('value');
+    if (Ember.isEmpty(value)){
+      return null;
+    }
+    return this.replaceDecimalMark(groupNumber(value.toFixed(2)));
+  }),
+
+  showFormatDisabledInput: Ember.computed.and('disabled', 'formatOnDisabled'),
+
   placeholder: Ember.computed('formattedPlaceholder', 'disabled', function() {
     if (get(this, 'disabled')) {
       return "";
@@ -64,6 +90,10 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+  replaceDecimalMark(value){
+    return String(value).replace(/[\.,]/, this._decimalMarkToChar());
+  },
+
   desktopValue: Ember.computed('value', {
     get() {
       let value = get(this, 'value');
@@ -71,7 +101,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      return String(value).replace(/[\.,]/, this._decimalMarkToChar());
+      return this.replaceDecimalMark(value);
     },
     set(key, value) {
       if (isPresent(value)) {
