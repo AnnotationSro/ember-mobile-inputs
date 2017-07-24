@@ -67,7 +67,8 @@ ENV['ember-mobile-inputs'] = {
   },
   number:{
     decimalMark: 'both', //available options: 'comma', 'dot', 'both'
-    selectOnClick: false //selects the whole number on focus
+    selectOnClick: false, //selects the whole number on focus
+    formatOnDisabled: false //format numbers when input is disabled
   },
   text:{
       selectOnClick: false //selects the whole text on focus
