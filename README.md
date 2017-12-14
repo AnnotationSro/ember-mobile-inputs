@@ -14,6 +14,8 @@ So what this addon does? On mobile (touch) devices it makes use of HTML5 power (
 * input type **text** - well just a simple input, nothing fancy here
 * input type **date** - masked input with the ability to customize the format + [Pikaday](https://github.com/dbushell/Pikaday) calendar popup + nice calendar button
 
+Requires Ember >= 2.15.0 because of Ember.assign - or [use a shim](https://github.com/shipshapecode/ember-assign-polyfill)
+
 # Install
 
 ```
@@ -78,6 +80,8 @@ ENV['ember-mobile-inputs'] = {
 
 For more Pikaday (calendar popup) configuration information, please have a look at the [Pikaday guide](https://github.com/dbushell/Pikaday#configuration).
 You can use any configuration parameter, except _onSelect_ and _field_ that are used internally by this addon.
+You can also pass `options` parameter to the component - this is currently used only by _date_ input to customize Pikaday calendar (content of `options` is merged with Pikaday config).
+
 
 There is an option to add callback `onBlurChanged` that will be called on input blur, but only when value has changed since on-focus event.
 There is a service `mobile-input-event-bus` where you can subscribe to input changes on input blur - don't forget to enable these events in the config:
