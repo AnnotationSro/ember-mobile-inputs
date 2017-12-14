@@ -9,14 +9,20 @@ export default Ember.Controller.extend({
 
   disabled: false,
 
+  dateOptions: null,
+
   valueNumberController: 4.5,
   mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
 
 
-  init(){
+  init() {
     this._super(...arguments);
-    this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element)=>{
+    this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
       window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
+    });
+
+    this.set('dateOptions', {
+      maxDate: new Date()
     });
   },
 
@@ -30,7 +36,7 @@ export default Ember.Controller.extend({
       this.toggleProperty('disabled');
     },
 
-    onBlurChanged(newValue, oldValue){
+    onBlurChanged(newValue, oldValue) {
       window.console.log(`newValue: ${newValue}, oldValue: ${oldValue}`);
     }
   }

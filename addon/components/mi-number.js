@@ -51,7 +51,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         decimalMarkPattern = ',';
         break;
       default: //'both' option or default
-        decimalMarkPattern = '[\.,]';
+        decimalMarkPattern = '[\\.,]';
         break;
     }
     return `-?[0-9]*${decimalMarkPattern}?[0-9]*`;
@@ -91,7 +91,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   }),
 
   replaceDecimalMark(value){
-    return String(value).replace(/[\.,]/, this._decimalMarkToChar());
+    return String(value).replace(/[\\.,]/, this._decimalMarkToChar());
   },
 
   desktopValue: Ember.computed('value', {
@@ -146,7 +146,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     if (isNone(value)) {
       return 0;
     }
-    return parseFloat(value.replace(/[\.,]/, '.'));
+    return parseFloat(value.replace(/[\\.,]/, '.'));
   },
 
   didInsertElement: function() {
@@ -167,7 +167,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
   actions: {
     valueChanged(newValue) {
-      if (isPresent(newValue) && newValue.match(/.*[\.,]$/)) {
+      if (isPresent(newValue) && newValue.match(/.*[\\.,]$/)) {
         //new value ends with dot or comma - ignore that
         return;
       }
