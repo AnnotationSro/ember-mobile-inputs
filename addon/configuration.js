@@ -15,6 +15,9 @@ let CONFIG_PROPERTIES = {
   },
   text: {
     selectOnClick: false
+  },
+  password: {
+    selectOnClick: false
   }
 };
 
@@ -33,6 +36,10 @@ export default {
 
   getTextConfig(){
     return Ember.copy(CONFIG_PROPERTIES.text);
+  },
+
+  getPasswordConfig() {
+    return Ember.copy(CONFIG_PROPERTIES.password);
   },
 
   getConfig(){

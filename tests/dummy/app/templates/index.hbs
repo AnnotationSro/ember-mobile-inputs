@@ -46,6 +46,12 @@
   <span id="textResult">{{valueText}}</span>
 </div>
 
+<h2>Password</h2>
+<div>
+  {{mobile-input id="passInput" selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Emter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="passResult">{{valuePass}}</span>
+</div>
+
 
 <h2>Date</h2>
 

@@ -116,6 +116,9 @@ export default Ember.Component.extend({
 			case 'date':
 				set(this, 'inputComponentType', 'mi-date');
 				break;
+			case 'password':
+				set(this, 'inputComponentType', 'mi-password');
+				break;
 			default:
 				Ember.Logger.error(`Unknown ember-mobile-inputs type: ${inputType}`);
 		}
