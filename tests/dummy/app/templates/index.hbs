@@ -1,5 +1,11 @@
 <h3>Try these inputs on desktop and mobile as well - observe the difference.</h3>
 
+<h2>Email</h2>
+<div>
+  {{mobile-input id="emailInput" selectOnClick=true type='email' value=valueEmail disabled=disabled placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="emailResult">{{valueEmail}}</span>
+</div>
+
 <button {{action 'toggleDisabled'}}>Toggle disabled</button>
 
 <h2>Number</h2>
@@ -48,7 +54,7 @@
 
 <h2>Password</h2>
 <div>
-  {{mobile-input id="passInput" selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Emter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="passInput" selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="passResult">{{valuePass}}</span>
 </div>
 
