@@ -38,7 +38,10 @@ You can customize the decimal point mark - whether to use comma or dot or both. 
 ```
 {{mobile-input id="textInput" type='text' value=valueText disabled=isDisabled onValueChanged=(action 'callback')}}
 ```
-
+### Password
+```
+{{mobile-input id="passInput" type='password' value=valuePass disabled=isDisabled onValueChanged=(action 'callback')}}
+```
 ### Date
 With default date format - dd.mm.yyyy
 ```

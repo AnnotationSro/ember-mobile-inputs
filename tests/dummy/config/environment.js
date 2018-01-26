@@ -28,6 +28,9 @@ module.exports = function(environment) {
     eventOnBlurChanged: true,
     number:{
       formatOnDisabled: true
+    },
+    password: {
+      selectOnClick: true
     }
   };
 
