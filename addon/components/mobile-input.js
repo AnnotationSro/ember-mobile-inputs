@@ -1,21 +1,24 @@
-import Ember from "ember";
 import layout from "../templates/components/mobile-input";
 import configuration from "../configuration";
+import Ember from 'ember';
+import { set } from '@ember/object';
+import { getWithDefault } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { inject } from '@ember/service';
+import { isNone } from '@ember/utils';
+import $ from 'jquery';
 
-const {
-	set,
-	getWithDefault,
-	isPresent
-} = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
 
 	classNameBindings: ['getClassNames'],
 	attributeBindings: ['data-custom'],
-	getClassNames: Ember.computed(function() {
+	getClassNames: computed(function() {
 		return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
 	}),
-	mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
+	mobileInputEventBus: inject('mobile-input-event-bus'),
 	tagName: 'span',
 	id: null,
 	layout,
@@ -42,7 +45,7 @@ export default Ember.Component.extend({
 
 	_getSelectOnClick() {
 		let selectOnClick = this.get('selectOnClick');
-		if (Ember.isNone(selectOnClick)){
+		if (isNone(selectOnClick)){
 			switch(this.get('type')){
 				case 'text':
 					return configuration.getTextConfig().selectOnClick;
@@ -56,7 +59,7 @@ export default Ember.Component.extend({
 	didInsertElement: function() {
 		this._super(...arguments);
 
-		let $input = Ember.$(this.element).find('input');
+		let $input = $(this.element).find('input');
 
 		if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
 
@@ -98,7 +101,7 @@ export default Ember.Component.extend({
 
 	willDestroyElement: function() {
 		this._super(...arguments);
-		let $input = Ember.$(this.element).find('input');
+		let $input = $(this.element).find('input');
 		$input.off(`focus.ember-mobile-input--${this.elementId}`);
 		$input.off(`blur.ember-mobile-input--${this.elementId}`);
 	},

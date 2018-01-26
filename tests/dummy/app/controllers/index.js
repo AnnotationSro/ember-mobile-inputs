@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   valueNumber: null,
   valueText: null,
   valueDate: null,
@@ -12,7 +13,7 @@ export default Ember.Controller.extend({
   dateOptions: null,
 
   valueNumberController: 4.5,
-  mobileInputEventBus: Ember.inject.service('mobile-input-event-bus'),
+  mobileInputEventBus: inject('mobile-input-event-bus'),
 
 
   init() {

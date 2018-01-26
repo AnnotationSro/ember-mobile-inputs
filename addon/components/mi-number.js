@@ -1,4 +1,3 @@
-import Ember from "ember";
 import layout from "../templates/components/mi-number";
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
 import {
@@ -6,14 +5,16 @@ import {
 } from "../utils/mobile-utils";
 import configuration from "../configuration";
 
-const {
-  get,
-  set,
-  isNone,
-  isPresent,
-  getWithDefault
-} = Ember;
-
+import { get } from '@ember/object';
+import { set } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { isPresent } from '@ember/utils';
+import { getWithDefault } from '@ember/object';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { and } from '@ember/object/computed';
+import $ from 'jquery';
 
 function groupNumber(nStr) {
     nStr += '';
@@ -27,7 +28,7 @@ function groupNumber(nStr) {
     return x1 + x2;
 }
 
-export default Ember.Component.extend(MobileInputComponentMixin, {
+export default Component.extend(MobileInputComponentMixin, {
   layout,
 
   mobileInputVisible: false,
@@ -68,21 +69,21 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  formatOnDisabled: Ember.computed(function(){
+  formatOnDisabled: computed(function(){
       return configuration.getNumberConfig().formatOnDisabled;
   }),
 
-  formatOnDisabledValue: Ember.computed('value', function(){
+  formatOnDisabledValue: computed('value', function(){
     let value = this.get('value');
-    if (Ember.isEmpty(value)){
+    if (isEmpty(value)){
       return null;
     }
     return this.replaceDecimalMark(groupNumber(value.toFixed(2)));
   }),
 
-  showFormatDisabledInput: Ember.computed.and('disabled', 'formatOnDisabled'),
+  showFormatDisabledInput: and('disabled', 'formatOnDisabled'),
 
-  placeholder: Ember.computed('formattedPlaceholder', 'disabled', function() {
+  placeholder: computed('formattedPlaceholder', 'disabled', function() {
     if (get(this, 'disabled')) {
       return "";
     } else {
@@ -94,7 +95,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return String(value).replace(/[\\.,]/, this._decimalMarkToChar());
   },
 
-  desktopValue: Ember.computed('value', {
+  desktopValue: computed('value', {
     get() {
       let value = get(this, 'value');
       if (isNone(value)) {
@@ -153,7 +154,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     this._super(...arguments);
 
     if (!isTouchDevice()) {
-      let $input = Ember.$(this.element).find('.desktop-input');
+      let $input = $(this.element).find('.desktop-input');
       $input.inputmask({
         regex: this._numberRegexPattern(),
         showMaskOnHover: false,
@@ -181,7 +182,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       this.set('value', value);
       //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
       //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
-      //  Ember.$(this.element).find('input').val(value);
+      //  $(this.element).find('input').val(value);
       //  }
     }
   }

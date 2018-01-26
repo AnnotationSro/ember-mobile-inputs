@@ -1,10 +1,10 @@
-import Ember from 'ember';
 import {isTouchDevice} from '../utils/mobile-utils';
+import { get } from '@ember/object';
+import Mixin from '@ember/object/mixin';
+import { scheduleOnce } from '@ember/runloop';
+import $ from 'jquery';
 
-const {get} = Ember;
-
-
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   tagName: 'span',
 
@@ -18,9 +18,9 @@ export default Ember.Mixin.create({
       if (isTouchDevice()) {
         this.toggleProperty('mobileInputVisible');
         //simulate click "propagation" on the input, because we just stole the click on the input
-        Ember.run.scheduleOnce('afterRender', ()=> {
-          Ember.$(this.element).find('.native-input').focus();
-          Ember.$(this.element).find('.native-input').click();
+        scheduleOnce('afterRender', ()=> {
+          $(this.element).find('.native-input').focus();
+          $(this.element).find('.native-input').click();
         });
       }
     }

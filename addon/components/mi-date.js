@@ -1,4 +1,3 @@
-import Ember from "ember";
 import layout from "../templates/components/mi-date";
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
 import {
@@ -6,17 +5,32 @@ import {
 } from "../utils/mobile-utils";
 import moment from "moment";
 import configuration from "../configuration";
-
-const {
+import {
   get,
   set,
+  observer,
+  computed
+} from '@ember/object';
+import {
   isNone,
-  getWithDefault,
-  run,
-  isEmpty
-} = Ember;
+  isEmpty,
+  isPresent
+} from '@ember/utils';
+import {
+  getWithDefault
+} from '@ember/object';
+import {
+  run, scheduleOnce
+} from '@ember/runloop';
+import $ from 'jquery';
+import {
+  assign
+} from '@ember/polyfills';
+import Component from '@ember/component';
+import {on} from '@ember/object/evented';
 
-export default Ember.Component.extend(MobileInputComponentMixin, {
+
+export default Component.extend(MobileInputComponentMixin, {
   layout,
 
   format: null,
@@ -32,8 +46,8 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
   },
 
-  disabledObserver: Ember.observer('disabled', function() {
-    let $input = Ember.$(this.element).find('.desktop-input');
+  disabledObserver: observer('disabled', function() {
+    let $input = $(this.element).find('.desktop-input');
 
     if (this.get('disabled')) {
       get(this, 'pikadayCalendar').hide();
@@ -47,7 +61,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
 
   _initDateMask() {
     let format = this._getDateFormat();
-    let $input = Ember.$(this.element).find('.desktop-input');
+    let $input = $(this.element).find('.desktop-input');
     let that = this;
     $input.inputmask(format.toLowerCase(), {
       "placeholder": '_',
@@ -58,9 +72,9 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     });
   },
 
-  setup: Ember.on('didInsertElement', function() {
+  didInsertElement() {
     if (!isTouchDevice()) {
-      let $input = Ember.$(this.element).find('.desktop-input');
+      let $input = $(this.element).find('.desktop-input');
       let format = this._getDateFormat();
       if (!this.get('disabled')) {
         this._initDateMask();
@@ -69,7 +83,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       let that = this;
       let pikadayConfig = configuration.getDateConfig();
       pikadayConfig.onSelect = function(date) {
-        Ember.run(function() {
+        run(function() {
           set(that, 'value', date);
           that.onValueChanged(date);
         });
@@ -78,12 +92,12 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       pikadayConfig.field = $input[0];
 
       if (this._getShowOn() === 'button') {
-        pikadayConfig.trigger = Ember.$(this.element).find('.calendar-button')[0];
+        pikadayConfig.trigger = $(this.element).find('.calendar-button')[0];
       }
 
       let options = this.get('options');
-      if (Ember.isPresent(options)) {
-        Ember.assign(pikadayConfig, options);
+      if (isPresent(options)) {
+        assign(pikadayConfig, options);
       }
 
       set(this, 'pikadayCalendar', new window.Pikaday(pikadayConfig));
@@ -95,13 +109,13 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
         set(this, 'calendarClass', calendarButtonClass);
       });
     }
-  }),
+  },
 
   _getDateFormat() {
     return getWithDefault(this, 'format', configuration.getDateConfig().format);
   },
 
-  showCalendarButton: Ember.computed('showOn', function() {
+  showCalendarButton: computed('showOn', function() {
     let showOn = this._getShowOn();
     if (showOn === 'button' || showOn === 'both') {
       return true;
@@ -109,18 +123,19 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     return false;
   }),
 
-  desktopTextColorObserver: Ember.on('init', Ember.observer('desktopValue', function() {
-    Ember.run.scheduleOnce('afterRender', this, function() {
+// eslint-disable-next-line ember/no-on-calls-in-components
+  desktopTextColorObserver: on('init', observer('desktopValue', function() {
+    scheduleOnce('afterRender', this, function() {
       if (isEmpty(get(this, 'desktopValue'))) {
-        Ember.$(this.element).find('.desktop-input').addClass('desktop-input-empty');
+        $(this.element).find('.desktop-input').addClass('desktop-input-empty');
       } else {
-        Ember.$(this.element).find('.desktop-input').removeClass('desktop-input-empty');
+        $(this.element).find('.desktop-input').removeClass('desktop-input-empty');
       }
     });
   })),
 
 
-  desktopValue: Ember.computed('value', {
+  desktopValue: computed('value', {
     get() {
       let value = get(this, 'value');
       if (isNone(value)) {
@@ -140,9 +155,9 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     }
   }),
 
-  mobileValue: Ember.computed('value', {
+  mobileValue: computed('value', {
     get() {
-      if (Ember.isNone(get(this, 'value'))) {
+      if (isNone(get(this, 'value'))) {
         return null;
       }
       return moment(get(this, 'value')).format('YYYY-MM-DD');

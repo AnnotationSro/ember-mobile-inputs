@@ -1,14 +1,18 @@
-import Ember from 'ember';
 import layout from '../templates/components/mi-password';
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
-
-const {
-  get,
+import {
+  get
+} from '@ember/object';
+import {
   getWithDefault
-} = Ember;
+} from '@ember/object';
+import Component from '@ember/component';
+import {
+  computed
+} from '@ember/object';
 
 
-export default Ember.Component.extend(MobileInputComponentMixin, {
+export default Component.extend(MobileInputComponentMixin, {
   layout,
   tagName: 'span',
   onValueChanged() {},
@@ -19,7 +23,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
     this.oldValue = this.value;
   },
 
-  placeholder: Ember.computed('formattedPlaceholder', 'disabled', function() {
+  placeholder: computed('formattedPlaceholder', 'disabled', function() {
     if (get(this, 'disabled')) {
       return "";
     } else {

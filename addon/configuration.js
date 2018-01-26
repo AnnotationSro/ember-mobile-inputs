@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { copy } from '@ember/object/internals';
 
 let CONFIG_PROPERTIES = {
   eventOnBlurChanged: false,
@@ -23,23 +24,23 @@ let CONFIG_PROPERTIES = {
 
 export default {
   load(config) {
-    CONFIG_PROPERTIES = Ember.$.extend(true, {}, CONFIG_PROPERTIES, config);
+    CONFIG_PROPERTIES = $.extend(true, {}, CONFIG_PROPERTIES, config);
   },
 
   getDateConfig(){
-    return Ember.copy(CONFIG_PROPERTIES.date);
+    return copy(CONFIG_PROPERTIES.date);
   },
 
   getNumberConfig(){
-    return Ember.copy(CONFIG_PROPERTIES.number);
+    return copy(CONFIG_PROPERTIES.number);
   },
 
   getTextConfig(){
-    return Ember.copy(CONFIG_PROPERTIES.text);
+    return copy(CONFIG_PROPERTIES.text);
   },
 
   getPasswordConfig() {
-    return Ember.copy(CONFIG_PROPERTIES.password);
+    return copy(CONFIG_PROPERTIES.password);
   },
 
   getConfig(){
