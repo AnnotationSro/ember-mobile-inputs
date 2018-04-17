@@ -28,7 +28,6 @@ export default Ember.Component.extend({
 	selectOnClick: null,
 
   onValueChanged() {},
-  onCheckLength() {},
   onBlurChanged: null,
 
 	//number input
@@ -99,7 +98,6 @@ export default Ember.Component.extend({
 	willDestroyElement: function() {
 		this._super(...arguments);
 		let $input = Ember.$(this.element).find('input');
-		console.log($input);
 		$input.off(`focus.ember-mobile-input--${this.elementId}`);
 		$input.off(`blur.ember-mobile-input--${this.elementId}`);
 	},

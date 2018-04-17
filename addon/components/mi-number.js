@@ -35,7 +35,6 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   min: null,
   max: null,
   onValueChanged() {},
-  onCheckLength() {},
 
 
   _getDecimalMark() {
@@ -182,10 +181,8 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       //  Ember.$(this.element).find('input').val(value);
       //  }
     },
-    checkLength(newValue) {
+    checkRange(newValue) {
       let value =  this.rangeCheckValue(newValue);
-
-      // this.get('onCheckLength')(value);
       this.set('value', value);
     }
   }
