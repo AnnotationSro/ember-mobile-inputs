@@ -121,7 +121,7 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   rangeCheckValue(valueArg) {
-    if (isNone(valueArg)) {
+    if (isNone(valueArg) || valueArg < 0) {
       return 0;
     }
 
@@ -143,8 +143,11 @@ export default Component.extend(MobileInputComponentMixin, {
   stringToFloat(value) {
     if (isNone(value)) {
       return 0;
+    } else if(value === "-") {
+      return "-";
+    } else {
+      return parseFloat(value.replace(/[\\.,]/, '.'));
     }
-    return parseFloat(value.replace(/[\\.,]/, '.'));
   },
 
   didInsertElement: function() {
