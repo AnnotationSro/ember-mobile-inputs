@@ -27,13 +27,14 @@ export default Ember.Component.extend({
 	disabled: false,
 	selectOnClick: null,
 
-	onValueChanged() {},
-	onBlurChanged: null,
+  onValueChanged() {},
+  onCheckLength() {},
+  onBlurChanged: null,
 
 	//number input
 	min: null,
-	max: null,
-	step: null,
+  max: null,
+  step: null,
 
 	//internals
 	mobileInputVisible: false,
@@ -93,7 +94,6 @@ export default Ember.Component.extend({
 
 			});
 		}
-
 	},
 
 	willDestroyElement: function() {

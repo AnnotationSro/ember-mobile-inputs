@@ -35,6 +35,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
   min: null,
   max: null,
   onValueChanged() {},
+  onCheckLength() {},
 
 
   _getDecimalMark() {
@@ -129,10 +130,7 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    let {
-      min,
-      max
-    } = this.getProperties('min', 'max');
+    let { min, max } = this.getProperties('min', 'max');
     if (isPresent(min) && value < min) {
       return min;
     }
@@ -183,6 +181,12 @@ export default Ember.Component.extend(MobileInputComponentMixin, {
       //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
       //  Ember.$(this.element).find('input').val(value);
       //  }
+    },
+    checkLength(newValue) {
+      let value =  this.rangeCheckValue(newValue);
+
+      // this.get('onCheckLength')(value);
+      this.set('value', value);
     }
   }
 });
