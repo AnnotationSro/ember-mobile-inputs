@@ -3,6 +3,6 @@
   "dependencies": {
     "pikaday": "^1.6.1",
     "moment": ">= 2.8.0",
-    "jquery.inputmask": "3.3.6"
+    "jquery.inputmask": "3.3.11"
   }
 }

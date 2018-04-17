@@ -74,8 +74,8 @@ test('number input - dot separator - invalid input', function (assert) {
 
   andThen(() => fillIn(NUMBER_INPUT_DOT, '12,5'));
   andThen(() => {
-    assert.equal(findWithAssert(NUMBER_INPUT_DOT).val(), '125', 'should update `input` value');
-    assert.equal(findWithAssert('#numberResultDot').text().trim(), '125', 'should update `numberResultDot` oninput or onchange');
+    assert.equal(findWithAssert(NUMBER_INPUT_DOT).val(), '12.5', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultDot').text().trim(), '12.5', 'should update `numberResultDot` oninput or onchange');
   });
 });
 
