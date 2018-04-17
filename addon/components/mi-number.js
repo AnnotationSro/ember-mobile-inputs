@@ -130,10 +130,7 @@ export default Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    let {
-      min,
-      max
-    } = this.getProperties('min', 'max');
+    let { min, max } = this.getProperties('min', 'max');
     if (isPresent(min) && value < min) {
       return min;
     }
@@ -184,6 +181,10 @@ export default Component.extend(MobileInputComponentMixin, {
       //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
       //  $(this.element).find('input').val(value);
       //  }
+    },
+    checkRange(newValue) {
+      let value =  this.rangeCheckValue(newValue);
+      this.set('value', value);
     }
   }
 });
