@@ -121,7 +121,7 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   rangeCheckValue(valueArg) {
-    if (isNone(valueArg) || valueArg < 0) {
+    if (isNone(valueArg)) {
       return 0;
     }
 
