@@ -1,5 +1,6 @@
-import {test, skip} from "qunit";
+import {test} from "qunit";
 import moduleForAcceptance from "../../tests/helpers/module-for-acceptance";
+import $ from 'jquery';
 
 const NUMBER_INPUT = '#numberInput input';
 const NUMBER_INPUT_MINMAX = '#minMaxNumberInput input';
@@ -28,10 +29,11 @@ test('number input - valid input', function (assert) {
   });
 });
 
-skip('number input - valid input - max value', function (assert) {
+test('number input - valid input - max value', function (assert) {
   visit('/');
 
   andThen(() => fillIn(NUMBER_INPUT_MINMAX, 456));
+  andThen(() => $('input').trigger('blur'));
   andThen(() => {
     assert.equal(findWithAssert(NUMBER_INPUT_MINMAX).val(), 10, 'should update `input` value');
     assert.equal(findWithAssert('#numberResult').text().trim(), '10', 'should update `minMaxNumberResult` oninput or onchange');
@@ -39,10 +41,11 @@ skip('number input - valid input - max value', function (assert) {
 });
 
 
-skip('number input - valid input - min value', function (assert) {
+test('number input - valid input - min value', function (assert) {
   visit('/');
 
   andThen(() => fillIn(NUMBER_INPUT_MINMAX, -100));
+  andThen(() => $('input').trigger('blur'));
   andThen(() => {
     assert.equal(findWithAssert(NUMBER_INPUT_MINMAX).val(), 0, 'should update `input` value');
     assert.equal(findWithAssert('#numberResult').text().trim(), '0', 'should update `minMaxNumberResult` oninput or onchange');
