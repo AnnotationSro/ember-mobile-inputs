@@ -143,8 +143,11 @@ export default Component.extend(MobileInputComponentMixin, {
   stringToFloat(value) {
     if (isNone(value)) {
       return 0;
+    } else if(value === "-") {
+      return "-";
+    } else {
+      return parseFloat(value.replace(/[\\.,]/, '.'));
     }
-    return parseFloat(value.replace(/[\\.,]/, '.'));
   },
 
   didInsertElement: function() {
