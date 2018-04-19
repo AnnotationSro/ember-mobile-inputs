@@ -27,10 +27,10 @@ module.exports = {
         'tests/dummy/config/**/*.js'
       ],
       excludedFiles: [
-        'app/**',
         'addon/**',
-        'tests/dummy/app/**',
         'addon-test-support/**',
+        'app/**',
+        'tests/dummy/app/**'
       ],
       parserOptions: {
         sourceType: 'script',
