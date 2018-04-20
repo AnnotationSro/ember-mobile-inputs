@@ -2,7 +2,7 @@
   <input class="desktop-input" value={{formatOnDisabledValue}} disabled=true>
 {{else}}
   {{#if mobileInputVisible}}
-    {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder min=min max=max}}
+    {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder min=min max=max autocomplete=autocomplete}}
   {{else}}
     <span {{action "inputClicked"}}>
       <input class="desktop-input"
@@ -13,6 +13,7 @@
       max={{max}}
       oninput={{action "valueChanged" value="target.value"}}
       onblur={{action "checkRange" value="target.value"}}
+      autocomplete={{autocomplete}}
       >
     </span>
   {{/if}}

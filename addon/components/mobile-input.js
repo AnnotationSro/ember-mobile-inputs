@@ -41,6 +41,7 @@ export default Component.extend({
   value: null,
   disabled: false,
   selectOnClick: null,
+  autocomplete: 'on',
 
   onValueChanged() {},
   onBlurChanged: null,
