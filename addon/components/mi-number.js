@@ -15,6 +15,7 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { and } from '@ember/object/computed';
 import $ from 'jquery';
+import {schedule} from '@ember/runloop';
 
 function groupNumber(nStr) {
     nStr += '';
@@ -186,8 +187,10 @@ export default Component.extend(MobileInputComponentMixin, {
       //  }
     },
     checkRange(newValue) {
-      let value =  this.rangeCheckValue(newValue);
-      this.set('value', value);
+      schedule('sync', () => {
+        let value =  this.rangeCheckValue(newValue);
+        this.set('value', value);
+      });
     }
   }
 });
