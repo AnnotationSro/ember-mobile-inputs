@@ -111,6 +111,10 @@ export default Component.extend({
 
         }
 
+        if (typeof this.get('onBlur') === 'function') {
+          this.get('onBlur')();
+        }
+
       });
     }
 

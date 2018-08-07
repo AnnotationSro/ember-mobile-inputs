@@ -40,7 +40,7 @@ export default Component.extend(MobileInputComponentMixin, {
   pikadayCalendar: null,
   onValueChanged() {},
   onBlurChanged() {},
-
+  onBlur() {},
 
   _getShowOn() {
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);

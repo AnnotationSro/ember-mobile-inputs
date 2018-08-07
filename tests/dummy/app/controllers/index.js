@@ -39,6 +39,10 @@ export default Controller.extend({
 
     onBlurChanged(newValue, oldValue) {
       window.console.log(`newValue: ${newValue}, oldValue: ${oldValue}`);
-    }
+    },
+    onBlur() {
+      window.console.log('blurred input');
+    },
+
   }
 });
