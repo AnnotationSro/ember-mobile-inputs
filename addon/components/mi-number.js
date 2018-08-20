@@ -47,16 +47,19 @@ export default Component.extend(MobileInputComponentMixin, {
     let decimalMarkPattern;
     switch (this._getDecimalMark()) {
       case 'dot':
-        decimalMarkPattern = '\\.';
+        decimalMarkPattern = '\\.?';
         break;
       case 'comma':
-        decimalMarkPattern = ',';
+        decimalMarkPattern = ',?';
+        break;
+      case 'none':
+        decimalMarkPattern = '';
         break;
       default: //'both' option or default
-        decimalMarkPattern = '[\\.,]';
+        decimalMarkPattern = '[\\.,]?';
         break;
     }
-    return `-?[0-9]*${decimalMarkPattern}?[0-9]*`;
+    return `-?[0-9]*${decimalMarkPattern}[0-9]*`;
   },
 
   _decimalMarkToChar() {
@@ -93,6 +96,9 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   replaceDecimalMark(value){
+    if (this._getDecimalMark() === 'none'){
+      return value;
+    }
     return String(value).replace(/[\\.,]/, this._decimalMarkToChar());
   },
 

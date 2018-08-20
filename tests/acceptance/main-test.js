@@ -13,6 +13,7 @@ const CUSTOM_DATE_INPUT = '#customDateInput input';
 const DATE_INPUT_SHOWON_BOTH = '#bothDateInput';
 const DATE_INPUT_SHOWON_BUTTON = '#buttonDateInput';
 const DATE_INPUT_SHOWON_INPUT = '#inputDateInput';
+//const NUMBER_INPUT_DECIMAL_ONLY = '#numberInputDecimalOnly';
 
 
 moduleForAcceptance('Acceptance | main', {
@@ -101,6 +102,28 @@ test('number input - comma separator - invalid input', function (assert) {
     assert.equal(findWithAssert('#numberResultComma').text().trim(), '125', 'should update `numberResultComma` oninput or onchange');
   });
 });
+
+/*
+test('number input - decimalMark=none - test 1', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_DECIMAL_ONLY, '12.5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_DECIMAL_ONLY).val(), '125', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultDecimalOnly').text().trim(), '125', 'should update `numberResultDecimalOnly` oninput or onchange');
+  });
+});
+
+test('number input - decimalMark=none - test 2', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(NUMBER_INPUT_DECIMAL_ONLY, '12,5'));
+  andThen(() => {
+    assert.equal(findWithAssert(NUMBER_INPUT_DECIMAL_ONLY).val(), '125', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResultDecimalOnly').text().trim(), '125', 'should update `numberResultDecimalOnly` oninput or onchange');
+  });
+});
+*/
 
 test('text input - valid input', function (assert) {
   visit('/');

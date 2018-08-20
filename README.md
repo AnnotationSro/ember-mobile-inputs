@@ -33,6 +33,7 @@ You can customize the decimal point mark - whether to use comma or dot or both. 
 * _comma_
 * _dot_
 * _both_
+* _none_
 
 ### Text
 ```

@@ -46,6 +46,12 @@
   <span id="numberResultNull">{{nullValue}}</span>
 </div>
 
+<h4>Decimal values ony (decimalMark='none')</h4>
+<div>
+  {{mobile-input id="numberInputDecimalOnly" type='number' decimalMark='none' value=valueNumberDecimal disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
+  <span id="numberResultDecimalOnly">{{valueNumberDecimal}}</span>
+</div>
+
 <h2>Text</h2>
 <div>
   {{mobile-input id="textInput" selectOnClick=true type='text' value=valueText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
