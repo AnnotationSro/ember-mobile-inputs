@@ -35,6 +35,8 @@ You can customize the decimal point mark - whether to use comma or dot or both. 
 * _both_
 * _none_
 
+You can limit number to be positive only by parameter `allowNegative=false`.
+
 ### Text
 ```
 {{mobile-input id="textInput" type='text' value=valueText disabled=isDisabled onValueChanged=(action 'callback')}}

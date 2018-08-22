@@ -5,28 +5,46 @@ import {
 } from "../utils/mobile-utils";
 import configuration from "../configuration";
 
-import { get } from '@ember/object';
-import { set } from '@ember/object';
-import { isNone } from '@ember/utils';
-import { isPresent } from '@ember/utils';
-import { getWithDefault } from '@ember/object';
+import {
+  get
+} from '@ember/object';
+import {
+  set
+} from '@ember/object';
+import {
+  isNone
+} from '@ember/utils';
+import {
+  isPresent
+} from '@ember/utils';
+import {
+  getWithDefault
+} from '@ember/object';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { and } from '@ember/object/computed';
+import {
+  computed
+} from '@ember/object';
+import {
+  isEmpty
+} from '@ember/utils';
+import {
+  and
+} from '@ember/object/computed';
 import $ from 'jquery';
-import {schedule} from '@ember/runloop';
+import {
+  schedule
+} from '@ember/runloop';
 
 function groupNumber(nStr) {
-    nStr += '';
-    let x = nStr.split('.');
-    let x1 = x[0];
-    let x2 = x.length > 1 ? '.' + x[1] : '';
-    let rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
-    }
-    return x1 + x2;
+  nStr += '';
+  let x = nStr.split('.');
+  let x1 = x[0];
+  let x2 = x.length > 1 ? '.' + x[1] : '';
+  let rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+  }
+  return x1 + x2;
 }
 
 export default Component.extend(MobileInputComponentMixin, {
@@ -59,7 +77,8 @@ export default Component.extend(MobileInputComponentMixin, {
         decimalMarkPattern = '[\\.,]?';
         break;
     }
-    return `-?[0-9]*${decimalMarkPattern}[0-9]*`;
+    let allowNegative = this.get('allowNegative');
+    return `${allowNegative ? '-?' : ''}[0-9]*${decimalMarkPattern}[0-9]*`;
   },
 
   _decimalMarkToChar() {
@@ -73,13 +92,13 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  formatOnDisabled: computed(function(){
-      return configuration.getNumberConfig().formatOnDisabled;
+  formatOnDisabled: computed(function() {
+    return configuration.getNumberConfig().formatOnDisabled;
   }),
 
-  formatOnDisabledValue: computed('value', function(){
+  formatOnDisabledValue: computed('value', function() {
     let value = this.get('value');
-    if (isEmpty(value)){
+    if (isEmpty(value)) {
       return null;
     }
     return this.replaceDecimalMark(groupNumber(value.toFixed(2)));
@@ -95,8 +114,8 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
-  replaceDecimalMark(value){
-    if (this._getDecimalMark() === 'none'){
+  replaceDecimalMark(value) {
+    if (this._getDecimalMark() === 'none') {
       return value;
     }
     return String(value).replace(/[\\.,]/, this._decimalMarkToChar());
@@ -137,7 +156,10 @@ export default Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    let { min, max } = this.getProperties('min', 'max');
+    let {
+      min,
+      max
+    } = this.getProperties('min', 'max');
     if (isPresent(min) && value < min) {
       return min;
     }
@@ -150,7 +172,7 @@ export default Component.extend(MobileInputComponentMixin, {
   stringToFloat(value) {
     if (isNone(value)) {
       return 0;
-    } else if(value === "-") {
+    } else if (value === "-") {
       return "-";
     } else {
       return parseFloat(value.replace(/[\\.,]/, '.'));
@@ -194,7 +216,7 @@ export default Component.extend(MobileInputComponentMixin, {
     },
     checkRange(newValue) {
       schedule('sync', () => {
-        let value =  this.rangeCheckValue(newValue);
+        let value = this.rangeCheckValue(newValue);
         this.set('value', value);
       });
     }

@@ -50,6 +50,7 @@ export default Component.extend({
   min: null,
   max: null,
   step: null,
+  allowNegative: true,
 
   //internals
   mobileInputVisible: false,
