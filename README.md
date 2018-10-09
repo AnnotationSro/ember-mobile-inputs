@@ -3,7 +3,7 @@
 DEMO: http://annotationsro.github.io/ember-mobile-inputs/
 
 # Ember-mobile-inputs
- aadad   
+ aadad   final
 HTML 5 introduced input types that are really great for mobile devices, but not that great for the good old desktops.
 Mainly because every browser implements it in a little bit different way (speaking of UI), which is sometimes not that great (e.g. number input in Firefox on Windows
 is simply disgusting...). And of course they are sometimes a little bit buggy (looking at you Firefox....)
