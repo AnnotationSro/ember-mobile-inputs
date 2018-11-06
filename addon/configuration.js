@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { copy } from '@ember/object/internals';
 
 let CONFIG_PROPERTIES = {
   eventOnBlurChanged: false,
@@ -21,6 +20,10 @@ let CONFIG_PROPERTIES = {
     selectOnClick: false
   }
 };
+
+function copy(data){
+  return JSON.parse(JSON.stringify(data));
+}
 
 export default {
   load(config) {

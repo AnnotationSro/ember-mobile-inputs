@@ -203,6 +203,7 @@ export default Component.extend(MobileInputComponentMixin, {
       }
       if (newValue === '') {
         this.set('value', null);
+        this.get('onValueChanged')(null);
         return;
       }
       // let value =  this.rangeCheckValue(newValue);
