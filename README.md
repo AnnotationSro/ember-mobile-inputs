@@ -22,6 +22,8 @@ Requires Ember >= 2.15.0 because of Ember.assign - or [use a shim](https://githu
 ember install ember-mobile-inputs
 ```
 
+This addon uses JQuery, so do not forget to add it to your application via [ember-jquery](https://github.com/emberjs/ember-jquery).
+
 # Usage
 
 ### Number
@@ -83,6 +85,7 @@ ENV['ember-mobile-inputs'] = {
   }
 }
 ```
+
 
 For more Pikaday (calendar popup) configuration information, please have a look at the [Pikaday guide](https://github.com/dbushell/Pikaday#configuration).
 You can use any configuration parameter, except _onSelect_ and _field_ that are used internally by this addon.

@@ -1,10 +1,10 @@
 {{#if showFormatDisabledInput}}
-  <input class="desktop-input" value={{formatOnDisabledValue}} disabled=true>
+  <input class="desktop-input" value={{formatOnDisabledValue}} disabled="true">
 {{else}}
   {{#if mobileInputVisible}}
     {{input class="native-input number-input" value=desktopValue type="number" disabled=disabled placeholder=placeholder min=min max=max autocomplete=autocomplete}}
   {{else}}
-    <span {{action "inputClicked"}}>
+    <span {{action "inputClicked"}} role="button">
       <input class="desktop-input"
       value={{desktopValue}}
       disabled={{disabled}}

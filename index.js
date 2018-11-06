@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-mobile-inputs',
+  name: require('./package').name,
 
   included: function(app) {
     this._super.included(app);

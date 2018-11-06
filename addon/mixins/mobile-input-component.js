@@ -1,4 +1,4 @@
-import {isTouchDevice} from '../utils/mobile-utils';
+import { isTouchDevice } from '../utils/mobile-utils';
 import { get } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import { scheduleOnce } from '@ember/runloop';

@@ -27,7 +27,7 @@ import {
   assign
 } from '@ember/polyfills';
 import Component from '@ember/component';
-import {on} from '@ember/object/evented';
+import { on } from '@ember/object/evented';
 
 
 export default Component.extend(MobileInputComponentMixin, {
