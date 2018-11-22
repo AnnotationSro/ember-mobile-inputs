@@ -8,6 +8,7 @@ const NUMBER_INPUT_MINMAX = '#minMaxNumberInput input';
 const NUMBER_INPUT_COMMA = '#numberInputComma input';
 const NUMBER_INPUT_DOT = '#numberInputDot input';
 const TEXT_INPUT = '#textInput input';
+const TEXT_INPUT_REGEX = '#textInputRegex input';
 const DATE_INPUT = '#dateInput input';
 const CUSTOM_DATE_INPUT = '#customDateInput input';
 const DATE_INPUT_SHOWON_BOTH = '#bothDateInput';
@@ -132,6 +133,16 @@ test('text input - valid input', function (assert) {
   andThen(() => {
     assert.equal(findWithAssert(TEXT_INPUT).val(), 'hello', 'should update `input` value');
     assert.equal(findWithAssert('#textResult').text().trim(), 'hello', 'should update `textResult` oninput or onchange');
+  });
+});
+
+test('text input - pattern', function (assert) {
+  visit('/');
+
+  andThen(() => fillIn(TEXT_INPUT_REGEX, '123456798'));
+  andThen(() => {
+    assert.equal(findWithAssert(TEXT_INPUT_REGEX).val(), '12345', 'should update `input` value');
+    assert.equal(findWithAssert('#textRegexResult').text().trim(), '12345', 'should update `textRegexResult` oninput or onchange');
   });
 });
 

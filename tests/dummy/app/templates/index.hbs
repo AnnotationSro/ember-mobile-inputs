@@ -64,6 +64,12 @@
   <span id="textResult">{{valueText}}</span>
 </div>
 
+<h4>Text with regex (5 digits)</h4>
+<div>
+  {{mobile-input id="textInputRegex" pattern="[0-9]{5}" selectOnClick=true type='text' value=valueRegexText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="textRegexResult">{{valueRegexText}}</span>
+</div>
+
 <h2>Password</h2>
 <div>
   {{mobile-input id="passInput" selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}

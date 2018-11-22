@@ -43,6 +43,9 @@ You can limit number to be positive only by parameter `allowNegative=false`.
 ```
 {{mobile-input id="textInput" type='text' value=valueText disabled=isDisabled onValueChanged=(action 'callback')}}
 ```
+
+You can also define regex pattern for text input fields using `pattern` attribute.
+
 ### Password
 ```
 {{mobile-input id="passInput" type='password' value=valuePass disabled=isDisabled onValueChanged=(action 'callback')}}

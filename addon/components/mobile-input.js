@@ -46,6 +46,9 @@ export default Component.extend({
   onValueChanged() {},
   onBlurChanged: null,
 
+  //text input
+  pattern: null,
+
   //number input
   min: null,
   max: null,
