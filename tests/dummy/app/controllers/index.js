@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
-import { inject } from '@ember/service';
+import {
+  inject
+} from '@ember/service';
 
 export default Controller.extend({
   valueNumber: null,
@@ -22,8 +24,11 @@ export default Controller.extend({
       window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
     });
 
+    let date = new Date();
+    date.setDate(date.getDate() + 2);
+
     this.set('dateOptions', {
-      maxDate: new Date()
+      maxDate: date
     });
   },
 

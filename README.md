@@ -69,7 +69,7 @@ With custom format
 
 # Configuration
 
-You can add a global configuration into your _config/enbironment.js_ file:
+You can add a global configuration into your _config/environment.js_ file:
 ```
 ENV['ember-mobile-inputs'] = {
   date:{
