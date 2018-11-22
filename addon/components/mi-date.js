@@ -88,7 +88,7 @@ export default Component.extend(MobileInputComponentMixin, {
       flatpickrConfig.onChange = function(date) {
         run(function() {
           set(that, 'value', date[0]);
-          that.onValueChanged(date);
+          that.onValueChanged(date[0]);
         });
       };
       flatpickrConfig.dateFormat = format;
