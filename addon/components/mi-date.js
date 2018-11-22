@@ -20,17 +20,14 @@ import {
   getWithDefault
 } from '@ember/object';
 import {
-  run,
-  scheduleOnce
+  run, scheduleOnce
 } from '@ember/runloop';
 import $ from 'jquery';
 import {
   assign
 } from '@ember/polyfills';
 import Component from '@ember/component';
-import {
-  on
-} from '@ember/object/evented';
+import { on } from '@ember/object/evented';
 
 
 export default Component.extend(MobileInputComponentMixin, {
@@ -40,7 +37,7 @@ export default Component.extend(MobileInputComponentMixin, {
 
   mobileInputVisible: false,
   showOn: null, //input, button, both, none
-  flatpickrCalendar: null,
+  pikadayCalendar: null,
   onValueChanged() {},
   onBlurChanged() {},
   onBlur() {},
@@ -53,7 +50,7 @@ export default Component.extend(MobileInputComponentMixin, {
     let $input = $(this.element).find('.desktop-input');
 
     if (this.get('disabled')) {
-      get(this, 'flatpickrCalendar').close();
+      get(this, 'pikadayCalendar').hide();
       if (isNone(get(this, 'value'))) {
         $input.inputmask('remove');
       }
@@ -84,34 +81,26 @@ export default Component.extend(MobileInputComponentMixin, {
       }
 
       let that = this;
-      let flatpickrConfig = configuration.getDateConfig();
-      flatpickrConfig.onChange = function(date) {
+      let pikadayConfig = configuration.getDateConfig();
+      pikadayConfig.onSelect = function(date) {
         run(function() {
-          set(that, 'value', date[0]);
-          that.onValueChanged(date[0]);
+          set(that, 'value', date);
+          that.onValueChanged(date);
         });
       };
-      flatpickrConfig.dateFormat = format;
-      flatpickrConfig.field = $input[0];
-      flatpickrConfig.clickOpens = false;
-      flatpickrConfig.locale = "sk";
+      pikadayConfig.format = format;
+      pikadayConfig.field = $input[0];
 
       if (this._getShowOn() === 'button') {
-        flatpickrConfig.clickOpens = false;
-      } else {
-        flatpickrConfig.clickOpens = true;
-      }
-
-      if (this._getShowOn() === 'button') {
-        flatpickrConfig.trigger = $(this.element).find('.calendar-button')[0];
+        pikadayConfig.trigger = $(this.element).find('.calendar-button')[0];
       }
 
       let options = this.get('options');
       if (isPresent(options)) {
-        assign(flatpickrConfig, options);
+        assign(pikadayConfig, options);
       }
 
-      set(this, 'flatpickrCalendar', window.flatpickr($input[0], flatpickrConfig));
+      set(this, 'pikadayCalendar', new window.Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function() {
         let {
@@ -134,7 +123,7 @@ export default Component.extend(MobileInputComponentMixin, {
     return false;
   }),
 
-  // eslint-disable-next-line ember/no-on-calls-in-components
+// eslint-disable-next-line ember/no-on-calls-in-components
   desktopTextColorObserver: on('init', observer('desktopValue', function() {
     scheduleOnce('afterRender', this, function() {
       if (isEmpty(get(this, 'desktopValue'))) {
@@ -191,8 +180,8 @@ export default Component.extend(MobileInputComponentMixin, {
   actions: {
     actionCalendarButton() {
       if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
-        let calendar = get(this, 'flatpickrCalendar');
-        calendar.open();
+        let calendar = get(this, 'pikadayCalendar');
+        calendar.show();
       }
     }
   }
