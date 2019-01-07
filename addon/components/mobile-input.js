@@ -84,11 +84,13 @@ export default Component.extend({
       $input.on(`focus.ember-mobile-input--${this.elementId}`, function() {
 
         if (that._getSelectOnClick() === true) {
-          try {
-            this.setSelectionRange(0, this.value.length);
-          } catch (e) {
-            //this does not work on email input: "The input element's type ('email') does not support selection."
-          }
+          setTimeout(()=>{
+            try {
+              this.setSelectionRange(0, this.value.length);
+            } catch (e) {
+              //this does not work on email input: "The input element's type ('email') does not support selection."
+            }
+          });
         }
 
         if (isPresent(that.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
