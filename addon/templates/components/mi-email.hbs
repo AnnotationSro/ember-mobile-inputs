@@ -1,1 +1,11 @@
-{{input class="native-input email-input" value=value type="email" disabled=disabled placeholder=placeholder key-up=(action 'onKeyUp') autocomplete=autocomplete}}
+{{html-input
+  class="native-input
+  email-input"
+  value=value
+  type="email"
+  disabled=disabled
+  placeholder=placeholder
+  key-up=(action 'onKeyUp')
+  autocomplete=autocomplete
+  dataInput=dataInput
+}}

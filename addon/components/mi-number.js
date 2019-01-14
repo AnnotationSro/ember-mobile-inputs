@@ -216,7 +216,7 @@ export default Component.extend(MobileInputComponentMixin, {
       //  }
     },
     checkRange(newValue) {
-      schedule('sync', () => {
+      schedule('actions', () => {
         let value = this.rangeCheckValue(newValue);
         this.set('value', value);
       });

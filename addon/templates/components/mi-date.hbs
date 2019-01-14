@@ -1,16 +1,18 @@
 {{#if mobileInputVisible}}
-  {{input
+  {{html-input
     class="native-input date-input"
     value=mobileValue
     type="date"
     min="1970-01-01"
     max="9999-01-01"
     disabled=disabled
-    autocomplete=autocomplete}}
+    autocomplete=autocomplete
+    dataInput=dataInput
+  }}
 {{else}}
 
   <div class="date-input" {{action 'inputClicked'}} role="button">
-    {{input class="desktop-input" value=desktopValue disabled=disabled autocomplete=autocomplete}}
+    {{html-input class="desktop-input" value=desktopValue disabled=disabled autocomplete=autocomplete dataInput=dataInput}}
     {{#if showCalendarButton}}
       <button class="calendar-button" disabled={{disabled}} {{action 'actionCalendarButton'}} tabindex="-1"><i class={{calendarClass}}></i></button>
     {{/if}}

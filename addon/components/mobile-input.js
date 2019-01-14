@@ -54,6 +54,7 @@ export default Component.extend({
   max: null,
   step: null,
   allowNegative: true,
+  dataInput: null, //json, e.g: {a:1,b:2} will become => <input data-a=1 data-b=2 />
 
   //internals
   mobileInputVisible: false,

@@ -2,7 +2,8 @@
 
 <h2>Email</h2>
 <div>
-  {{mobile-input id="emailInput" selectOnClick=true type='email' value=valueEmail disabled=disabled placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="emailInput"
+  dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=valueEmail disabled=disabled placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="emailResult">{{valueEmail}}</span>
 </div>
 
@@ -12,7 +13,7 @@
 
 <h4>Default settings (comma and dot are allowed as decimal mark)</h4>
 <div>
-  {{mobile-input id="numberInput" type='number' value=valueNumber disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
+  {{mobile-input id="numberInput" dataInput='{"a":1, "b":2}' type='number' value=valueNumber disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
   <span id="numberResult">{{valueNumber}}</span>
 </div>
 
@@ -60,7 +61,7 @@
 
 <h2>Text</h2>
 <div>
-  {{mobile-input id="textInput" selectOnClick=true type='text' value=valueText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="textInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='text' value=valueText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="textResult">{{valueText}}</span>
 </div>
 
@@ -72,7 +73,7 @@
 
 <h2>Password</h2>
 <div>
-  {{mobile-input id="passInput" selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="passInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="passResult">{{valuePass}}</span>
 </div>
 
@@ -81,7 +82,7 @@
 
 <h4>Opens calendar on button click or input focus</h4>
 <div>
-  {{mobile-input id="dateInput" type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
+  {{mobile-input id="dateInput" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
   <span id="dateResult">{{valueDate}}</span>
 </div>
 
