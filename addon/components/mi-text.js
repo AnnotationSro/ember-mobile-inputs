@@ -8,7 +8,7 @@ import {
 } from '@ember/object';
 import Component from '@ember/component';
 import {
-  computed
+  computed, observer
 } from '@ember/object';
 import {
   isPresent
@@ -29,9 +29,13 @@ export default Component.extend(MobileInputComponentMixin, {
 
   didInsertElement() {
     this._super(...arguments);
-    if (isPresent(this.get('pattern'))) {
+    this.initPattern();
+  },
 
-      let $input = $(this.element).find('input');
+  initPattern(){
+    let $input = $(this.element).find('input');
+    $input.inputmask('remove');
+    if (isPresent(this.get('pattern'))) {
 
       $input.inputmask({
         regex: this.get('pattern'),
@@ -43,6 +47,10 @@ export default Component.extend(MobileInputComponentMixin, {
       });
     }
   },
+
+  patternObserver: observer('pattern', function(){
+      this.initPattern();
+  }),
 
   placeholder: computed('formattedPlaceholder', 'disabled', function() {
     if (get(this, 'disabled')) {
