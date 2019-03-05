@@ -173,6 +173,7 @@ export default Component.extend(MobileInputComponentMixin, {
         set(this, 'value', formattedDate.toDate());
       }
       set(this, 'mobileInputVisible', false);
+      this.get('onValueChanged')(this.get('value'));
       return value;
     }
   }),
