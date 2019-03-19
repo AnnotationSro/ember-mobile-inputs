@@ -41,6 +41,7 @@ export default Component.extend(MobileInputComponentMixin, {
   onValueChanged() {},
   onBlurChanged() {},
   onBlur() {},
+  neverNative: false,
 
   _getShowOn() {
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
@@ -73,7 +74,10 @@ export default Component.extend(MobileInputComponentMixin, {
   },
 
   didInsertElement() {
-    if (!isTouchDevice()) {
+
+    let isNeverNative = getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
+
+    if (!isTouchDevice() || isNeverNative === true) {
       let $input = $(this.element).find('.desktop-input');
       let format = this._getDateFormat();
       if (!this.get('disabled')) {

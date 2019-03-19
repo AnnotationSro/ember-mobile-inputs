@@ -31,6 +31,9 @@ module.exports = function(environment) {
     },
     password: {
       selectOnClick: true
+    },
+    date:{
+      neverNative: true
     }
   };
 

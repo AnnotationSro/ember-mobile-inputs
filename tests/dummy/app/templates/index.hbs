@@ -3,17 +3,19 @@
 <h2>Email</h2>
 <div>
   {{mobile-input id="emailInput"
-  dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=valueEmail disabled=disabled placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=valueEmail disabled=disabled
+  placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="emailResult">{{valueEmail}}</span>
 </div>
 
 <button {{action 'toggleDisabled'}}>Toggle disabled</button>
 
 <h2>Number</h2>
-
+<div id="test"></div>
 <h4>Default settings (comma and dot are allowed as decimal mark)</h4>
 <div>
-  {{mobile-input id="numberInput" dataInput='{"a":1, "b":2}' type='number' value=valueNumber disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
+  {{mobile-input id="numberInput" dataInput='{"a":1, "b":2}' type='number' value=valueNumber disabled=disabled
+  onValueChanged=(action 'valueChanged') data-custom="world"}}
   <span id="numberResult">{{valueNumber}}</span>
 </div>
 
@@ -67,13 +69,15 @@
 
 <h4>Text with regex (5 digits)</h4>
 <div>
-  {{mobile-input id="textInputRegex" pattern="[0-9]{5}" selectOnClick=true type='text' value=valueRegexText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="textInputRegex" pattern="[0-9]{5}" selectOnClick=true type='text' value=valueRegexText
+  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="textRegexResult">{{valueRegexText}}</span>
 </div>
 
 <h2>Password</h2>
 <div>
-  {{mobile-input id="passInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='password' value=valuePass disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="passInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='password' value=valuePass
+   disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="passResult">{{valuePass}}</span>
 </div>
 
@@ -83,6 +87,12 @@
 <h4>Opens calendar on button click or input focus</h4>
 <div>
   {{mobile-input id="dateInput" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
+  <span id="dateResult">{{valueDate}}</span>
+</div>
+
+<h4>Never use native datepicker</h4>
+<div>
+  {{mobile-input id="dateInputNeverNative" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged') neverNative=true}}
   <span id="dateResult">{{valueDate}}</span>
 </div>
 

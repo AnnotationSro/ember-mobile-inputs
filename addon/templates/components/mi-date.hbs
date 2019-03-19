@@ -11,7 +11,7 @@
   }}
 {{else}}
 
-  <div class="date-input" {{action 'inputClicked'}} role="button">
+  <div class="date-input" {{action 'inputClicked' bubbles=false}} role="button">
     {{html-input class="desktop-input" value=desktopValue disabled=disabled autocomplete=autocomplete dataInput=dataInput}}
     {{#if showCalendarButton}}
       <button class="calendar-button" disabled={{disabled}} {{action 'actionCalendarButton'}} tabindex="-1"><i class={{calendarClass}}></i></button>
