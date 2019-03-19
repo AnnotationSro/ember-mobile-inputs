@@ -34,6 +34,9 @@ import $ from 'jquery';
 import {
   schedule
 } from '@ember/runloop';
+import {
+  inject
+} from '@ember/service';
 
 function groupNumber(nStr) {
   nStr += '';
@@ -49,6 +52,7 @@ function groupNumber(nStr) {
 
 export default Component.extend(MobileInputComponentMixin, {
   layout,
+  mobileInputEventBus: inject('mobile-input-event-bus'),
 
   mobileInputVisible: false,
   decimalMark: null, //comma, dot, both
@@ -182,6 +186,10 @@ export default Component.extend(MobileInputComponentMixin, {
   didInsertElement: function() {
     this._super(...arguments);
 
+    this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', (value) => {
+      this.set('mobileInputVisible', value);
+    });
+
     if (!isTouchDevice()) {
       let $input = $(this.element).find('.desktop-input');
       $input.inputmask({
@@ -193,6 +201,11 @@ export default Component.extend(MobileInputComponentMixin, {
         }
       });
     }
+  },
+
+  willDestroyElement(){
+    this._super(...arguments);
+    this.get('mobileInputEventBus').unsubscribe('mobileInputVisibleChanged');
   },
 
   actions: {

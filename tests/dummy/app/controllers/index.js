@@ -20,6 +20,7 @@ export default Controller.extend({
     this._super(...arguments);
     this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
       window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
+      alert('aa');
     });
 
     this.set('dateOptions', {

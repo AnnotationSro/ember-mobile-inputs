@@ -22,8 +22,7 @@ import {
 } from '@ember/utils';
 import $ from 'jquery';
 import {
-  scheduleOnce,
-  run
+  scheduleOnce, run
 } from '@ember/runloop';
 
 
@@ -105,42 +104,51 @@ export default Component.extend({
 
       });
 
-      var onBlur = () => {
-        if (that.get('value') !== that.get('valueOnFocus')) {
 
-          if (isPresent(that.get('onBlurChanged'))) {
-            //call the callback only if it exists - otherwise callback will be called and event will be fired as well
-            that.get('onBlurChanged')(that.get('value'), that.get('valueOnFocus'));
-          } else {
-            if (configuration.getConfig().eventOnBlurChanged === true) {
-              that.get('mobileInputEventBus').publish('blurChanged', that.get('value'), that.get('valueOnFocus'), that.element);
-            }
-          }
+      this.prepareForBlur();
 
-        }
-
-        if (typeof that.get('onBlur') === 'function') {
-          that.get('onBlur')();
-        }
-      }
-
-      $input.on(`input.ember-mobile-input--${this.elementId}`, () => {
-        this.initBlurListener($input, onBlur);
-      });
-
-      $input.on('touchend', () => {
-        // debugger;
-        setTimeout(() => {
-          scheduleOnce('afterRender', () => {
-            let $mobileInput = $(this.element).find('.native-input')
-            this.initBlurListener($mobileInput, onBlur);
-          });
-        }, 100);
-
-
-      })
     }
 
+  },
+
+  prepareForBlur(){
+    let $input = $(this.element).find('input');
+    let that = this;
+    var onBlur = () => {
+      if (that.get('value') !== that.get('valueOnFocus')) {
+
+        if (isPresent(that.get('onBlurChanged'))) {
+          //call the callback only if it exists - otherwise callback will be called and event will be fired as well
+          that.get('onBlurChanged')(that.get('value'), that.get('valueOnFocus'));
+        } else {
+          if (configuration.getConfig().eventOnBlurChanged === true) {
+            that.get('mobileInputEventBus').publish('blurChanged', that.get('value'), that.get('valueOnFocus'), that.element);
+          }
+        }
+
+      }
+
+      if (typeof that.get('onBlur') === 'function') {
+        that.get('onBlur')();
+      }
+    }
+
+    $input.on(`input.ember-mobile-input--${this.elementId}`, () => {
+      this.initBlurListener($input, onBlur);
+    });
+
+    $input.on('touchend', () => {
+      // debugger;
+      setTimeout(() => {
+        scheduleOnce('afterRender', () => {
+          let $mobileInput = $(this.element).find('.native-input');
+
+          this.initBlurListener($mobileInput, onBlur);
+        });
+      }, 1000);
+
+
+    });
   },
 
   initBlurListener($input, onBlur = () => {}) {
@@ -149,11 +157,16 @@ export default Component.extend({
     }
     this.set('_initBlurListenerInitialized', true);
     $($input).on('blur.ember-mobile-inputs-blur touchleave touchcancel', () => {
-      onBlur();
-      run(() => {
+      run(()=>{
         this.set('_initBlurListenerInitialized', false);
+        this.get('mobileInputEventBus').publish('mobileInputVisibleChanged', false);
         $($input).off('blur.ember-mobile-inputs-blur');
+        setTimeout(()=>{
+          this.prepareForBlur();
+        }, 500);
       });
+
+      onBlur();
 
     });
   },

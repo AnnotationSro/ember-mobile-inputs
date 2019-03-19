@@ -4,7 +4,7 @@
 <div>
   {{mobile-input id="emailInput"
   dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=valueEmail disabled=disabled
-  placeholder="Enter email here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  placeholder="Enter email here" onBlurChanged2=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="emailResult">{{valueEmail}}</span>
 </div>
 
@@ -63,7 +63,8 @@
 
 <h2>Text</h2>
 <div>
-  {{mobile-input id="textInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='text' value=valueText disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  {{mobile-input id="textInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='text' value=valueText
+  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="textResult">{{valueText}}</span>
 </div>
 
