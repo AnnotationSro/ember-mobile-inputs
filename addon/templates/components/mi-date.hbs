@@ -1,4 +1,4 @@
-{{#if mobileInputVisible}}
+{{#if (and mobileInputVisible (not isNeverNative))}}
   {{html-input
     class="native-input date-input"
     value=mobileValue

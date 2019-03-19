@@ -33,7 +33,7 @@ module.exports = function(environment) {
       selectOnClick: true
     },
     date:{
-      neverNative: true
+      neverNative: false
     }
   };
 
