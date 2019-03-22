@@ -7,7 +7,8 @@ let CONFIG_PROPERTIES = {
     calendarButtonClass: 'fa fa-calendar',
     format: 'DD.MM.YYYY',
     showOn: 'both',
-    neverNative: false
+    neverNative: false,
+    useCalendar: true
   },
   number:{
     decimalMark: 'both',

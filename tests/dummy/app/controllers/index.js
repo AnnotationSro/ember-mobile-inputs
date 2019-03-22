@@ -14,6 +14,7 @@ export default Controller.extend({
 
   valueNumberController: 4.5,
   mobileInputEventBus: inject('mobile-input-event-bus'),
+  mobileInputConfiguration: inject('mobile-input-configuration'),
 
 
   init() {
@@ -26,6 +27,7 @@ export default Controller.extend({
     this.set('dateOptions', {
       maxDate: new Date()
     });
+      // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },
 
   actions: {

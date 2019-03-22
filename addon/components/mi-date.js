@@ -20,14 +20,17 @@ import {
   getWithDefault
 } from '@ember/object';
 import {
-  run, scheduleOnce
+  run,
+  scheduleOnce
 } from '@ember/runloop';
 import $ from 'jquery';
 import {
   assign
 } from '@ember/polyfills';
 import Component from '@ember/component';
-import { on } from '@ember/object/evented';
+import {
+  on
+} from '@ember/object/evented';
 
 
 export default Component.extend(MobileInputComponentMixin, {
@@ -44,6 +47,9 @@ export default Component.extend(MobileInputComponentMixin, {
   neverNative: undefined,
 
   _getShowOn() {
+    if (configuration.getDateConfig().useCalendar === false){
+      return 'none';
+    }
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
   },
 
@@ -51,7 +57,10 @@ export default Component.extend(MobileInputComponentMixin, {
     let $input = $(this.element).find('.desktop-input');
 
     if (this.get('disabled')) {
-      get(this, 'pikadayCalendar').hide();
+      let calendar = get(this, 'pikadayCalendar');
+      if (isPresent(calendar)) {
+        calendar.hide();
+      }
       if (isNone(get(this, 'value'))) {
         $input.inputmask('remove');
       }
@@ -73,39 +82,20 @@ export default Component.extend(MobileInputComponentMixin, {
     });
   },
 
-  isNeverNative: computed('neverNative', function(){
+  isNeverNative: computed('neverNative', function() {
     return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
   }),
 
   didInsertElement() {
     if (!isTouchDevice() || this.get('isNeverNative') === true) {
-      let $input = $(this.element).find('.desktop-input');
-      let format = this._getDateFormat();
+
       if (!this.get('disabled')) {
         this._initDateMask();
       }
 
-      let that = this;
-      let pikadayConfig = configuration.getDateConfig();
-      pikadayConfig.onSelect = function(date) {
-        run(function() {
-          set(that, 'value', date);
-          that.onValueChanged(date);
-        });
-      };
-      pikadayConfig.format = format;
-      pikadayConfig.field = $input[0];
-
-      if (this._getShowOn() === 'button') {
-        pikadayConfig.trigger = $(this.element).find('.calendar-button')[0];
+      if (configuration.getDateConfig().useCalendar === true) {
+        this.initPikaday();
       }
-
-      let options = this.get('options');
-      if (isPresent(options)) {
-        assign(pikadayConfig, options);
-      }
-
-      set(this, 'pikadayCalendar', new window.Pikaday(pikadayConfig));
 
       run.scheduleOnce('afterRender', this, function() {
         let {
@@ -114,6 +104,33 @@ export default Component.extend(MobileInputComponentMixin, {
         set(this, 'calendarClass', calendarButtonClass);
       });
     }
+  },
+
+  initPikaday() {
+    let $input = $(this.element).find('.desktop-input');
+    let format = this._getDateFormat();
+
+    let that = this;
+    let pikadayConfig = configuration.getDateConfig();
+    pikadayConfig.onSelect = function(date) {
+      run(function() {
+        set(that, 'value', date);
+        that.onValueChanged(date);
+      });
+    };
+    pikadayConfig.format = format;
+    pikadayConfig.field = $input[0];
+
+    if (this._getShowOn() === 'button') {
+      pikadayConfig.trigger = $(this.element).find('.calendar-button')[0];
+    }
+
+    let options = this.get('options');
+    if (isPresent(options)) {
+      assign(pikadayConfig, options);
+    }
+    set(this, 'pikadayCalendar', new window.Pikaday(pikadayConfig));
+
   },
 
   _getDateFormat() {
@@ -128,7 +145,7 @@ export default Component.extend(MobileInputComponentMixin, {
     return false;
   }),
 
-// eslint-disable-next-line ember/no-on-calls-in-components
+  // eslint-disable-next-line ember/no-on-calls-in-components
   desktopTextColorObserver: on('init', observer('desktopValue', function() {
     scheduleOnce('afterRender', this, function() {
       if (isEmpty(get(this, 'desktopValue'))) {
@@ -187,7 +204,9 @@ export default Component.extend(MobileInputComponentMixin, {
     actionCalendarButton() {
       if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
         let calendar = get(this, 'pikadayCalendar');
-        calendar.show();
+        if (isPresent(calendar)) {
+          calendar.show();
+        }
       }
     }
   }
