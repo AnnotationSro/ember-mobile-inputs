@@ -157,15 +157,16 @@ export default Component.extend(MobileInputComponentMixin, {
     } = this.getProperties('min', 'max');
 
     if (isNone(valueArg)) {
-      if (isPresent(min)){
-        return min;
-      }
       return 0;
     }
 
     let value = valueArg;
     if (typeof value === 'string') {
       value = this.stringToFloat(valueArg);
+    }
+
+    if (isNaN(value) && isPresent(min)){
+      return min;
     }
 
     if (isPresent(min) && value < min) {
