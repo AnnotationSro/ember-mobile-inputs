@@ -151,7 +151,15 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   rangeCheckValue(valueArg) {
+    let {
+      min,
+      max
+    } = this.getProperties('min', 'max');
+
     if (isNone(valueArg)) {
+      if (isPresent(min)){
+        return min;
+      }
       return 0;
     }
 
@@ -160,10 +168,6 @@ export default Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    let {
-      min,
-      max
-    } = this.getProperties('min', 'max');
     if (isPresent(min) && value < min) {
       return min;
     }
