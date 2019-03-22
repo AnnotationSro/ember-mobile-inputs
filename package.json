@@ -41,6 +41,7 @@
     "ember-try": "^1.0.0",
     "eslint-plugin-ember": "6.0.1",
     "eslint-plugin-node": "8.0.0",
+    "flatpickr": "^4.5.7",
     "inputmask": "3.3.11",
     "loader.js": "4.7.0",
     "moment": "2.22.2",

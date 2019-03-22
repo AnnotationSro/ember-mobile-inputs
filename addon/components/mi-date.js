@@ -46,6 +46,9 @@ export default Component.extend(MobileInputComponentMixin, {
   onBlur() {},
   neverNative: undefined,
 
+  flatpickrCalendar: window.flatpickr("#Skuska", {}),
+
+
   _getShowOn() {
     if (configuration.getDateConfig().useCalendar === false){
       return 'none';
