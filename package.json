@@ -41,7 +41,7 @@
     "ember-try": "^1.0.0",
     "eslint-plugin-ember": "6.0.1",
     "eslint-plugin-node": "8.0.0",
-    "inputmask": "3.3.11",
+    "inputmask": "4.0.6",
     "loader.js": "4.7.0",
     "moment": "2.22.2",
     "moment-timezone": ">= 0.5.23",

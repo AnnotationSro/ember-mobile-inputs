@@ -73,7 +73,8 @@ export default Component.extend(MobileInputComponentMixin, {
     let format = this._getDateFormat();
     let $input = $(this.element).find('.desktop-input');
     let that = this;
-    $input.inputmask(format.toLowerCase(), {
+    $input.inputmask("datetime", {
+      "inputFormat": format.toLowerCase(),
       "placeholder": '_',
       "clearMaskOnLostFocus": true,
       oncomplete() {
