@@ -165,7 +165,7 @@ export default Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    if (isNaN(value) && isPresent(min)){
+    if (isNaN(value) && isPresent(min)) {
       return min;
     }
 
@@ -188,12 +188,14 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
+  mobileInputVisibleChangedFn(value) {
+    this.set('mobileInputVisible', value);
+  },
+
   didInsertElement: function() {
     this._super(...arguments);
 
-    this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', (value) => {
-      this.set('mobileInputVisible', value);
-    });
+    this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', this.mobileInputVisibleChangedFn);
 
     if (!isTouchDevice()) {
       let $input = $(this.element).find('.desktop-input');
@@ -208,9 +210,9 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  willDestroyElement(){
+  willDestroyElement() {
     this._super(...arguments);
-    this.get('mobileInputEventBus').unsubscribe('mobileInputVisibleChanged');
+    this.get('mobileInputEventBus').unsubscribe('mobileInputVisibleChanged', this.mobileInputVisibleChangedFn);
   },
 
   actions: {
