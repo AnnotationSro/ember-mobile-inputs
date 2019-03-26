@@ -123,6 +123,7 @@ export default Component.extend(MobileInputComponentMixin, {
         //TODO prerobit, hrozne "riesenie" ...., zmenit configy, ale ptm to treba cele menit, lol? I guess, nieco s parsovanit namiesto moment a take daco
         //TODO costume format YYYY-MM-DD
         let skuska;
+        let skuska2;
         let newFormat;
         if (pikadayConfig.format === "DD.MM.YYYY") {
             newFormat = 'd.m.Y';
