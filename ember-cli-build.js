@@ -14,9 +14,9 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
   //TODO delete pikaday
-  app.import('node_modules/pikaday/pikaday.js');
-  app.import('node_modules/pikaday/css/pikaday.css');
-  app.import('node_modules/pikaday/css/theme.css');
+  // app.import('node_modules/pikaday/pikaday.js');
+  // app.import('node_modules/pikaday/css/pikaday.css');
+  // app.import('node_modules/pikaday/css/theme.css');
 
 
   app.import('node_modules/flatpickr/dist/flatpickr.js');

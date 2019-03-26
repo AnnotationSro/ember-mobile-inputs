@@ -5,6 +5,7 @@ let CONFIG_PROPERTIES = {
   date:{
     firstDay: 0,
     calendarButtonClass: 'fa fa-calendar',
+    // format: 'd.m.Y',
     format: 'DD.MM.YYYY',
     showOn: 'both',
     neverNative: false,
