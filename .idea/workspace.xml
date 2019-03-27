@@ -4,8 +4,6 @@
     <list default="true" id="798056f8-89a0-4863-8794-d86c34384128" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addon/components/mi-date.js" beforeDir="false" afterPath="$PROJECT_DIR$/addon/components/mi-date.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addon/configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/addon/configuration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addon/components/mi-date.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="125" column="89" selection-start-line="125" selection-start-column="89" selection-end-line="125" selection-end-column="89" />
+            <state relative-caret-position="428">
+              <caret line="110" column="41" lean-forward="true" selection-start-line="110" selection-start-column="41" selection-end-line="110" selection-end-column="41" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -364,7 +362,8 @@
     <MESSAGE value="imported flatpickr (through ember-cli-build.js)" />
     <MESSAGE value="trying to change user, skuska" />
     <MESSAGE value="trying to change user, skuska2" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to change user, skuska2" />
+    <MESSAGE value="Open calendar only on Button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Open calendar only on Button" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/components/mi-text.js">
@@ -519,8 +518,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/addon/components/mi-date.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="125" column="89" selection-start-line="125" selection-start-column="89" selection-end-line="125" selection-end-column="89" />
+        <state relative-caret-position="428">
+          <caret line="110" column="41" lean-forward="true" selection-start-line="110" selection-start-column="41" selection-end-line="110" selection-end-column="41" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>

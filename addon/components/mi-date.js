@@ -108,7 +108,7 @@ export default Component.extend(MobileInputComponentMixin, {
         flatpickrConfig.onSelect = function (date, dateString, instance) { //TODO co to robi, zmenit na onChange... nejde to
             run(function () {
                 console.error(date);
-                set(that, 'value', date);;
+                set(that, 'value', date);
                 that.onValueChanged(date);
 
             });
