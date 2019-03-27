@@ -92,50 +92,38 @@ export default Component.extend(MobileInputComponentMixin, {
         return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
     }),
 
-    //TODO treba prepisat, idk how ... configuration.js skor nie
-    initPikaday() {
+    //TODO Custom format YYYY-MM-DD
+    initFlatpickr() {
         let $input = $(this.element).find('.desktop-input');
-        let format = this._getDateFormat();
+        // let format = this._getDateFormat();
 
-        // console.log($input);
         let that = this;
-        let pikadayConfig = configuration.getDateConfig();
-        pikadayConfig.onSelect = function (date) {
+        let flatpickrConfig = configuration.getDateConfig();
+        // let flatpickrConfig = {}; //kedze z configu nepouzivam velmi veci
+        flatpickrConfig.dateFormat = 'd.m.Y';
+        flatpickrConfig.allowInput = true;
+
+
+
+        flatpickrConfig.onSelect = function (date, dateString, instance) { //TODO co to robi, zmenit na onChange... nejde to
             run(function () {
-                set(that, 'value', date);
+                console.error(date);
+                set(that, 'value', date);;
                 that.onValueChanged(date);
+
             });
         };
-        pikadayConfig.format = format;
-        pikadayConfig.field = $input[0];
 
         if (this._getShowOn() === 'button') {
-            pikadayConfig.trigger = $(this.element).find('.calendar-button')[0];
+            flatpickrConfig.clickOpens = false;
         }
 
-        let options = this.get('options');
+        let options = this.get('options'); //TODO idk
         if (isPresent(options)) {
-            assign(pikadayConfig, options);
-        }
-        // set(this, 'flatpickrCalendar', new window.Pikaday(pikadayConfig));
-        console.log(pikadayConfig);
-
-        //TODO prerobit, hrozne "riesenie" ...., zmenit configy, ale ptm to treba cele menit, lol? I guess, nieco s parsovanit namiesto moment a take daco
-        //TODO costume format YYYY-MM-DD
-        let skuska;
-        let skuska2;
-        let newFormat;
-        if (pikadayConfig.format === "DD.MM.YYYY") {
-            newFormat = 'd.m.Y';
-        } else {
-            newFormat = 'Y-m-d';
+            assign(flatpickrConfig, options);
         }
 
-        set(this, 'flatpickrCalendar', new window.flatpickr($input, {
-            // dateFormat: "d.m.Y",
-            dateFormat: newFormat,
-            allowInput: true
-        })); //ale nedavam ziadny config.... y pickaday
+        set(this, 'flatpickrCalendar', new window.flatpickr($input[0], flatpickrConfig));
 
     },
 
@@ -147,7 +135,7 @@ export default Component.extend(MobileInputComponentMixin, {
             }
 
             if (configuration.getDateConfig().useCalendar === true) {
-                this.initPikaday();
+                this.initFlatpickr();
             }
 
             run.scheduleOnce('afterRender', this, function () {
@@ -191,6 +179,7 @@ export default Component.extend(MobileInputComponentMixin, {
             }
 
             return moment(value).format(this._getDateFormat());
+            //return flatpickr.formatDate(value, this._getDateFormat());
         },
         set(key, value) {
             let formattedDate = moment(value, this._getDateFormat(), true);

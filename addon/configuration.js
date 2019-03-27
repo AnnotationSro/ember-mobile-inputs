@@ -5,7 +5,7 @@ let CONFIG_PROPERTIES = {
   date:{
     firstDay: 0,
     calendarButtonClass: 'fa fa-calendar',
-    // format: 'd.m.Y',
+    // format: 'dd.mm.YYYY', //TODO maska sa bije s tymto formatom, parse but how?
     format: 'DD.MM.YYYY',
     showOn: 'both',
     neverNative: false,

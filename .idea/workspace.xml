@@ -5,8 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addon/components/mi-date.js" beforeDir="false" afterPath="$PROJECT_DIR$/addon/components/mi-date.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/addon/configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/addon/configuration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ember-cli-build.js" beforeDir="false" afterPath="$PROJECT_DIR$/ember-cli-build.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/dummy/app/controllers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/dummy/app/controllers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +14,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addon/components/html-input.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="285">
+              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
               </folding>
@@ -27,14 +27,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/addon/components/mi-date.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-915">
-              <caret line="41" column="43" lean-forward="true" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
+            <state relative-caret-position="383">
+              <caret line="125" column="89" selection-start-line="125" selection-start-column="89" selection-end-line="125" selection-end-column="89" />
               <folding>
-                <element signature="e#41#94#0" expanded="true" />
+                <element signature="e#0#53#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/dummy/app/controllers/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="33" column="16" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -42,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addon/configuration.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+            <state relative-caret-position="105">
+              <caret line="7" column="82" selection-start-line="7" selection-start-column="82" selection-end-line="7" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -51,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-date.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="210">
+              <caret line="14" column="121" lean-forward="true" selection-start-line="14" selection-start-column="121" selection-end-line="14" selection-end-column="121" />
             </state>
           </provider>
         </entry>
@@ -60,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/dummy/app/templates/index.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="102" column="7" lean-forward="true" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="7" />
+            <state relative-caret-position="227">
+              <caret line="114" column="78" selection-start-line="114" selection-start-column="72" selection-end-line="114" selection-end-column="78" />
             </state>
           </provider>
         </entry>
@@ -69,17 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addon/templates/components/mobile-input.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="30" selection-start-column="12" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/addon/components/mobile-input.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="22" lean-forward="true" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+            <state relative-caret-position="75">
+              <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -88,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/ember-cli-build.js">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="13" lean-forward="true" selection-start-column="13" selection-end-column="13" />
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -96,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+            <state relative-caret-position="645">
+              <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -106,41 +106,46 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>configuration</find>
-      <find>pikadayCalendar</find>
-      <find>flat</find>
-      <find>alert</find>
-      <find>calenda</find>
-      <find>never</find>
-      <find>neverNative</find>
-      <find>isNeverNative</find>
-      <find>flatpickr</find>
-      <find>forma</find>
-      <find>Custom format Y</find>
-      <find>mobile-input</find>
-      <find>customDateInput</find>
-      <find>TODO</find>
-      <find>initPikaday</find>
-      <find>actionCalendarButton</find>
-      <find>inputComponentType</find>
-      <find>config</find>
-      <find>moment</find>
       <find>inputmask</find>
-      <find>format</find>
-      <find>_getDateFormat</find>
       <find>Custom fo</find>
       <find>desktop-input-empty</find>
-      <find>value</find>
       <find>open</find>
       <find>init</find>
       <find>flatpickrCalendar</find>
-      <find>console</find>
       <find>showOn</find>
+      <find>getDat</find>
+      <find>pars</find>
+      <find>getWithDefault</find>
+      <find>mask</find>
+      <find>_getDateFormat</find>
+      <find>calendar-b</find>
+      <find>calendarClass</find>
+      <find>trigger</find>
+      <find>both</find>
+      <find>show</find>
+      <find>_getShowOn</find>
+      <find>Ope</find>
+      <find>onValueChanged</find>
+      <find>console.log</find>
+      <find>value</find>
+      <find>moment</find>
+      <find>conso</find>
+      <find>console</find>
+      <find>options</find>
+      <find>getDateConfig</find>
+      <find>Opens</find>
+      <find>Custom</find>
+      <find>format</find>
     </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/addon</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Mr-SvaRoq" />
         <option value="Dinh Nguyen Tien" />
       </list>
     </option>
@@ -153,13 +158,13 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/addon/templates/components/mi-number.hbs" />
-        <option value="$PROJECT_DIR$/addon/templates/components/mi-date.hbs" />
         <option value="$PROJECT_DIR$/tests/dummy/app/controllers/index.js" />
         <option value="$PROJECT_DIR$/ember-cli-build.js" />
         <option value="$PROJECT_DIR$/addon/templates/components/mobile-input.hbs" />
+        <option value="$PROJECT_DIR$/addon/templates/components/mi-date.hbs" />
+        <option value="$PROJECT_DIR$/tests/dummy/app/templates/index.hbs" />
         <option value="$PROJECT_DIR$/addon/configuration.js" />
         <option value="$PROJECT_DIR$/addon/components/mi-date.js" />
-        <option value="$PROJECT_DIR$/tests/dummy/app/templates/index.hbs" />
       </list>
     </option>
   </component>
@@ -168,13 +173,14 @@
     <option name="width" value="1912" />
     <option name="height" value="1044" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -284,15 +290,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1922" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2524013" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22572039" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.3291536" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.3291536" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.3291536" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -304,7 +311,7 @@
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2497332" />
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
@@ -338,10 +345,26 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="imported flatpickr (through ember-cli-build.js)" />
-    <option name="LAST_COMMIT_MESSAGE" value="imported flatpickr (through ember-cli-build.js)" />
+    <MESSAGE value="trying to change user, skuska" />
+    <MESSAGE value="trying to change user, skuska2" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to change user, skuska2" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/components/mi-text.js">
@@ -383,24 +406,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/flatpickr/dist/types/globals.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/flatpickr/dist/types/instance.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="95" column="17" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/flatpickr/dist/types/globals.d.ts" />
+    <entry file="file://$PROJECT_DIR$/node_modules/flatpickr/dist/types/instance.d.ts" />
     <entry file="file://$PROJECT_DIR$/config/environment.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-email.hbs">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/dummy/app/templates/application.hbs">
@@ -423,22 +431,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/dummy/app/controllers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addon/components/html-input.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-number.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -453,65 +445,85 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/dummy/app/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-email.hbs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon/components/mobile-input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+        <state relative-caret-position="645">
+          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon/components/html-input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-date.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="121" lean-forward="true" selection-start-line="14" selection-start-column="121" selection-end-line="14" selection-end-column="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addon/templates/components/mobile-input.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/dummy/app/templates/index.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="114" column="78" selection-start-line="114" selection-start-column="72" selection-end-line="114" selection-end-column="78" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ember-cli-build.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="13" lean-forward="true" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addon/templates/components/mi-date.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addon/configuration.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        <state relative-caret-position="105">
+          <caret line="7" column="82" selection-start-line="7" selection-start-column="82" selection-end-line="7" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/dummy/app/controllers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="33" column="16" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/addon/components/mi-date.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-915">
-          <caret line="41" column="43" lean-forward="true" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
+        <state relative-caret-position="383">
+          <caret line="125" column="89" selection-start-line="125" selection-start-column="89" selection-end-line="125" selection-end-column="89" />
           <folding>
-            <element signature="e#41#94#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/dummy/app/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addon/templates/components/mobile-input.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="30" selection-start-column="12" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/dummy/app/templates/index.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="102" column="7" lean-forward="true" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addon/components/mobile-input.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="22" lean-forward="true" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
         </state>
       </provider>
     </entry>
