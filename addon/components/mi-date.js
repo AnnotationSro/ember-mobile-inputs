@@ -92,7 +92,7 @@ export default Component.extend(MobileInputComponentMixin, {
         return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
     }),
 
-    //TODO Custom format YYYY-MM-DD
+    //TODO Custom format YYYY-MM-DD, onSelect/onChange, options?
     initFlatpickr() {
         let $input = $(this.element).find('.desktop-input');
         // let format = this._getDateFormat();
