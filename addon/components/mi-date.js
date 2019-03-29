@@ -3,7 +3,7 @@ import MobileInputComponentMixin from "../mixins/mobile-input-component";
 import {
     isTouchDevice
 } from "../utils/mobile-utils";
-import moment from "moment";
+// import moment from "moment";
 import configuration from "../configuration";
 import {
     get,
