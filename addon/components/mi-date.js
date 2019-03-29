@@ -202,19 +202,13 @@ export default Component.extend(MobileInputComponentMixin, {
             if (isNone(get(this, 'value'))) {
                 return null;
             }
-            // console.warn('mobilValue GET' + moment(get(this, 'value')).format('YYYY-MM-DD') + ' ....... ' + get(this, 'value'));  //TODO zas format...
-            // return moment(get(this, 'value')).format('YYYY-MM-DD');
 
             return flatpickr.formatDate(get(this, 'value'), 'Y-m-d').toString();
-            // return moment(get(this, 'value')).format('Y-m-d');
-
         },
         set(key, value) {
             if (isNone(value)) {
                 return value;
             }
-
-            // let newFormat = (this._getDateFormat() === 'DD.MM.YYYY') ? 'd.m.Y' : 'Y-m-d';
 
             //TODO ech podmienka
             if (value.replace('_', "").length === flatpickr.formatDate(new Date(), 'Y-m-d').toString().length) {
@@ -224,13 +218,6 @@ export default Component.extend(MobileInputComponentMixin, {
                 set(this, 'value', null);
             }
 
-            // let formattedDate = moment(value, 'YYYY-MM-DD', true); //hmmm,  tu format sa nebije v mobile
-            //
-            // if (!formattedDate.isValid()) {
-            //     set(this, 'value', null);
-            // } else {
-            //     set(this, 'value', formattedDate.toDate());
-            // }
             set(this, 'mobileInputVisible', false);
             this.get('onValueChanged')(this.get('value'));
             return value;
