@@ -92,7 +92,7 @@ export default Component.extend(MobileInputComponentMixin, {
         return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
     }),
 
-    //TODO Custom format YYYY-MM-DD, onSelect/onChange, options?
+    //TODO Custom format YYYY-MM-DD, onSelect/onChange, options?, rozsah 1900-2099
     initFlatpickr() {
         let $input = $(this.element).find('.desktop-input');
         // let format = this._getDateFormat();
@@ -105,11 +105,10 @@ export default Component.extend(MobileInputComponentMixin, {
 
 
 
-        flatpickrConfig.onSelect = function (date, dateString, instance) { //TODO co to robi, zmenit na onChange... nejde to
+        flatpickrConfig.onChange = function (selectedDates) { //TODO co to robi, zmenit na onChange... nejde to
             run(function () {
-                console.error(date);
-                set(that, 'value', date);
-                that.onValueChanged(date);
+                set(that, 'value', selectedDates[0]);
+                that.onValueChanged(selectedDates[0]);
 
             });
         };
@@ -178,8 +177,10 @@ export default Component.extend(MobileInputComponentMixin, {
                 return null;
             }
 
-            return moment(value).format(this._getDateFormat());
-            //return flatpickr.formatDate(value, this._getDateFormat());
+            console.warn(moment(value).format(this._getDateFormat()));  //TODO zas format...
+            console.error(flatpickr.formatDate(value,  'd.m.Y'));
+            // return moment(value).format(this._getDateFormat());
+            return flatpickr.formatDate(value, 'd.m.Y');
         },
         set(key, value) {
             let formattedDate = moment(value, this._getDateFormat(), true);
@@ -197,7 +198,10 @@ export default Component.extend(MobileInputComponentMixin, {
             if (isNone(get(this, 'value'))) {
                 return null;
             }
+            console.warn('Skuska ' +  moment(get(this, 'value')).format('YYYY-MM-DD'));  //TODO zas format...
             return moment(get(this, 'value')).format('YYYY-MM-DD');
+            // return flatpickr.formatDate(value, 'Y.m.d');
+
             // return moment(get(this, 'value')).format('Y-m-d');
 
         },
@@ -224,9 +228,7 @@ export default Component.extend(MobileInputComponentMixin, {
             if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
                 let calendar = get(this, 'flatpickrCalendar');
                 if (isPresent(calendar)) {
-                    // calendar.show();
                     calendar.open();
-                    // console.log("ActionCalendarButtonInside");
                 }
             }
         }
