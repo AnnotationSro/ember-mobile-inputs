@@ -105,7 +105,7 @@ export default Component.extend(MobileInputComponentMixin, {
         flatpickrConfig.allowInput = true;
 
 
-        flatpickrConfig.onChange = function (selectedDates) { //TODO co to robi, zmenit na onChange... nejde to
+        flatpickrConfig.onChange = function (selectedDates) {
             run(function () {
                 set(that, 'value', selectedDates[0]);
                 that.onValueChanged(selectedDates[0]);
@@ -117,7 +117,7 @@ export default Component.extend(MobileInputComponentMixin, {
             flatpickrConfig.clickOpens = false;
         }
 
-        let options = this.get('options'); //TODO idk
+        let options = this.get('options');
         if (isPresent(options)) {
             assign(flatpickrConfig, options);
         }
@@ -178,6 +178,9 @@ export default Component.extend(MobileInputComponentMixin, {
             }
 
             //TODO newFormat
+            /*TODO [2:43 PM] Igor Kvasnička: tak potom by som urobil nejaku funkciu, ktorej na vstupe das flatpickr format a na vystupe bude format pre tu masku
+                [2:43 PM] Igor Kvasnička: staci ak budes podporovat len tie zakladne formaty: d, m , Y
+                [2:44 PM] Igor Kvasnička: cize na vstupe bude d.m.Y a na vystupe bude DD.MM.YYYY*/
             let newFormat = (this._getDateFormat() === 'DD.MM.YYYY') ? 'd.m.Y' : 'Y-m-d';
             return flatpickr.formatDate(value, newFormat);
 
@@ -186,8 +189,10 @@ export default Component.extend(MobileInputComponentMixin, {
             //TODO newFormat
             let newFormat = (this._getDateFormat() === 'DD.MM.YYYY') ? 'd.m.Y' : 'Y-m-d';
 
-            //TODO ech podmienka
-            if (value.replace('_', "").length === flatpickr.formatDate(new Date(), newFormat).toString().length) {
+            //TODO ech podmienka value.indexOf('_') === -1
+            // if (value.replace('_', "").length === flatpickr.formatDate(new Date(), newFormat).toString().length) {
+            if (value.indexOf('_') === -1) {
+
                 let formattedDate = flatpickr.parseDate(value, newFormat);
                 set(this, 'value', formattedDate);
             } else {
@@ -211,7 +216,7 @@ export default Component.extend(MobileInputComponentMixin, {
             }
 
             //TODO ech podmienka
-            if (value.replace('_', "").length === flatpickr.formatDate(new Date(), 'Y-m-d').toString().length) {
+            if (value.indexOf('_') === -1) {
                 let formattedDate = flatpickr.parseDate(value, 'Y-m-d');
                 set(this, 'value', formattedDate);
             } else {
