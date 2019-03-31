@@ -194,7 +194,7 @@ export default Component.extend(MobileInputComponentMixin, {
       } else {
         set(this, 'value', formattedDate.toDate());
       }
-      set(this, 'mobileInputVisible', false);
+      set(this, 'mobileInputService.mobileInputVisible', false);
       this.get('onValueChanged')(this.get('value'));
       return value;
     }

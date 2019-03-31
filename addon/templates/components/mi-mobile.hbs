@@ -1,0 +1,7 @@
+{{#if mobileInputVisible}}
+  {{mobile-input type=mobileType}}
+{{else}}
+<div {{action 'inputClicked' }}>
+  {{yield}}
+</div>
+{{/if}}
