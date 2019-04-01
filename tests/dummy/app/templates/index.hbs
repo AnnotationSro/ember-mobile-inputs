@@ -2,7 +2,7 @@
 
 <h4>Custom mobile input</h4>
 <div>
-  {{#mobile-input type="custom" mobileType="number"}}
+  {{#mobile-input type="custom" mobileType="number" onMobileInputVisibleChanged=(action 'onMobileInputVisibleChanged')}}
     <input value="ja som input">
   {{/mobile-input}}
 </div>

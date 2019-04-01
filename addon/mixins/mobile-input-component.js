@@ -1,11 +1,20 @@
-import { isTouchDevice } from '../utils/mobile-utils';
-import { get } from '@ember/object';
+import {
+  isTouchDevice
+} from '../utils/mobile-utils';
+import {
+  get
+} from '@ember/object';
 import Mixin from '@ember/object/mixin';
-import { scheduleOnce } from '@ember/runloop';
+import {
+  scheduleOnce
+} from '@ember/runloop';
 import $ from 'jquery';
 import {
   inject
 } from '@ember/service';
+import {
+  alias
+} from '@ember/object/computed';
 
 export default Mixin.create({
 
@@ -15,27 +24,28 @@ export default Mixin.create({
 
   mobileInputEventBus: inject('mobile-input-event-bus'),
   mobileInputService: inject('mobile-input'),
+  mobileInputVisible: alias('mobileInputService.mobileInputVisible'),
 
-init(){
-  this._super(...arguments);
-  this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', this.mobileInputVisibleChangedFn);
+  init() {
+    this._super(...arguments);
+    this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', this, this.mobileInputVisibleChangedFn);
 
-},
+  },
 
   mobileInputVisibleChangedFn(value) {
     this.set('mobileInputVisible', value);
   },
 
   actions: {
-    inputClicked(){
+    inputClicked() {
 
-      if (get(this, 'disabled') === true){
+      if (get(this, 'disabled') === true) {
         return;
       }
       if (isTouchDevice()) {
         this.get('mobileInputService').toggleProperty('mobileInputVisible');
         //simulate click "propagation" on the input, because we just stole the click on the input
-        scheduleOnce('afterRender', ()=> {
+        scheduleOnce('afterRender', () => {
           let $element = $(this.element).find('.native-input');
 
           $element.focus();
