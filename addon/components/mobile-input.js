@@ -22,9 +22,12 @@ import {
 } from '@ember/utils';
 import $ from 'jquery';
 import {
-  scheduleOnce, run
+  scheduleOnce,
+  run
 } from '@ember/runloop';
-import { alias } from '@ember/object/computed';
+import {
+  alias
+} from '@ember/object/computed';
 
 
 export default Component.extend({
@@ -114,7 +117,7 @@ export default Component.extend({
 
   },
 
-  prepareForBlur(){
+  prepareForBlur() {
     let $input = $(this.element).find('input');
     let that = this;
     var onBlur = () => {
@@ -158,13 +161,19 @@ export default Component.extend({
     if (this.get('_initBlurListenerInitialized') === true) {
       return;
     }
+    if (this.get('isDestroyed') || this.get('isDestroying')) {
+      return;
+    }
     this.set('_initBlurListenerInitialized', true);
     $($input).on('blur.ember-mobile-inputs-blur touchleave touchcancel', () => {
-      run(()=>{
+      run(() => {
+        if (this.get('isDestroyed') || this.get('isDestroying')) {
+          return;
+        }
         this.set('_initBlurListenerInitialized', false);
         this.get('mobileInputEventBus').publish('mobileInputVisibleChanged', false);
         $($input).off('blur.ember-mobile-inputs-blur');
-        setTimeout(()=>{
+        setTimeout(() => {
           this.prepareForBlur();
         }, 500);
       });

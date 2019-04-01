@@ -33,6 +33,9 @@ export default Mixin.create({
   },
 
   mobileInputVisibleChangedFn(value) {
+    if (this.get('isDestroyed') || this.get('isDestroying')) {
+      return;
+    }
     this.set('mobileInputVisible', value);
   },
 
