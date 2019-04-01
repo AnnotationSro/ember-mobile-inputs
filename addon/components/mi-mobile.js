@@ -22,7 +22,9 @@ export default Component.extend(MobileInputComponentMixin, {
   onValueChanged() {},
 
   mobileInputVisibleObserver: observer('mobileInputVisible', function() {
-    this.get('onMobileInputVisibleChanged')(this.get('mobileInputVisible'));
+    if (typeof this.get('onMobileInputVisibleChanged') === 'function') {
+      this.get('onMobileInputVisibleChanged')(this.get('mobileInputVisible'));
+    }
   }),
 
   actions: {
