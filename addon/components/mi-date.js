@@ -48,7 +48,7 @@ export default Component.extend(MobileInputComponentMixin, {
   },
   neverNative: undefined,
 
-  willDestroyElement(){
+  willDestroyElement() {
     flatpickrCalendar.destroy();
     let $input = $(this.element).find('.desktop-input');
     $input.remove();
