@@ -2,16 +2,14 @@ import $ from 'jquery';
 
 let CONFIG_PROPERTIES = {
   eventOnBlurChanged: false,
-  date:{
-    firstDay: 0,
+  date: {
     calendarButtonClass: 'fa fa-calendar',
-    // format: 'dd.mm.YYYY', //TODO maska sa bije s tymto formatom, parse but how?
     format: 'DD.MM.YYYY',
     showOn: 'both',
     neverNative: false,
     useCalendar: true
   },
-  number:{
+  number: {
     decimalMark: 'both',
     selectOnClick: false,
     formatOnDisabled: false
@@ -24,7 +22,7 @@ let CONFIG_PROPERTIES = {
   }
 };
 
-function copy(data){
+function copy(data) {
   return JSON.parse(JSON.stringify(data));
 }
 
@@ -33,15 +31,15 @@ export default {
     CONFIG_PROPERTIES = $.extend(true, {}, CONFIG_PROPERTIES, config);
   },
 
-  getDateConfig(){
+  getDateConfig() {
     return copy(CONFIG_PROPERTIES.date);
   },
 
-  getNumberConfig(){
+  getNumberConfig() {
     return copy(CONFIG_PROPERTIES.number);
   },
 
-  getTextConfig(){
+  getTextConfig() {
     return copy(CONFIG_PROPERTIES.text);
   },
 
@@ -49,7 +47,7 @@ export default {
     return copy(CONFIG_PROPERTIES.password);
   },
 
-  getConfig(){
+  getConfig() {
     return CONFIG_PROPERTIES;
   }
 };

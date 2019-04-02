@@ -13,18 +13,15 @@ module.exports = function(defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
-  //TODO delete pikaday
-  // app.import('node_modules/pikaday/pikaday.js');
-  // app.import('node_modules/pikaday/css/pikaday.css');
-  // app.import('node_modules/pikaday/css/theme.css');
-
 
   app.import('node_modules/flatpickr/dist/flatpickr.js');
   app.import('node_modules/flatpickr/dist/flatpickr.css');
-
-
-  app.import('node_modules/moment/moment.js');
-
+  // app.import('node_modules/flatpickr/dist/l10n/sk.js', {
+  //   using: [
+  //     { transformation: 'amd', as: 'acme' }
+  //   ]
+  // });
+  app.import('node_modules/flatpickr/dist/l10n/sk.js');
 
   app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');
 
