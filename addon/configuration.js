@@ -4,7 +4,7 @@ let CONFIG_PROPERTIES = {
   eventOnBlurChanged: false,
   date: {
     calendarButtonClass: 'fa fa-calendar',
-    format: 'DD.MM.YYYY',
+    format: 'd.m.Y',
     showOn: 'both',
     neverNative: false,
     useCalendar: true

@@ -61,13 +61,20 @@ export default Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
   },
 
+  _parseFormat(configFormat) {
+    let maskFormat = configFormat;
+    maskFormat = maskFormat.replace('d', 'DD');
+    maskFormat = maskFormat.replace('m', 'MM');
+    maskFormat = maskFormat.replace('Y', 'YYYY');
+    return maskFormat;
+  },
+
   disabledObserver: observer('disabled', function () {
     let $input = $(this.element).find('.desktop-input');
 
     if (this.get('disabled')) {
       let calendar = get(this, 'flatpickrCalendar');
       if (isPresent(calendar)) {
-        // calendar.hide();
         calendar.close();
       }
       if (isNone(get(this, 'value'))) {
@@ -78,8 +85,9 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
-  _initDateMask() { //Maska na autocomplete
-    let format = this._getDateFormat();
+  _initDateMask() {
+    let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mast
+    console.error(format);
     let $input = $(this.element).find('.desktop-input');
     let that = this;
     $input.inputmask(format.toLowerCase(), {
@@ -97,11 +105,12 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   initFlatpickr() {
+    this._parseFormat(configuration.getDateConfig().format);
     let $input = $(this.element).find('.desktop-input');
 
     let that = this;
     let flatpickrConfig = configuration.getDateConfig();
-    flatpickrConfig.dateFormat = 'd.m.Y';
+    flatpickrConfig.dateFormat = this._getDateFormat();
     flatpickrConfig.allowInput = true;
     flatpickrConfig.locale = 'sk';
 
@@ -178,13 +187,12 @@ export default Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      let newFormat = (this._getDateFormat() === 'DD.MM.YYYY') ? 'd.m.Y' : 'Y-m-d';
+      let newFormat = this._getDateFormat();
       return flatpickr.formatDate(value, newFormat);
 
     },
     set(key, value) {
-      let newFormat = (this._getDateFormat() === 'DD.MM.YYYY') ? 'd.m.Y' : 'Y-m-d';
-
+      let newFormat = this._getDateFormat();
       //checking if date input is filled
       if (value.indexOf(this.get('INPUT_MASK_PLACEHOLDER')) === -1) {
         let formattedDate = flatpickr.parseDate(value, newFormat);
