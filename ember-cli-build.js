@@ -14,12 +14,9 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  app.import('node_modules/pikaday/pikaday.js');
-  app.import('node_modules/pikaday/css/pikaday.css');
-  app.import('node_modules/pikaday/css/theme.css');
-
-  app.import('node_modules/moment/moment.js');
-
+  app.import('node_modules/flatpickr/dist/flatpickr.js');
+  app.import('node_modules/flatpickr/dist/flatpickr.css');
+  app.import('node_modules/flatpickr/dist/l10n/sk.js');
 
   app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');
 
