@@ -32,6 +32,8 @@ import {
 } from '@ember/object/evented';
 
 
+const INPUT_MASK_PLACEHOLDER = '_';
+
 export default Component.extend(MobileInputComponentMixin, {
   layout,
 
@@ -39,7 +41,7 @@ export default Component.extend(MobileInputComponentMixin, {
   mobileInputVisible: false,
   showOn: null, //input, button, both, none
   flatpickrCalendar: null,
-  INPUT_MASK_PLACEHOLDER: '_',
+
   onValueChanged() {
   },
   onBlurChanged() {
@@ -90,7 +92,7 @@ export default Component.extend(MobileInputComponentMixin, {
     let $input = $(this.element).find('.desktop-input');
     let that = this;
     $input.inputmask(format.toLowerCase(), {
-      "placeholder": this.get('INPUT_MASK_PLACEHOLDER'),
+      "placeholder": INPUT_MASK_PLACEHOLDER,
       "clearMaskOnLostFocus": true,
       oncomplete() {
         that.get('onValueChanged')(that.get('value'));
@@ -186,14 +188,14 @@ export default Component.extend(MobileInputComponentMixin, {
       }
 
       let newFormat = this._getDateFormat();
-      return flatpickr.formatDate(value, newFormat);
+      return window.flatpickr.formatDate(value, newFormat);
 
     },
     set(key, value) {
       let newFormat = this._getDateFormat();
       //checking if date input is filled
-      if (value.indexOf(this.get('INPUT_MASK_PLACEHOLDER')) === -1) {
-        let formattedDate = flatpickr.parseDate(value, newFormat);
+      if (value.indexOf(INPUT_MASK_PLACEHOLDER) === -1) {
+        let formattedDate = window.flatpickr.parseDate(value, newFormat);
         set(this, 'value', formattedDate);
       } else {
         set(this, 'value', null);
@@ -208,7 +210,7 @@ export default Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      return flatpickr.formatDate(get(this, 'value'), 'Y-m-d').toString();
+      return window.flatpickr.formatDate(get(this, 'value'), 'Y-m-d').toString();
     },
     set(key, value) {
       if (isNone(value)) {
@@ -217,7 +219,7 @@ export default Component.extend(MobileInputComponentMixin, {
 
       //checking if date input is filled
       if (value.indexOf(this.get('INPUT_MASK_PLACEHOLDER')) === -1) {
-        let formattedDate = flatpickr.parseDate(value, 'Y-m-d');
+        let formattedDate = window.flatpickr.parseDate(value, 'Y-m-d');
         set(this, 'value', formattedDate);
       } else {
         set(this, 'value', null);
