@@ -16,11 +16,6 @@ module.exports = function(defaults) {
 
   app.import('node_modules/flatpickr/dist/flatpickr.js');
   app.import('node_modules/flatpickr/dist/flatpickr.css');
-  // app.import('node_modules/flatpickr/dist/l10n/sk.js', {
-  //   using: [
-  //     { transformation: 'amd', as: 'acme' }
-  //   ]
-  // });
   app.import('node_modules/flatpickr/dist/l10n/sk.js');
 
   app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');

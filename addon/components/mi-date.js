@@ -49,7 +49,7 @@ export default Component.extend(MobileInputComponentMixin, {
   neverNative: undefined,
 
   willDestroyElement() {
-    flatpickrCalendar.destroy();
+    this.flatpickrCalendar.destroy();
     let $input = $(this.element).find('.desktop-input');
     $input.remove();
   },
@@ -86,8 +86,7 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   _initDateMask() {
-    let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mast
-    console.error(format);
+    let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
     let that = this;
     $input.inputmask(format.toLowerCase(), {
@@ -105,7 +104,6 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   initFlatpickr() {
-    this._parseFormat(configuration.getDateConfig().format);
     let $input = $(this.element).find('.desktop-input');
 
     let that = this;
