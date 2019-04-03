@@ -20,6 +20,7 @@ module.exports = function(defaults) {
 
   app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');
 
+  app.import('node_modules/moment/moment.js');
 
   return app.toTree();
 };

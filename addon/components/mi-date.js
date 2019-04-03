@@ -30,6 +30,7 @@ import Component from '@ember/component';
 import {
   on
 } from '@ember/object/evented';
+import moment from "moment";
 
 
 const INPUT_MASK_PLACEHOLDER = '_';
@@ -42,12 +43,9 @@ export default Component.extend(MobileInputComponentMixin, {
   showOn: null, //input, button, both, none
   flatpickrCalendar: null,
 
-  onValueChanged() {
-  },
-  onBlurChanged() {
-  },
-  onBlur() {
-  },
+  onValueChanged() {},
+  onBlurChanged() {},
+  onBlur() {},
   neverNative: undefined,
 
   willDestroyElement() {
@@ -63,12 +61,20 @@ export default Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'showOn', configuration.getDateConfig().showOn);
   },
 
+  _getLocale() {
+    return configuration.getDateConfig().locale;
+  },
+
   _parseFormat(configFormat) {
     let maskFormat = configFormat;
     maskFormat = maskFormat.replace('d', 'DD');
     maskFormat = maskFormat.replace('m', 'MM');
     maskFormat = maskFormat.replace('Y', 'YYYY');
     return maskFormat;
+  },
+
+  _getMomentFormat(){
+    return this._parseFormat(this._getDateFormat());
   },
 
   _setValue(value, dateFormat) {
@@ -79,7 +85,7 @@ export default Component.extend(MobileInputComponentMixin, {
       set(this, 'value', null);
     }
   },
-  disabledObserver: observer('disabled', function () {
+  disabledObserver: observer('disabled', function() {
     let $input = $(this.element).find('.desktop-input');
 
     if (this.get('disabled')) {
@@ -109,7 +115,7 @@ export default Component.extend(MobileInputComponentMixin, {
 
   },
 
-  isNeverNative: computed('neverNative', function () {
+  isNeverNative: computed('neverNative', function() {
     return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
   }),
 
@@ -120,11 +126,11 @@ export default Component.extend(MobileInputComponentMixin, {
     let flatpickrConfig = configuration.getDateConfig();
     flatpickrConfig.dateFormat = this._getDateFormat();
     flatpickrConfig.allowInput = true;
-    flatpickrConfig.locale = 'sk';
+    flatpickrConfig.locale = this._getLocale();
 
 
-    flatpickrConfig.onChange = function (selectedDates) {
-      run(function () {
+    flatpickrConfig.onChange = function(selectedDates) {
+      run(function() {
         set(that, 'value', selectedDates[0]);
         that.onValueChanged(selectedDates[0]);
 
@@ -155,7 +161,7 @@ export default Component.extend(MobileInputComponentMixin, {
         this.initFlatpickr();
       }
 
-      run.scheduleOnce('afterRender', this, function () {
+      run.scheduleOnce('afterRender', this, function() {
         let {
           calendarButtonClass
         } = configuration.getDateConfig();
@@ -168,7 +174,7 @@ export default Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'format', configuration.getDateConfig().format);
   },
 
-  showCalendarButton: computed('showOn', function () {
+  showCalendarButton: computed('showOn', function() {
     let showOn = this._getShowOn();
     if (showOn === 'button' || showOn === 'both') {
       return true;
@@ -177,8 +183,8 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   // eslint-disable-next-line ember/no-on-calls-in-components
-  desktopTextColorObserver: on('init', observer('desktopValue', function () {
-    scheduleOnce('afterRender', this, function () {
+  desktopTextColorObserver: on('init', observer('desktopValue', function() {
+    scheduleOnce('afterRender', this, function() {
       if (isEmpty(get(this, 'desktopValue'))) {
         $(this.element).find('.desktop-input').addClass('desktop-input-empty');
       } else {
@@ -195,13 +201,16 @@ export default Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      let newFormat = this._getDateFormat();
-      return window.flatpickr.formatDate(value, newFormat);
-
+      let momentFormat = this._getMomentFormat();
+      return moment(value).format(momentFormat);
     },
     set(key, value) {
-      let newFormat = this._getDateFormat();
-      this._setValue(value, newFormat);
+      let formattedDate = moment(value, this._getMomentFormat(), true);
+      if (!formattedDate.isValid()) {
+        set(this, 'value', null);
+      } else {
+        set(this, 'value', formattedDate.toDate());
+      }
       return value;
     }
   }),
@@ -212,16 +221,21 @@ export default Component.extend(MobileInputComponentMixin, {
         return null;
       }
 
-      return window.flatpickr.formatDate(get(this, 'value'), 'Y-m-d').toString();
+      return moment(get(this, 'value')).format('YYYY-MM-DD');
     },
     set(key, value) {
       if (isNone(value)) {
-        return value;
-      }
-      this._setValue(value, 'Y-m-d');
-      set(this, 'mobileInputVisible', false);
-      this.get('onValueChanged')(this.get('value'));
-      return value;
+       return value;
+     }
+     let formattedDate = moment(value, 'YYYY-MM-DD', true);
+     if (!formattedDate.isValid()) {
+       set(this, 'value', null);
+     } else {
+       set(this, 'value', formattedDate.toDate());
+     }
+     set(this, 'mobileInputService.mobileInputVisible', false);
+     this.get('onValueChanged')(this.get('value'));
+     return value;
     }
   }),
 

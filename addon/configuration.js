@@ -7,7 +7,8 @@ let CONFIG_PROPERTIES = {
     format: 'd.m.Y',
     showOn: 'both',
     neverNative: false,
-    useCalendar: true
+    useCalendar: true,
+    locale: 'en'
   },
   number: {
     decimalMark: 'both',
