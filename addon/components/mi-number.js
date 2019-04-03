@@ -37,6 +37,7 @@ import {
 import {
   inject
 } from '@ember/service';
+import { alias } from '@ember/object/computed';
 
 function groupNumber(nStr) {
   nStr += '';
@@ -53,8 +54,9 @@ function groupNumber(nStr) {
 export default Component.extend(MobileInputComponentMixin, {
   layout,
   mobileInputEventBus: inject('mobile-input-event-bus'),
+  mobileInputService: inject('mobile-input'),
 
-  mobileInputVisible: false,
+  mobileInputVisible: alias('mobileInputService.mobileInputVisible'),
   decimalMark: null, //comma, dot, both
   min: null,
   max: null,
@@ -151,6 +153,11 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   rangeCheckValue(valueArg) {
+    let {
+      min,
+      max
+    } = this.getProperties('min', 'max');
+
     if (isNone(valueArg)) {
       return 0;
     }
@@ -160,10 +167,10 @@ export default Component.extend(MobileInputComponentMixin, {
       value = this.stringToFloat(valueArg);
     }
 
-    let {
-      min,
-      max
-    } = this.getProperties('min', 'max');
+    if (isNaN(value) && isPresent(min)) {
+      return min;
+    }
+
     if (isPresent(min) && value < min) {
       return min;
     }
@@ -186,9 +193,6 @@ export default Component.extend(MobileInputComponentMixin, {
   didInsertElement: function() {
     this._super(...arguments);
 
-    this.get('mobileInputEventBus').subscribe('mobileInputVisibleChanged', (value) => {
-      this.set('mobileInputVisible', value);
-    });
 
     if (!isTouchDevice()) {
       let $input = $(this.element).find('.desktop-input');
@@ -203,10 +207,6 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  willDestroyElement(){
-    this._super(...arguments);
-    this.get('mobileInputEventBus').unsubscribe('mobileInputVisibleChanged');
-  },
 
   actions: {
     valueChanged(newValue) {

@@ -1,0 +1,26 @@
+{{#if mobileInputVisible}}
+  {{mobile-input
+    type=mobileType
+    value=value
+    format=format
+    disabled=disabled
+    showOn=showOn
+    decimalMark=decimalMark
+    min=min max=max
+    formattedPlaceholder=placeholder
+    onValueChanged=onValueChanged
+    selectOnClick=selectOnClick
+    onBlurChanged=onBlurChanged
+    onBlur=onBlur
+    options=options
+    autocomplete=autocomplete
+    allowNegative=allowNegative
+    pattern=pattern
+    dataInput=dataInput
+    neverNative=neverNative
+  }}
+{{else}}
+  <div {{action 'inputClicked' }} role="button">
+    {{yield}}
+  </div>
+{{/if}}

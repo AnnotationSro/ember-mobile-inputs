@@ -8,7 +8,10 @@ export default Service.extend(Evented, {
 	subscribe: function () {
 		return this.on.apply(this, arguments);
 	},
-	unsubscribe: function () {
+	unsubscribe: function (eventName) {
+    if (!this.has(eventName)){
+      return;
+    }
 		return this.off.apply(this, arguments);
 	}
 });

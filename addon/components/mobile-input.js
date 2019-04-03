@@ -22,8 +22,12 @@ import {
 } from '@ember/utils';
 import $ from 'jquery';
 import {
-  scheduleOnce, run
+  scheduleOnce,
+  run
 } from '@ember/runloop';
+import {
+  alias
+} from '@ember/object/computed';
 
 
 export default Component.extend({
@@ -61,7 +65,9 @@ export default Component.extend({
   dataInput: null, //json, e.g: {a:1,b:2} will become => <input data-a=1 data-b=2 />
 
   //internals
-  mobileInputVisible: false,
+  mobileInputService: inject('mobile-input'),
+
+  mobileInputVisible: alias('mobileInputService.mobileInputVisible'),
   oldValue: null,
   valueOnFocus: null,
   _initBlurListenerInitialized: false,
@@ -111,7 +117,7 @@ export default Component.extend({
 
   },
 
-  prepareForBlur(){
+  prepareForBlur() {
     let $input = $(this.element).find('input');
     let that = this;
     var onBlur = () => {
@@ -155,13 +161,19 @@ export default Component.extend({
     if (this.get('_initBlurListenerInitialized') === true) {
       return;
     }
+    if (this.get('isDestroyed') || this.get('isDestroying')) {
+      return;
+    }
     this.set('_initBlurListenerInitialized', true);
     $($input).on('blur.ember-mobile-inputs-blur touchleave touchcancel', () => {
-      run(()=>{
+      run(() => {
+        if (this.get('isDestroyed') || this.get('isDestroying')) {
+          return;
+        }
         this.set('_initBlurListenerInitialized', false);
         this.get('mobileInputEventBus').publish('mobileInputVisibleChanged', false);
         $($input).off('blur.ember-mobile-inputs-blur');
-        setTimeout(()=>{
+        setTimeout(() => {
           this.prepareForBlur();
         }, 500);
       });
@@ -196,6 +208,9 @@ export default Component.extend({
         break;
       case 'email':
         set(this, 'inputComponentType', 'mi-email');
+        break;
+      case 'custom':
+        set(this, 'inputComponentType', 'mi-mobile');
         break;
       default:
         Ember.Logger.error(`Unknown ember-mobile-inputs type: ${inputType}`);

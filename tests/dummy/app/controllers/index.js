@@ -1,5 +1,7 @@
 import Controller from '@ember/controller';
-import { inject } from '@ember/service';
+import {
+  inject
+} from '@ember/service';
 
 export default Controller.extend({
   valueNumber: null,
@@ -16,7 +18,7 @@ export default Controller.extend({
   mobileInputEventBus: inject('mobile-input-event-bus'),
   mobileInputConfiguration: inject('mobile-input-configuration'),
 
-
+val: 123,
   init() {
     this._super(...arguments);
     this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
@@ -26,7 +28,7 @@ export default Controller.extend({
     this.set('dateOptions', {
       maxDate: new Date()
     });
-      // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
+    // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },
 
   actions: {
@@ -45,6 +47,8 @@ export default Controller.extend({
     onBlur() {
       window.console.log('blurred input');
     },
-
+    onMobileInputVisibleChanged(value) {
+      window.console.log('onMobileInputVisibleChanged', value);
+    }
   }
 });

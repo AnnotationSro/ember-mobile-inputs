@@ -1,4 +1,4 @@
-{{component inputComponentType
+{{#component inputComponentType
   value=value
   format=format
   disabled=disabled
@@ -16,4 +16,8 @@
   pattern=pattern
   dataInput=dataInput
   neverNative=neverNative
+  mobileType=mobileType
+  onMobileInputVisibleChanged=onMobileInputVisibleChanged
 }}
+  {{yield}}
+{{/component}}

@@ -1,5 +1,12 @@
 <h3>Try these inputs on desktop and mobile as well - observe the difference.</h3>
 
+<h4>Custom mobile input</h4>
+<div>
+  {{#mobile-input type="custom" mobileType="number" value=val onMobileInputVisibleChanged=(action 'onMobileInputVisibleChanged')}}
+    <input value="ja som input"> {{val}}
+  {{/mobile-input}}
+</div>
+
 <h2>Email</h2>
 <div>
   {{mobile-input id="emailInput"
