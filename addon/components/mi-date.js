@@ -127,7 +127,7 @@ export default Component.extend(MobileInputComponentMixin, {
     flatpickrConfig.dateFormat = this._getDateFormat();
     flatpickrConfig.allowInput = true;
     flatpickrConfig.locale = this._getLocale();
-
+    flatpickrConfig.disableMobile = this.get('isNeverNative');
 
     flatpickrConfig.onChange = function(selectedDates) {
       run(function() {
