@@ -137,19 +137,28 @@
        });
      };
 
-
-
      if (this._getShowOn() === 'button') {
        flatpickrConfig.clickOpens = false;
      }
 
-     let options = this.get('options');
-     if (isPresent(options)) {
-       assign(flatpickrConfig, options);
+     let flatpickrOptions = this.get('flatpickrOptions');
+     if (isPresent(flatpickrOptions)) {
+       assign(flatpickrConfig, flatpickrOptions);
      }
+
+     let options = this.get('options');
+     if (isPresent(options) && isPresent(options.defaultDateOnOpen)) {
+       flatpickrConfig.onOpen = (selectedDates, dateStr, instance) => {
+         if (isNone(this.get('desktopValue'))) {
+           instance.jumpToDate(options.defaultDateOnOpen);
+         }
+       };
+     }
+
 
      let flatpickrInstance = new window.flatpickr($input[0], flatpickrConfig);
      set(this, 'flatpickrCalendar', flatpickrInstance);
+
 
      //ios fix
      scheduleOnce('afterRender', this, function() {

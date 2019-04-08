@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import {
   inject
 } from '@ember/service';
+import moment from 'moment';
 
 export default Controller.extend({
   valueNumber: null,
@@ -13,6 +14,7 @@ export default Controller.extend({
   disabled: false,
 
   dateOptions: null,
+  optionsDateOpen: null,
 
   valueNumberController: 4.5,
   mobileInputEventBus: inject('mobile-input-event-bus'),
@@ -27,6 +29,10 @@ val: 123,
 
     this.set('dateOptions', {
       maxDate: new Date()
+    });
+
+    this.set('optionsDateOpen', {
+      defaultDateOnOpen: moment('1980-01-01').toDate()
     });
     // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },

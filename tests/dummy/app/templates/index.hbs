@@ -99,6 +99,13 @@
   <span id="dateResult">{{valueDate}}</span>
 </div>
 
+<h4>Opens calendar on date 1.1.1980</h4>
+<div>
+  {{mobile-input id="dateInputOpen" type='date' value=valueDate disabled=disabled options=optionsDateOpen
+  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
+  <span id="dateResult">{{valueDate}}</span>
+</div>
+
 <h4>Never use native datepicker</h4>
 <div>
   {{mobile-input id="dateInputNeverNative" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged') neverNative=true}}
@@ -150,5 +157,5 @@ showOn="none"
 
 <h4>Calendar with custom properties (e.g. maxDate set)</h4>
 <div>
-  {{mobile-input id="dateInputProperties" type='date' disabled=disabled options=dateOptions showOn="both"}}
+  {{mobile-input id="dateInputProperties" type='date' disabled=disabled flatpickrOptions=dateOptions showOn="both"}}
 </div>

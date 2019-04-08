@@ -92,8 +92,10 @@ ENV['ember-mobile-inputs'] = {
 
 
 For more Flatpickr (calendar popup) configuration information, please have a look at the [Flatpickr guide](https://flatpickr.js.org/options/).
-You can also pass `options` parameter to the component - this is currently used only by _date_ input to customize Flatpickr calendar (content of `options` is merged with Flatpickr config).
+You can also pass `flatpickrOptions` parameter to the component - this is currently used only by _date_ input to customize Flatpickr calendar (content of `flatpickrOptions` is merged with Flatpickr config).
 
+You can also configure other options for inputs in `options` attribute - list of supported options:
+* defaultDateOnOpen - date, to which Flatpickr calendar should open when no value is set
 
 There is an option to add callback `onBlurChanged` that will be called on input blur, but only when value has changed since on-focus event.
 There is a service `mobile-input-event-bus` where you can subscribe to input changes on input blur - don't forget to enable these events in the config:
