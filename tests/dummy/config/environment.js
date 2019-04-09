@@ -33,7 +33,8 @@ module.exports = function(environment) {
       selectOnClick: true
     },
     date:{
-      neverNative: false
+      neverNative: false,
+      locale: 'sk'
     }
   };
 
