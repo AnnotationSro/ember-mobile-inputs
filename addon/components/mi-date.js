@@ -155,18 +155,9 @@
        };
      }
 
-
      let flatpickrInstance = new window.flatpickr($input[0], flatpickrConfig);
      set(this, 'flatpickrCalendar', flatpickrInstance);
 
-
-     //ios fix
-     scheduleOnce('afterRender', this, function() {
-       $(flatpickrInstance.calendarContainer).find('.flatpickr-day ').bind('touchend', (e) => {
-         $(e.target).trigger("click");
-       });
-     });
-     //ios fix end
    },
 
    didInsertElement() {
