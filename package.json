@@ -1,6 +1,6 @@
 {
   "name": "ember-mobile-inputs",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "description": "Mobile- and Desktop- friendly inputs",
   "scripts": {
     "build": "ember build",
