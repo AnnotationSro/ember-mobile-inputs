@@ -105,7 +105,8 @@
      let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
      let $input = $(this.element).find('.desktop-input');
      let that = this;
-     $input.inputmask(format.toLowerCase(), {
+     $input.inputmask("datetime", {
+       "inputFormat": format.toLowerCase(),
        "placeholder": INPUT_MASK_PLACEHOLDER,
        "clearMaskOnLostFocus": true,
        oncomplete() {
