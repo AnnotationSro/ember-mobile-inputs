@@ -14,6 +14,7 @@ import {
   isPresent
 } from '@ember/utils';
 import $ from 'jquery';
+import IMask from 'imask';
 
 
 export default Component.extend(MobileInputComponentMixin, {
@@ -34,17 +35,39 @@ export default Component.extend(MobileInputComponentMixin, {
 
   initPattern(){
     let $input = $(this.element).find('input');
-    $input.inputmask('remove');
+    // $input.inputmask('remove');
+
+    if (isPresent(this.get('_maskObj'))){
+      //pattern was previously defined and now has changed
+      this.get('_maskObj').updateOptions({
+        mask: new RegExp(`^${this.get('pattern')}$`)
+      });
+      return;
+    }
+
     if (isPresent(this.get('pattern'))) {
 
-      $input.inputmask({
-        regex: this.get('pattern'),
-        showMaskOnHover: false,
-        showMaskOnFocus: false,
-        //isComplete: function(buffer, opts) {
-          //return new RegExp(opts.regex).test(buffer.join(''));
-        //}
-      });
+      var maskOptions = {
+        mask: new RegExp(`^${this.get('pattern')}$`)
+      };
+      var mask = IMask($input[0], maskOptions);
+      this.set('_maskObj', mask);
+
+      // $input.inputmask({
+      //   regex: this.get('pattern'),
+      //   showMaskOnHover: false,
+      //   showMaskOnFocus: false,
+      //   //isComplete: function(buffer, opts) {
+      //     //return new RegExp(opts.regex).test(buffer.join(''));
+      //   //}
+      // });
+    }
+  },
+
+  willDestroyElement(){
+    this._super(...arguments);
+    if (isPresent(this.get('_maskObj'))){
+      this.get('_maskObj').destroy();
     }
   },
 

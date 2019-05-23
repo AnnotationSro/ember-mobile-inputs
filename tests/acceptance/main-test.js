@@ -60,8 +60,8 @@ test('number input - invalid input', function (assert) {
 
   andThen(() => fillIn(NUMBER_INPUT, 'hello'));
   andThen(() => {
-    assert.equal(findWithAssert(NUMBER_INPUT).val(), '', 'should update `input` value');
-    assert.equal(findWithAssert('#numberResult').text().trim(), '', 'should update `numberResult` oninput or onchange');
+    assert.equal(findWithAssert(NUMBER_INPUT).val(), '0', 'should update `input` value');
+    assert.equal(findWithAssert('#numberResult').text().trim(), '0', 'should update `numberResult` oninput or onchange');
   });
 });
 

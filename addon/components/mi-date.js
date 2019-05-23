@@ -31,7 +31,7 @@
    on
  } from '@ember/object/evented';
  import moment from "moment";
-
+ import IMask from 'imask';
 
  const INPUT_MASK_PLACEHOLDER = '_';
 
@@ -49,9 +49,14 @@
    neverNative: undefined,
 
    willDestroyElement() {
+     this._super(...arguments);
      this.flatpickrCalendar.destroy();
      let $input = $(this.element).find('.desktop-input');
      $input.remove();
+
+     if (isPresent(this.get('_maskObj'))) {
+       this.get('_maskObj').destroy();
+     }
    },
 
    _getShowOn() {
@@ -94,7 +99,12 @@
          calendar.close();
        }
        if (isNone(get(this, 'value'))) {
-         $input.inputmask('remove');
+
+         if (isPresent(this.get('_maskObj'))){
+           this.get('_maskObj').destroy();
+           this.set('_maskObj', null);
+         }
+
        }
      } else {
        this._initDateMask();
@@ -104,15 +114,57 @@
    _initDateMask() {
      let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
      let $input = $(this.element).find('.desktop-input');
-     let that = this;
-     $input.inputmask("datetime", {
-       "inputFormat": format.toLowerCase(),
-       "placeholder": INPUT_MASK_PLACEHOLDER,
-       "clearMaskOnLostFocus": true,
-       oncomplete() {
-         that.get('onValueChanged')(that.get('value'));
+
+     var maskOptions = {
+       mask: Date,
+       pattern: format,
+       placeholderChar: INPUT_MASK_PLACEHOLDER,
+
+       format: function(date) {
+         return moment(date).format(format);
+       },
+       parse: function(str) {
+         return moment(str, format);
+       },
+       blocks: {
+         YYYY: {
+           mask: IMask.MaskedRange,
+           from: 1970,
+           to: 2500
+         },
+         MM: {
+           mask: IMask.MaskedRange,
+           from: 1,
+           to: 12
+         },
+         DD: {
+           mask: IMask.MaskedRange,
+           from: 1,
+           to: 31
+         },
+         HH: {
+           mask: IMask.MaskedRange,
+           from: 0,
+           to: 23
+         },
+         mm: {
+           mask: IMask.MaskedRange,
+           from: 0,
+           to: 59
+         }
        }
-     });
+     };
+     var mask = IMask($input[0], maskOptions);
+     this.set('_maskObj', mask);
+
+     // $input.inputmask("datetime", {
+     //   "inputFormat": format.toLowerCase(),
+     //   "placeholder": INPUT_MASK_PLACEHOLDER,
+     //   "clearMaskOnLostFocus": true,
+     //   oncomplete() {
+     //     that.get('onValueChanged')(that.get('value'));
+     //   }
+     // });
 
    },
 

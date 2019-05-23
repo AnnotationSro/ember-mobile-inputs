@@ -5,10 +5,10 @@ module.exports = {
   afterInstall: function () {
     var that = this;
     return this.addAddonsToProject([
-        {name: "pikaday", target: "1.6.1"},
+        {name: "flatpickr", target: "^4.5.7"},
         {name: "'ember-cli-moment-shim'", target: "3.7.1"},
         {name: "moment", target: "2.22.2"},
-        {name: "jquery.inputmask", target: "4.0.6"}
+        {name: "imask", target: "^5.1.5"}
     ]);
   }
 };

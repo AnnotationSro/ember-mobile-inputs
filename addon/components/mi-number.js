@@ -38,6 +38,7 @@ import {
   inject
 } from '@ember/service';
 import { alias } from '@ember/object/computed';
+import IMask from 'imask';
 
 function groupNumber(nStr) {
   nStr += '';
@@ -186,7 +187,11 @@ export default Component.extend(MobileInputComponentMixin, {
     } else if (value === "-") {
       return "-";
     } else {
-      return parseFloat(value.replace(/[\\.,]/, '.'));
+      let v = parseFloat(value.replace(/[\\.,]/, '.'));
+      if (isNaN(v)){
+        return null;
+      }
+      return v;
     }
   },
 
@@ -196,17 +201,30 @@ export default Component.extend(MobileInputComponentMixin, {
 
     if (!isTouchDevice()) {
       let $input = $(this.element).find('.desktop-input');
-      $input.inputmask({
-        regex: this._numberRegexPattern(),
-        showMaskOnHover: false,
-        showMaskOnFocus: false,
-        isComplete: function(buffer, opts) {
-          return new RegExp(opts.regex).test(buffer.join(''));
-        }
-      });
+
+      var maskOptions = {
+        mask: new RegExp(`^${this._numberRegexPattern()}$`)
+      };
+      var mask = IMask($input[0], maskOptions);
+      this.set('_maskObj', mask);
+
+      // $input.inputmask({
+      //   regex: this._numberRegexPattern(),
+      //   showMaskOnHover: false,
+      //   showMaskOnFocus: false,
+      //   isComplete: function(buffer, opts) {
+      //     return new RegExp(opts.regex).test(buffer.join(''));
+      //   }
+      // });
     }
   },
 
+  willDestroyElement(){
+      this._super(...arguments);
+      if (isPresent(this.get('_maskObj'))){
+        this.get('_maskObj').destroy();
+      }
+  },
 
   actions: {
     valueChanged(newValue) {

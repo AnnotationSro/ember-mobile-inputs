@@ -16,7 +16,7 @@ module.exports = {
     }
 
 
-    app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');
+    // app.import('node_modules/inputmask/dist/jquery.inputmask.bundle.js');
 
 
     const localePaths = `l10n/${flatpickrLocale}.js`;
