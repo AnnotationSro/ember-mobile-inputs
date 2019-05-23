@@ -65,8 +65,8 @@
     "ember-cli-htmlbars": "^3.0.1",
     "ember-cli-node-assets": "^0.2.2",
     "imask": "^5.1.5",
-    "moment": "2.22.2",
-    "moment-timezone": ">= 0.5.23"
+    "moment": "2.24.2",
+    "moment-timezone": " 0.5.23"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
