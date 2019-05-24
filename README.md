@@ -45,7 +45,7 @@ You can limit number to be positive only by parameter `allowNegative=false`.
 {{mobile-input id="textInput" type='text' value=valueText disabled=isDisabled onValueChanged=(action 'callback')}}
 ```
 
-You can also define regex pattern for text input fields using `pattern` attribute.
+You can also define regex pattern for text input fields using `pattern` attribute. Note: regex must work also for intermediate states, not just final value.
 
 ### Password
 ```
@@ -70,7 +70,7 @@ With custom format
 
 # Configuration
 
-You can add a global configuration into your _config/enbironment.js_ file:
+You can add a global configuration into your _config/environment.js_ file:
 ```
 ENV['ember-mobile-inputs'] = {
   date:{
