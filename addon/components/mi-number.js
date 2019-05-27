@@ -265,6 +265,9 @@ export default Component.extend(MobileInputComponentMixin, {
         } = this.rangeCheckValue(v);
         this.set('value', newValue);
         if (valueChanged === true) {
+          if (isPresent(this.get('_maskObj'))) {
+            this.get('_maskObj').updateValue();
+          }
           this.get('onValueChanged')(newValue);
         }
       });
