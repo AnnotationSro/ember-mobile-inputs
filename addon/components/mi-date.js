@@ -100,7 +100,7 @@
        }
        if (isNone(get(this, 'value'))) {
 
-         if (isPresent(this.get('_maskObj'))){
+         if (isPresent(this.get('_maskObj'))) {
            this.get('_maskObj').destroy();
            this.set('_maskObj', null);
          }
@@ -154,7 +154,12 @@
          }
        }
      };
+
      var mask = IMask($input[0], maskOptions);
+     mask.on('complete', () => {
+       let date = maskOptions.parse(this.get('_maskObj').value);
+       this.get('onValueChanged')(date.toDate());
+     })
      this.set('_maskObj', mask);
 
      // $input.inputmask("datetime", {
@@ -185,6 +190,7 @@
      flatpickrConfig.onChange = function(selectedDates) {
        run(function() {
          set(that, 'value', selectedDates[0]);
+         that.get('_maskObj').updateValue();
          that.onValueChanged(selectedDates[0]);
 
        });
