@@ -6,28 +6,19 @@ import {
 import configuration from "../configuration";
 
 import {
-  get
-} from '@ember/object';
-import {
+  computed,
+  get,
+  getWithDefault,
   set
 } from '@ember/object';
 import {
-  isNone
-} from '@ember/utils';
-import {
+  isEmpty,
+  isNone,
   isPresent
 } from '@ember/utils';
-import {
-  getWithDefault
-} from '@ember/object';
 import Component from '@ember/component';
 import {
-  computed
-} from '@ember/object';
-import {
-  isEmpty
-} from '@ember/utils';
-import {
+  alias,
   and
 } from '@ember/object/computed';
 import $ from 'jquery';
@@ -37,7 +28,6 @@ import {
 import {
   inject
 } from '@ember/service';
-import { alias } from '@ember/object/computed';
 import IMask from 'imask';
 
 function groupNumber(nStr) {
@@ -153,6 +143,11 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+  /**
+   * returns tuple {newValue: newValue, valueChanged: boolean}
+   * boolean value represents, whether the value was corrected to be within min-max boundaries
+   */
+
   rangeCheckValue(valueArg) {
     let {
       min,
@@ -160,7 +155,10 @@ export default Component.extend(MobileInputComponentMixin, {
     } = this.getProperties('min', 'max');
 
     if (isNone(valueArg)) {
-      return 0;
+      return {
+        newValue: 0,
+        valueChanged: true
+      };
     }
 
     let value = valueArg;
@@ -169,16 +167,28 @@ export default Component.extend(MobileInputComponentMixin, {
     }
 
     if (isNaN(value) && isPresent(min)) {
-      return min;
+      return {
+        newValue: min,
+        valueChanged: true
+      };
     }
 
     if (isPresent(min) && value < min) {
-      return min;
+      return {
+        newValue: min,
+        valueChanged: true
+      };
     }
     if (isPresent(max) && value > max) {
-      return max;
+      return {
+        newValue: max,
+        valueChanged: true
+      };
     }
-    return value;
+    return {
+      newValue: value,
+      valueChanged: false
+    };
   },
 
   stringToFloat(value) {
@@ -188,7 +198,7 @@ export default Component.extend(MobileInputComponentMixin, {
       return "-";
     } else {
       let v = parseFloat(value.replace(/[\\.,]/, '.'));
-      if (isNaN(v)){
+      if (isNaN(v)) {
         return null;
       }
       return v;
@@ -219,11 +229,11 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  willDestroyElement(){
-      this._super(...arguments);
-      if (isPresent(this.get('_maskObj'))){
-        this.get('_maskObj').destroy();
-      }
+  willDestroyElement() {
+    this._super(...arguments);
+    if (isPresent(this.get('_maskObj'))) {
+      this.get('_maskObj').destroy();
+    }
   },
 
   actions: {
@@ -247,9 +257,16 @@ export default Component.extend(MobileInputComponentMixin, {
       //  }
     },
     checkRange(newValue) {
+      let v = newValue;
       schedule('actions', () => {
-        let value = this.rangeCheckValue(newValue);
-        this.set('value', value);
+        let {
+          newValue,
+          valueChanged
+        } = this.rangeCheckValue(v);
+        this.set('value', newValue);
+        if (valueChanged === true) {
+          this.get('onValueChanged')(newValue);
+        }
       });
     }
   }
