@@ -129,7 +129,7 @@
        blocks: {
          YYYY: {
            mask: IMask.MaskedRange,
-           from: 1970,
+           from: 1900,
            to: 2500
          },
          MM: {
