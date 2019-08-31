@@ -39,6 +39,9 @@ export default Component.extend({
     if (this.get('disabled')) {
       cls += ' disabled';
     }
+    if (this.get('readonly')) {
+      cls += ' readonly';
+    }
     return cls;
   }),
   mobileInputEventBus: inject('mobile-input-event-bus'),
@@ -51,12 +54,14 @@ export default Component.extend({
   type: 'text', //text, number, date
   value: null,
   disabled: false,
+  readonly: false,
   selectOnClick: null,
   autocomplete: 'on',
   neverNative: undefined,
 
   onValueChanged() {},
   onBlurChanged: null,
+  onClick: null,
 
   //text input
   pattern: null,
@@ -143,6 +148,13 @@ export default Component.extend({
       }
     }
 
+    if (isPresent(that.get('onClick'))) {
+      let that = this;
+      $input.on(`click.ember-mobile-input--${this.elementId}`, () => {
+        that.get('onClick')(that.element);
+      });
+    }
+
     $input.on(`input.ember-mobile-input--${this.elementId}`, () => {
       this.initBlurListener($input, onBlur);
     });
@@ -159,6 +171,7 @@ export default Component.extend({
 
 
     });
+
   },
 
   initBlurListener($input, onBlur = () => {}) {
@@ -190,6 +203,7 @@ export default Component.extend({
   willDestroyElement: function() {
     this._super(...arguments);
     let $input = $(this.element).find('input');
+    $input.off(`click.ember-mobile-input--${this.elementId}`);
     $input.off(`focus.ember-mobile-input--${this.elementId}`);
     $input.off(`blur.ember-mobile-input--${this.elementId}`);
   },
