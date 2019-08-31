@@ -34,8 +34,12 @@ export default Component.extend({
 
   classNameBindings: ['getClassNames'],
   attributeBindings: ['data-custom'],
-  getClassNames: computed(function() {
-    return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+  getClassNames: computed('disabled', function() {
+    let cls = `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+    if (this.get('disabled')) {
+      cls += ' disabled';
+    }
+    return cls;
   }),
   mobileInputEventBus: inject('mobile-input-event-bus'),
   tagName: 'span',
