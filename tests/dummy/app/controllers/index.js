@@ -20,7 +20,10 @@ export default Controller.extend({
   mobileInputEventBus: inject('mobile-input-event-bus'),
   mobileInputConfiguration: inject('mobile-input-configuration'),
 
-val: 123,
+  imaskOptions: {
+    mask: '{#}000[aaa]/NIC-`*[**]'
+  },
+  val: 123,
   init() {
     this._super(...arguments);
     this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {

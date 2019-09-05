@@ -65,6 +65,7 @@ export default Component.extend({
 
   //text input
   pattern: null,
+  imaskOptions: null,
 
   //number input
   min: null,

@@ -22,6 +22,7 @@ export default Component.extend(MobileInputComponentMixin, {
   tagName: 'span',
   onValueChanged() {},
   oldValue: null,
+  imaskOptions: null,
 
   init() {
     this._super(...arguments);
@@ -47,10 +48,10 @@ export default Component.extend(MobileInputComponentMixin, {
 
     if (isPresent(this.get('pattern'))) {
 
-      var maskOptions = {
+      let maskOptions = {
         mask: new RegExp(`^${this.get('pattern')}$`)
       };
-      var mask = IMask($input[0], maskOptions);
+      let mask = IMask($input[0], maskOptions);
       this.set('_maskObj', mask);
 
       // $input.inputmask({
@@ -61,6 +62,10 @@ export default Component.extend(MobileInputComponentMixin, {
       //     //return new RegExp(opts.regex).test(buffer.join(''));
       //   //}
       // });
+    }
+    if (isPresent(this.get('imaskOptions'))){
+      let mask = IMask($input[0], this.get('imaskOptions'));
+      this.set('_maskObj', mask);
     }
   },
 
