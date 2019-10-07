@@ -2,7 +2,7 @@
   <input class="desktop-input" value={{formatOnDisabledValue}} disabled="true">
 {{else}}
   {{#if mobileInputVisible}}
-    {{html-input class="native-input number-input" dataInput=dataInput value=desktopValue type="number" disabled=disabled placeholder=placeholder min=min max=max autocomplete=autocomplete pattern="[0-9]*"}}
+    {{html-input class="native-input number-input" dataInput=dataInput value=desktopValue type="number" readonly=readonly disabled=disabled placeholder=placeholder min=min max=max autocomplete=autocomplete pattern="[0-9]*"}}
   {{else}}
     <span {{action "inputClicked"}} role="button">
       <input class="desktop-input"
