@@ -161,7 +161,6 @@ export default Component.extend({
     });
 
     $input.on('touchend', () => {
-      // debugger;
       setTimeout(() => {
         scheduleOnce('afterRender', () => {
           let $mobileInput = $(this.element).find('.native-input');

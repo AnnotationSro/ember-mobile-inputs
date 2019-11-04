@@ -20,7 +20,8 @@
  } from '@ember/object';
  import {
    run,
-   scheduleOnce
+   scheduleOnce,
+   debounce
  } from '@ember/runloop';
  import $ from 'jquery';
  import {
@@ -90,6 +91,11 @@
        set(this, 'value', null);
      }
    },
+
+   runOnValueChanged(value){
+     debounce(this, this.get('onValueChanged'), value, 150);
+   },
+
    disabledObserver: observer('disabled', function() {
      if (this.get('disabled')) {
        let calendar = get(this, 'flatpickrCalendar');
@@ -155,12 +161,8 @@
 
      var mask = IMask($input[0], maskOptions);
      mask.on('complete', () => {
-       if (this.get('disableMaskChange') === true) {
-         this.set('disableMaskChange', false);
-       } else {
-         let date = maskOptions.parse(this.get('_maskObj').value);
-         this.get('onValueChanged')(date.toDate());
-       }
+       let date = maskOptions.parse(this.get('_maskObj').value);
+       this.runOnValueChanged(date.toDate());
      })
      this.set('_maskObj', mask);
 
@@ -194,7 +196,7 @@
          that.set('disableMaskChange', true);
          set(that, 'value', selectedDates[0]);
          that.get('_maskObj').updateValue();
-         that.onValueChanged(selectedDates[0]);
+         that.runOnValueChanged(selectedDates[0]);
 
        });
      };
