@@ -125,4 +125,4 @@ which will render:
 <span data-custom="hello world" class="ember-mobile-input ember-mobile-input-text ember-view">
  <!-- some more stuff here -->
 </span>
-``` 
+```
