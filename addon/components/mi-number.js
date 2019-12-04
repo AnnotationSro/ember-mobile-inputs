@@ -218,6 +218,10 @@ export default Component.extend(MobileInputComponentMixin, {
       var mask = IMask($input[0], maskOptions);
       this.set('_maskObj', mask);
 
+      $input.on('input.valuechange', () =>  {
+        this.valueChangedInternal($input.val());
+      });
+
       // $input.inputmask({
       //   regex: this._numberRegexPattern(),
       //   showMaskOnHover: false,
@@ -234,27 +238,33 @@ export default Component.extend(MobileInputComponentMixin, {
     if (isPresent(this.get('_maskObj'))) {
       this.get('_maskObj').destroy();
     }
+    let $input = $(this.element).find('.desktop-input');
+    $input.off('input.valuechange');
+  },
+
+  valueChangedInternal(newValue) {
+    if (isPresent(newValue) && newValue.match(/.*[\\.,]$/)) {
+      //new value ends with dot or comma - ignore that
+      return;
+    }
+    if (newValue === '') {
+      this.set('value', null);
+      this.get('onValueChanged')(null);
+      return;
+    }
+    // let value =  this.rangeCheckValue(newValue);
+    let value = this.stringToFloat(newValue);
+    this.get('onValueChanged')(value);
+    this.set('value', value);
+    //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
+    //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
+    //  $(this.element).find('input').val(value);
+    //  }
   },
 
   actions: {
     valueChanged(newValue) {
-      if (isPresent(newValue) && newValue.match(/.*[\\.,]$/)) {
-        //new value ends with dot or comma - ignore that
-        return;
-      }
-      if (newValue === '') {
-        this.set('value', null);
-        this.get('onValueChanged')(null);
-        return;
-      }
-      // let value =  this.rangeCheckValue(newValue);
-      let value = this.stringToFloat(newValue);
-      this.get('onValueChanged')(value);
-      this.set('value', value);
-      //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
-      //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
-      //  $(this.element).find('input').val(value);
-      //  }
+      this.valueChangedInternal(newValue);
     },
     checkRange(newValue) {
       let v = newValue;

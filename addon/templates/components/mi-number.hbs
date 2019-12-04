@@ -12,10 +12,9 @@
       placeholder={{placeholder}}
       min={{min}}
       max={{max}}
-      oninput={{action "valueChanged" value="target.value"}}
       onblur={{action "checkRange" value="target.value"}}
       autocomplete={{autocomplete}}
-      pattern="[0-9]*"
+      pattern="[0-9,\.]*"
       >
     </span>
   {{/if}}
