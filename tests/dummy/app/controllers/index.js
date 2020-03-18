@@ -3,6 +3,9 @@ import {
   inject
 } from '@ember/service';
 import moment from 'moment';
+import {
+  isPresent
+} from '@ember/utils';
 
 export default Controller.extend({
   valueNumber: null,
@@ -23,9 +26,12 @@ export default Controller.extend({
   imaskOptions: {
     mask: '{#}000[aaa]/NIC-`*[**]'
   },
+  imaskOptions2: {mask: '000000{/}0000'},
+
   val: 123,
   init() {
     this._super(...arguments);
+
     this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
       window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
     });
@@ -42,8 +48,24 @@ export default Controller.extend({
 
   actions: {
 
+    actionSetRegexValue(){
+        this.set('valueTextR', '1234567890');
+    },
+
     valueChanged(value) {
       window.console.log(`updated value: ${value}`);
+    },
+
+    valueChangedR(v){
+      let birthId = null;
+       if (isPresent(v)) {
+           birthId = String(v);
+           if (!birthId.includes('_') && isPresent(birthId)) {
+               birthId = birthId.replace('/', '');
+           }
+       }
+       console.log('changing value', birthId);
+       this.set('valueTextR', birthId);
     },
 
     toggleDisabled() {

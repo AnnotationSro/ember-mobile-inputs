@@ -15,6 +15,7 @@ import {
 } from '@ember/utils';
 import $ from 'jquery';
 import IMask from 'imask';
+import {next} from '@ember/runloop';
 
 
 export default Component.extend(MobileInputComponentMixin, {
@@ -65,9 +66,21 @@ export default Component.extend(MobileInputComponentMixin, {
     }
     if (isPresent(this.get('imaskOptions'))){
       let mask = IMask($input[0], this.get('imaskOptions'));
+      mask.on('accept', ()=>{
+        this.onInputChanged();
+      })
       this.set('_maskObj', mask);
     }
   },
+
+  valueObserver: observer('value', function(){
+    if (isPresent(this.get('_maskObj'))){
+      console.log('value observer', this.get('value'));
+      next(this, ()=>{
+        this.get('_maskObj').unmaskedValue = this.get('value');
+      });
+    }
+  }),
 
   willDestroyElement(){
     this._super(...arguments);
@@ -88,15 +101,29 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+onInputChanged(){
+  let newValue = this.get('value');
+  if (newValue === this.get('oldValue')) {
+    //this happens eg. when input is empty and user presses backspace
+    return;
+  }
+  this.set('oldValue', newValue);
+  if (isPresent(this.get('_maskObj'))){
+    // newValue = this.get('_maskObj').unmaskedValue;
+  }
+
+  next(this, ()=>{
+    this.get('onValueChanged')(newValue);
+  });
+
+},
+
   actions: {
     onKeyUp() {
-      let newValue = this.get('value');
-      if (newValue === this.get('oldValue')) {
-        //this happens eg. when input is empty and user presses backspace
+      if (isPresent(this.get('_maskObj'))){
         return;
       }
-      this.set('oldValue', newValue);
-      this.get('onValueChanged')(newValue);
+      this.onInputChanged();
     }
   }
 });

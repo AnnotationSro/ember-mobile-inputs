@@ -80,6 +80,15 @@
   <span id="textResult">{{valueText}}</span>
 </div>
 
+
+<h4>Text with regex</h4>
+<div>
+  {{mobile-input id="textInputR" imaskOptions=imaskOptions2 selectOnClick=true type='text' value=valueTextR
+  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'valueChangedR')}}
+  <span id="textResult">{{valueTextR}}</span>
+  <button {{action 'actionSetRegexValue'}}>Set value</button>
+</div>
+
 <h4>Text with regex (5 digits)</h4>
 <div>
   {{mobile-input id="textInputRegex" pattern="[0-9]{0,5}" selectOnClick=true type='text' value=valueRegexText
