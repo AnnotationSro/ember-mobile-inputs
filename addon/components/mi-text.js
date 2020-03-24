@@ -47,29 +47,22 @@ export default Component.extend(MobileInputComponentMixin, {
       return;
     }
 
-    if (isPresent(this.get('pattern'))) {
-
+	  let mask;
+	  if (isPresent(this.get('pattern'))) {
       let maskOptions = {
         mask: new RegExp(`^${this.get('pattern')}$`)
       };
-      let mask = IMask($input[0], maskOptions);
-      this.set('_maskObj', mask);
-
-      // $input.inputmask({
-      //   regex: this.get('pattern'),
-      //   showMaskOnHover: false,
-      //   showMaskOnFocus: false,
-      //   //isComplete: function(buffer, opts) {
-      //     //return new RegExp(opts.regex).test(buffer.join(''));
-      //   //}
-      // });
+      mask = IMask($input[0], maskOptions);
     }
     if (isPresent(this.get('imaskOptions'))){
-      let mask = IMask($input[0], this.get('imaskOptions'));
-      mask.on('accept', ()=>{
-        this.onInputChanged();
-      })
-      this.set('_maskObj', mask);
+      mask = IMask($input[0], this.get('imaskOptions'));
+    }
+
+    if (isPresent(mask)) {
+    	mask.on('accept', () => {
+    		this.onInputChanged();
+    	})
+    	this.set('_maskObj', mask);
     }
   },
 
