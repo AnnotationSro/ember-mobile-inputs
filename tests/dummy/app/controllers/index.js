@@ -48,6 +48,10 @@ export default Controller.extend({
 
   actions: {
 
+actionSetNumer(){
+  this.set('valueNumberController', Math.round(Math.random()*100));
+},
+
     actionSetRegexValue(){
         this.set('valueTextR', '1234567890');
     },

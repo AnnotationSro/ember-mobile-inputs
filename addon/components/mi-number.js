@@ -52,7 +52,17 @@ export default Component.extend(MobileInputComponentMixin, {
   min: null,
   max: null,
   onValueChanged() {},
+  _inputObject: null,
 
+  didReceiveAttrs() {
+    this._super(...arguments);
+    if (isPresent(this._inputObject)) {
+      let that = this;
+      this._inputObject.inputFocussed = function(parentThis) {
+        that._maskObj.updateValue();
+      }
+    }
+  },
 
   _getDecimalMark() {
     return getWithDefault(this, 'decimalMark', configuration.getNumberConfig().decimalMark);
@@ -218,18 +228,11 @@ export default Component.extend(MobileInputComponentMixin, {
       var mask = IMask($input[0], maskOptions);
       this.set('_maskObj', mask);
 
-      $input.on('input.valuechange', () =>  {
+      $input.on('input.valuechange', () => {
         this.valueChangedInternal($input.val());
       });
 
-      // $input.inputmask({
-      //   regex: this._numberRegexPattern(),
-      //   showMaskOnHover: false,
-      //   showMaskOnFocus: false,
-      //   isComplete: function(buffer, opts) {
-      //     return new RegExp(opts.regex).test(buffer.join(''));
-      //   }
-      // });
+
     }
   },
 

@@ -81,6 +81,7 @@ export default Component.extend({
   oldValue: null,
   valueOnFocus: null,
   _initBlurListenerInitialized: false,
+  _inputObject: null,
 
   _getSelectOnClick() {
     let selectOnClick = this.get('selectOnClick');
@@ -99,10 +100,16 @@ export default Component.extend({
     this._super(...arguments);
 
     let $input = $(this.element).find('input');
+    this.set('_inputObject', {});
 
     if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
       let that = this;
       $input.on(`focus.ember-mobile-input--${this.elementId}`, function() {
+
+        if (isPresent(that.get('_inputObject.inputFocussed'))){
+          that._inputObject.inputFocussed(that);
+        }
+
         if (that._getSelectOnClick() === true) {
           setTimeout(() => {
             try {
