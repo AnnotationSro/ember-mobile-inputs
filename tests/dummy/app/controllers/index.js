@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import {
   inject
 } from '@ember/service';
-import moment from 'moment';
+import * as dayjs from 'dayjs';
 import {
   isPresent
 } from '@ember/utils';
@@ -41,7 +41,7 @@ export default Controller.extend({
     });
 
     this.set('optionsDateOpen', {
-      defaultDateOnOpen: moment('1980-01-01').toDate()
+      defaultDateOnOpen: dayjs('1980-01-01').toDate()
     });
     // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },
