@@ -28,8 +28,8 @@ module.exports = {
       app.import(`node_modules/flatpickr/dist/${f}`);
     });
 
-    app.import('node_modules/moment/moment.js');
-
+    app.import('node_modules/dayjs/dayjs.min.js');
+    app.import('node_modules/dayjs/locale/sk.js');
   },
 
   options: {
