@@ -1,21 +1,16 @@
-import layout from '../templates/components/mi-text';
-import MobileInputComponentMixin from "../mixins/mobile-input-component";
-import {
-	get
-} from '@ember/object';
-import {
-	getWithDefault
-} from '@ember/object';
-import Component from '@ember/component';
-import {
-	computed, observer
-} from '@ember/object';
+import IMask from 'imask';
+
+import $ from 'jquery';
+import { computed, get, observer } from '@ember/object';
 import {
 	isPresent
 } from '@ember/utils';
-import $ from 'jquery';
-import IMask from 'imask';
 import {next} from '@ember/runloop';
+import Component from '@ember/component';
+
+import { getWithDefault } from '../utils/mobile-utils';
+import MobileInputComponentMixin from "../mixins/mobile-input-component";
+import layout from '../templates/components/mi-text';
 
 
 export default Component.extend(MobileInputComponentMixin, {

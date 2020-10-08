@@ -1,14 +1,13 @@
 import layout from "../templates/components/mi-number";
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
 import {
-  isTouchDevice
+  isTouchDevice, getWithDefault
 } from "../utils/mobile-utils";
 import configuration from "../configuration";
 
 import {
   computed,
   get,
-  getWithDefault,
   set
 } from '@ember/object';
 import {

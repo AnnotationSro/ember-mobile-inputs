@@ -1,7 +1,7 @@
  import layout from "../templates/components/mi-date";
  import MobileInputComponentMixin from "../mixins/mobile-input-component";
  import {
-   isTouchDevice
+   isTouchDevice, getWithDefault
  } from "../utils/mobile-utils";
  import configuration from "../configuration";
  import {
@@ -15,9 +15,7 @@
    isEmpty,
    isPresent
  } from '@ember/utils';
- import {
-   getWithDefault
- } from '@ember/object';
+
  import {
    run,
    scheduleOnce,
