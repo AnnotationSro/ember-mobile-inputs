@@ -1,33 +1,22 @@
-import layout from "../templates/components/mobile-input";
-import configuration from "../configuration";
-import Ember from 'ember';
+import $ from 'jquery';
 import {
-  set
-} from '@ember/object';
-import {
-  getWithDefault
-} from '@ember/object';
-import {
-  isPresent
-} from '@ember/utils';
-import Component from '@ember/component';
-import {
-  computed
-} from '@ember/object';
+  alias
+} from '@ember/object/computed';
+import { computed, set } from '@ember/object';
 import {
   inject
 } from '@ember/service';
-import {
-  isNone
-} from '@ember/utils';
-import $ from 'jquery';
+import { isNone, isPresent } from '@ember/utils';
 import {
   scheduleOnce,
   run
 } from '@ember/runloop';
-import {
-  alias
-} from '@ember/object/computed';
+import Component from '@ember/component';
+import Ember from 'ember';
+
+import { getWithDefault } from '../utils/mobile-utils';
+import configuration from "../configuration";
+import layout from "../templates/components/mobile-input";
 
 
 export default Component.extend({

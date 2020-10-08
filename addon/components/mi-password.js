@@ -1,15 +1,9 @@
-import layout from '../templates/components/mi-password';
-import MobileInputComponentMixin from "../mixins/mobile-input-component";
-import {
-  get
-} from '@ember/object';
-import {
-  getWithDefault
-} from '@ember/object';
+import { computed, get } from '@ember/object';
 import Component from '@ember/component';
-import {
-  computed
-} from '@ember/object';
+
+import { getWithDefault } from '../utils/mobile-utils';
+import MobileInputComponentMixin from "../mixins/mobile-input-component";
+import layout from '../templates/components/mi-password';
 
 
 export default Component.extend(MobileInputComponentMixin, {
