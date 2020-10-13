@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $ from 'cash-dom';
 
 let CONFIG_PROPERTIES = {
   eventOnBlurChanged: false,

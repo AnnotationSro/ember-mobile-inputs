@@ -1,6 +1,6 @@
 import { test } from "qunit";
 import moduleForAcceptance from "../../tests/helpers/module-for-acceptance";
-import $ from 'jquery';
+import $ from 'cash-dom';
 
 const NUMBER_INPUT = '#numberInput input';
 const NUMBER_INPUT_MINMAX = '#minMaxNumberInput input';

@@ -8,7 +8,7 @@ import Mixin from '@ember/object/mixin';
 import {
   scheduleOnce
 } from '@ember/runloop';
-import $ from 'jquery';
+import $ from 'cash-dom';
 import {
   inject
 } from '@ember/service';

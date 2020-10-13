@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $ from 'cash-dom';
 import {
   alias
 } from '@ember/object/computed';

@@ -20,7 +20,7 @@ import {
   alias,
   and
 } from '@ember/object/computed';
-import $ from 'jquery';
+import $ from 'cash-dom';
 import {
   schedule
 } from '@ember/runloop';

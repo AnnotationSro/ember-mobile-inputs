@@ -1,6 +1,6 @@
 import IMask from 'imask';
 
-import $ from 'jquery';
+import $ from 'cash-dom';
 import { computed, get, observer } from '@ember/object';
 import {
 	isPresent

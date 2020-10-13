@@ -21,7 +21,7 @@
    scheduleOnce,
    debounce
  } from '@ember/runloop';
- import $ from 'jquery';
+ import $ from 'cash-dom';
  import {
    assign
  } from '@ember/polyfills';
@@ -128,9 +128,7 @@
          return dayjs(date).format(format);
        },
        parse: function(str) {
-         dayjs.locale('sk');
-         console.log('locale',dayjs.locale());
-         return dayjs(str, format, 'sk');
+         return dayjs(str, format);
        },
        blocks: {
          YYYY: {
