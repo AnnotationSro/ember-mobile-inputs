@@ -29,7 +29,7 @@
  import {
    on
  } from '@ember/object/evented';
- import * as dayjs from 'dayjs';
+ import moment from "moment";
  import IMask from 'imask';
 
  const INPUT_MASK_PLACEHOLDER = '_';
@@ -77,7 +77,7 @@
      return maskFormat;
    },
 
-   _getDayjsDateFormat() {
+   _getMomentFormat() {
      return this._parseFormat(this._getDateFormat());
    },
 
@@ -123,10 +123,10 @@
        placeholderChar: INPUT_MASK_PLACEHOLDER,
 
        format: function(date) {
-         return dayjs(date).format(format);
+         return moment(date).format(format);
        },
        parse: function(str) {
-         return dayjs(str, format);
+         return moment(str, format);
        },
        blocks: {
          YYYY: {
@@ -273,11 +273,11 @@
          return null;
        }
 
-       let dateFormat = this._getDayjsDateFormat();
-       return dayjs(value).format(dateFormat);
+       let momentFormat = this._getMomentFormat();
+       return moment(value).format(momentFormat);
      },
      set(key, value) {
-       let formattedDate = dayjs(value, this._getDayjsDateFormat(), true);
+       let formattedDate = moment(value, this._getMomentFormat(), true);
        if (!formattedDate.isValid()) {
          set(this, 'value', null);
        } else {
@@ -293,13 +293,13 @@
          return null;
        }
 
-       return dayjs(get(this, 'value')).format('YYYY-MM-DD');
+       return moment(get(this, 'value')).format('YYYY-MM-DD');
      },
      set(key, value) {
        if (isNone(value)) {
          return value;
        }
-       let formattedDate = dayjs(value, 'YYYY-MM-DD', true);
+       let formattedDate = moment(value, 'YYYY-MM-DD', true);
        if (!formattedDate.isValid()) {
          set(this, 'value', null);
        } else {
