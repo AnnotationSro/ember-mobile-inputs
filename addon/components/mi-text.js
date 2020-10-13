@@ -69,7 +69,6 @@ export default Component.extend(MobileInputComponentMixin, {
 
 	valueObserver: observer('value', function () {
 		if (isPresent(this.get('_maskObj'))) {
-			console.log('value observer', this.get('value'));
 			next(this, () => {
 				this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.get('value') : "";
 			});
