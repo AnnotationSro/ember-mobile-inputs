@@ -29,7 +29,8 @@
  import {
    on
  } from '@ember/object/evented';
- import moment from "moment";
+ import * as dayjs from "dayjs";
+ import * as customParseFormat from "dayjs/plugin/customParseFormat";
  import IMask from 'imask';
 
  const INPUT_MASK_PLACEHOLDER = '_';
@@ -77,7 +78,7 @@
      return maskFormat;
    },
 
-   _getMomentFormat() {
+   _getDayjsFormat() {
      return this._parseFormat(this._getDateFormat());
    },
 
@@ -116,6 +117,7 @@
    _initDateMask() {
      let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
      let $input = $(this.element).find('.desktop-input');
+     dayjs.extend(customParseFormat);
 
      var maskOptions = {
        mask: Date,
@@ -123,10 +125,12 @@
        placeholderChar: INPUT_MASK_PLACEHOLDER,
 
        format: function(date) {
-         return moment(date).format(format);
+         return dayjs(date).format(format);
        },
        parse: function(str) {
-         return moment(str, format);
+         dayjs.locale('sk');
+         console.log('locale',dayjs.locale());
+         return dayjs(str, format, 'sk');
        },
        blocks: {
          YYYY: {
@@ -273,11 +277,11 @@
          return null;
        }
 
-       let momentFormat = this._getMomentFormat();
-       return moment(value).format(momentFormat);
+       let momentFormat = this._getDayjsFormat();
+       return dayjs(value).format(momentFormat);
      },
      set(key, value) {
-       let formattedDate = moment(value, this._getMomentFormat(), true);
+       let formattedDate = dayjs(value, this._getDayjsFormat(), true);
        if (!formattedDate.isValid()) {
          set(this, 'value', null);
        } else {
@@ -293,13 +297,13 @@
          return null;
        }
 
-       return moment(get(this, 'value')).format('YYYY-MM-DD');
+       return dayjs(get(this, 'value')).format('YYYY-MM-DD');
      },
      set(key, value) {
        if (isNone(value)) {
          return value;
        }
-       let formattedDate = moment(value, 'YYYY-MM-DD', true);
+       let formattedDate = dayjs(value, 'YYYY-MM-DD', true);
        if (!formattedDate.isValid()) {
          set(this, 'value', null);
        } else {
