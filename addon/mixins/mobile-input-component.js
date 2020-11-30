@@ -15,7 +15,6 @@ import {
 import {
   alias
 } from '@ember/object/computed';
-import $ from 'cash-dom';
 
 export default Mixin.create({
 
