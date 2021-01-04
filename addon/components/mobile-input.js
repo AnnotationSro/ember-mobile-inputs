@@ -100,12 +100,14 @@ export default Component.extend({
         }
 
         if (that._getSelectOnClick() === true) {
+
           setTimeout(() => {
             try {
               this.setSelectionRange(0, this.value.length);
             } catch (e) {
               //this does not work on email input: "The input element's type ('email') does not support selection."
             }
+
           });
         }
 

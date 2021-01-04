@@ -58,7 +58,9 @@ export default Component.extend(MobileInputComponentMixin, {
     if (isPresent(this._inputObject)) {
       let that = this;
       this._inputObject.inputFocussed = function(parentThis) {
-        that._maskObj.updateValue();
+      	if (isPresent(that._maskObj)) {
+			that._maskObj.updateValue();
+		}
       }
     }
   },
