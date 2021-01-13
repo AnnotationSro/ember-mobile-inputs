@@ -68,17 +68,20 @@ export default Component.extend(MobileInputComponentMixin, {
 	},
 
 	valueObserver: observer('value', function () {
-		if (isPresent(this.get('_maskObj'))) {
+
 			next(this, () => {
-				this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.get('value') : "";
+				if (isPresent(this.get('_maskObj'))) {
+					this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.get('value') : "";
+				}
 			});
-		}
+
 	}),
 
 	willDestroyElement() {
 		this._super(...arguments);
 		if (isPresent(this.get('_maskObj'))) {
 			this.get('_maskObj').destroy();
+			this.set('_maskObj', null);
 			$(this.element).find('input').off("paste");
 		}
 	},
