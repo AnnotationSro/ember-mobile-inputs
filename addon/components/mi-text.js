@@ -99,7 +99,7 @@ export default Component.extend(MobileInputComponentMixin, {
 	}),
 
 	onInputChanged() {
-		let newValue = this.get('value');
+    let newValue =Ember.isPresent(this.get('_maskObj')) ? this.get('_maskObj').unmaskedValue : this.get('value');
 		if (newValue === this.get('oldValue')) {
 			//this happens eg. when input is empty and user presses backspace
 			return;
