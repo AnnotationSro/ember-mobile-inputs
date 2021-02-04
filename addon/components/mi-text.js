@@ -1,74 +1,126 @@
-import layout from '../templates/components/mi-text';
-import MobileInputComponentMixin from "../mixins/mobile-input-component";
+import IMask from 'imask';
+
+import $ from 'cash-dom';
+import { computed, get, observer } from '@ember/object';
 import {
-  get
-} from '@ember/object';
-import {
-  getWithDefault
-} from '@ember/object';
-import Component from '@ember/component';
-import {
-  computed, observer
-} from '@ember/object';
-import {
-  isPresent
+	isPresent
 } from '@ember/utils';
-import $ from 'jquery';
+import {next} from '@ember/runloop';
+import Component from '@ember/component';
+
+import { getWithDefault } from '../utils/mobile-utils';
+import MobileInputComponentMixin from "../mixins/mobile-input-component";
+import layout from '../templates/components/mi-text';
 
 
 export default Component.extend(MobileInputComponentMixin, {
-  layout,
-  tagName: 'span',
-  onValueChanged() {},
-  oldValue: null,
+	layout,
+	tagName: 'span',
+	onValueChanged() {
+	},
+	oldValue: null,
+	imaskOptions: null,
 
-  init() {
-    this._super(...arguments);
-    this.oldValue = this.value;
-  },
+	init() {
+		this._super(...arguments);
+		this.oldValue = this.value;
+	},
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.initPattern();
-  },
+	didInsertElement() {
+		this._super(...arguments);
+		this.initPattern();
+	},
 
-  initPattern(){
-    let $input = $(this.element).find('input');
-    $input.inputmask('remove');
-    if (isPresent(this.get('pattern'))) {
+	initPattern() {
+		let $input = $(this.element).find('input');
+		// $input.inputmask('remove');
 
-      $input.inputmask({
-        regex: this.get('pattern'),
-        showMaskOnHover: false,
-        showMaskOnFocus: false,
-        //isComplete: function(buffer, opts) {
-          //return new RegExp(opts.regex).test(buffer.join(''));
-        //}
-      });
-    }
-  },
+		if (isPresent(this.get('_maskObj'))) {
+			//pattern was previously defined and now has changed
+			this.get('_maskObj').updateOptions({
+				mask: new RegExp(`^${this.get('pattern')}$`)
+			});
+			return;
+		}
 
-  patternObserver: observer('pattern', function(){
-      this.initPattern();
-  }),
+		let mask;
+		if (isPresent(this.get('pattern'))) {
+			let maskOptions = {
+				mask: new RegExp(`^${this.get('pattern')}$`)
+			};
+			mask = IMask($input[0], maskOptions);
+		}
+		if (isPresent(this.get('imaskOptions'))) {
+			mask = IMask($input[0], this.get('imaskOptions'));
+		}
 
-  placeholder: computed('formattedPlaceholder', 'disabled', function() {
-    if (get(this, 'disabled')) {
-      return "";
-    } else {
-      return getWithDefault(this, 'formattedPlaceholder', "");
-    }
-  }),
+		if (isPresent(mask)) {
+			mask.on('accept', () => {
+				this.onInputChanged();
+			})
+			$(this.element).find('input').on("paste", (e) => {
+				next(this, () => {
+					this.onInputChanged();
+				});
+			});
+			this.set('_maskObj', mask);
+		}
+	},
 
-  actions: {
-    onKeyUp() {
-      let newValue = this.get('value');
-      if (newValue === this.get('oldValue')) {
-        //this happens eg. when input is empty and user presses backspace
-        return;
-      }
-      this.set('oldValue', newValue);
-      this.get('onValueChanged')(newValue);
-    }
-  }
+	valueObserver: observer('value', function () {
+
+			next(this, () => {
+				if (isPresent(this.get('_maskObj'))) {
+					this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.get('value') : "";
+				}
+			});
+
+	}),
+
+	willDestroyElement() {
+		this._super(...arguments);
+		if (isPresent(this.get('_maskObj'))) {
+			this.get('_maskObj').destroy();
+			this.set('_maskObj', null);
+			$(this.element).find('input').off("paste");
+		}
+	},
+
+	patternObserver: observer('pattern', function () {
+		this.initPattern();
+	}),
+
+	placeholder: computed('formattedPlaceholder', 'disabled', function () {
+		if (get(this, 'disabled')) {
+			return "";
+		} else {
+			return getWithDefault(this, 'formattedPlaceholder', "");
+		}
+	}),
+
+	onInputChanged() {
+    let newValue =Ember.isPresent(this.get('_maskObj')) ? this.get('_maskObj').unmaskedValue : this.get('value');
+		if (newValue === this.get('oldValue')) {
+			//this happens eg. when input is empty and user presses backspace
+			return;
+		}
+		this.set('oldValue', newValue);
+		if (isPresent(this.get('_maskObj'))) {
+			// newValue = this.get('_maskObj').unmaskedValue;
+		}
+
+		next(this, () => {
+			this.get('onValueChanged')(newValue);
+		});
+
+	},
+
+	actions: {
+		onKeyUp() {
+			if (isPresent(this.get('_maskObj'))) {
+				return;
+			}
+			this.onInputChanged();
+		}
+	}
 });

@@ -2,7 +2,10 @@ import Controller from '@ember/controller';
 import {
   inject
 } from '@ember/service';
-import moment from 'moment';
+import {
+  isPresent
+} from '@ember/utils';
+import * as dayjs from "dayjs";
 
 export default Controller.extend({
   valueNumber: null,
@@ -20,9 +23,17 @@ export default Controller.extend({
   mobileInputEventBus: inject('mobile-input-event-bus'),
   mobileInputConfiguration: inject('mobile-input-configuration'),
 
-val: 123,
+  imaskOptions: {
+    mask: '{#}000[aaa]/NIC-`*[**]'
+  },
+  imaskOptions2: {mask: '000000{/}0000'},
+
+  val: 123,
   init() {
     this._super(...arguments);
+
+
+
     this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
       window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
     });
@@ -32,15 +43,35 @@ val: 123,
     });
 
     this.set('optionsDateOpen', {
-      defaultDateOnOpen: moment('1980-01-01').toDate()
+      defaultDateOnOpen: dayjs('1980-01-01').toDate()
     });
     // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },
 
   actions: {
 
+actionSetNumer(){
+  this.set('valueNumberController', Math.round(Math.random()*100));
+},
+
+    actionSetRegexValue(){
+        this.set('valueTextR', '1234567890');
+    },
+
     valueChanged(value) {
       window.console.log(`updated value: ${value}`);
+    },
+
+    valueChangedR(v){
+      let birthId = null;
+       if (isPresent(v)) {
+           birthId = String(v);
+           if (!birthId.includes('_') && isPresent(birthId)) {
+               birthId = birthId.replace('/', '');
+           }
+       }
+       console.log('changing value', birthId);
+       this.set('valueTextR', birthId);
     },
 
     toggleDisabled() {

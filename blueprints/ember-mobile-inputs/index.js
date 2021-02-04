@@ -5,13 +5,10 @@ module.exports = {
   afterInstall: function () {
     var that = this;
     return this.addAddonsToProject([
-        {name: "pikaday", target: "1.6.1"},
-        {name: "'ember-cli-moment-shim'", target: "3.7.1"},
-        {name: "moment", target: "2.22.2"},
-    ]).then(function(){
-      return that.addBowerPackagesToProject([
-        {name: "jquery.inputmask", target: "4.0.2"}
-      ]);
-    });
+        {name: "flatpickr", target: "^4.5.7"},
+        {name: "dayjs", target: "1.9.3"},
+        {name: "cash-dom", target: "8.1.0"},
+        {name: "imask", target: "^5.1.5"}
+    ]);
   }
 };

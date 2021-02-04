@@ -1,41 +1,37 @@
-import layout from "../templates/components/mobile-input";
-import configuration from "../configuration";
-import Ember from 'ember';
+import $ from 'cash-dom';
 import {
-  set
-} from '@ember/object';
-import {
-  getWithDefault
-} from '@ember/object';
-import {
-  isPresent
-} from '@ember/utils';
-import Component from '@ember/component';
-import {
-  computed
-} from '@ember/object';
+  alias
+} from '@ember/object/computed';
+import { computed, set } from '@ember/object';
 import {
   inject
 } from '@ember/service';
-import {
-  isNone
-} from '@ember/utils';
-import $ from 'jquery';
+import { isNone, isPresent } from '@ember/utils';
 import {
   scheduleOnce,
   run
 } from '@ember/runloop';
-import {
-  alias
-} from '@ember/object/computed';
+import Component from '@ember/component';
+import Ember from 'ember';
+
+import { getWithDefault } from '../utils/mobile-utils';
+import configuration from "../configuration";
+import layout from "../templates/components/mobile-input";
 
 
 export default Component.extend({
 
   classNameBindings: ['getClassNames'],
   attributeBindings: ['data-custom'],
-  getClassNames: computed(function() {
-    return `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+  getClassNames: computed('disabled', function() {
+    let cls = `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+    if (this.get('disabled')) {
+      cls += ' disabled';
+    }
+    if (this.get('readonly')) {
+      cls += ' readonly';
+    }
+    return cls;
   }),
   mobileInputEventBus: inject('mobile-input-event-bus'),
   tagName: 'span',
@@ -47,15 +43,18 @@ export default Component.extend({
   type: 'text', //text, number, date
   value: null,
   disabled: false,
+  readonly: false,
   selectOnClick: null,
   autocomplete: 'on',
   neverNative: undefined,
 
   onValueChanged() {},
   onBlurChanged: null,
+  onClick: null,
 
   //text input
   pattern: null,
+  imaskOptions: null,
 
   //number input
   min: null,
@@ -71,6 +70,7 @@ export default Component.extend({
   oldValue: null,
   valueOnFocus: null,
   _initBlurListenerInitialized: false,
+  _inputObject: null,
 
   _getSelectOnClick() {
     let selectOnClick = this.get('selectOnClick');
@@ -89,17 +89,25 @@ export default Component.extend({
     this._super(...arguments);
 
     let $input = $(this.element).find('input');
+    this.set('_inputObject', {});
 
     if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
       let that = this;
       $input.on(`focus.ember-mobile-input--${this.elementId}`, function() {
+
+        if (isPresent(that.get('_inputObject.inputFocussed'))){
+          that._inputObject.inputFocussed(that);
+        }
+
         if (that._getSelectOnClick() === true) {
+
           setTimeout(() => {
             try {
               this.setSelectionRange(0, this.value.length);
             } catch (e) {
               //this does not work on email input: "The input element's type ('email') does not support selection."
             }
+
           });
         }
 
@@ -139,12 +147,18 @@ export default Component.extend({
       }
     }
 
+    if (isPresent(that.get('onClick'))) {
+      let that = this;
+      $input.on(`click.ember-mobile-input--${this.elementId}`, () => {
+        that.get('onClick')(that.element);
+      });
+    }
+
     $input.on(`input.ember-mobile-input--${this.elementId}`, () => {
       this.initBlurListener($input, onBlur);
     });
 
     $input.on('touchend', () => {
-      // debugger;
       setTimeout(() => {
         scheduleOnce('afterRender', () => {
           let $mobileInput = $(this.element).find('.native-input');
@@ -155,6 +169,7 @@ export default Component.extend({
 
 
     });
+
   },
 
   initBlurListener($input, onBlur = () => {}) {
@@ -186,6 +201,7 @@ export default Component.extend({
   willDestroyElement: function() {
     this._super(...arguments);
     let $input = $(this.element).find('input');
+    $input.off(`click.ember-mobile-input--${this.elementId}`);
     $input.off(`focus.ember-mobile-input--${this.elementId}`);
     $input.off(`blur.ember-mobile-input--${this.elementId}`);
   },

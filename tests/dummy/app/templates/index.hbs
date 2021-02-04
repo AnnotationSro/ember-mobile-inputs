@@ -1,5 +1,10 @@
 <h3>Try these inputs on desktop and mobile as well - observe the difference.</h3>
 
+<!-- <h4>Imask</h4>
+<div>
+  {{mobile-input type="text" imaskOptions=imaskOptions value=val}}
+</div> -->
+
 <h4>Custom mobile input</h4>
 <div>
   {{#mobile-input type="custom" mobileType="number" value=val onMobileInputVisibleChanged=(action 'onMobileInputVisibleChanged')}}
@@ -36,6 +41,7 @@
 <div>
   {{mobile-input id="numberInputController" type='number' value=valueNumberController disabled=disabled placeholder="Some number here"}}
   <span id="numberControllerResult">{{valueNumberController}}</span>
+  <button {{action 'actionSetNumer'}}>Set value</button>
 </div>
 
 <h4>With comma decimal mark</h4>
@@ -75,9 +81,18 @@
   <span id="textResult">{{valueText}}</span>
 </div>
 
+
+<h4>Text with regex</h4>s
+<div>
+  {{mobile-input id="textInputR" imaskOptions=imaskOptions2 selectOnClick=true type='text' value=valueTextR
+  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'valueChangedR')}}
+  <span id="textResult">{{valueTextR}}</span>
+  <button {{action 'actionSetRegexValue'}}>Set value</button>
+</div>
+
 <h4>Text with regex (5 digits)</h4>
 <div>
-  {{mobile-input id="textInputRegex" pattern="[0-9]{5}" selectOnClick=true type='text' value=valueRegexText
+  {{mobile-input id="textInputRegex" pattern="[0-9]{0,5}" selectOnClick=true type='text' value=valueRegexText
   disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
   <span id="textRegexResult">{{valueRegexText}}</span>
 </div>
@@ -108,7 +123,10 @@
 
 <h4>Never use native datepicker</h4>
 <div>
-  {{mobile-input id="dateInputNeverNative" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged') neverNative=true}}
+  {{mobile-input id="dateInputNeverNative" dataInput='{"a":1, "b":2}'
+   type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged')
+   onBlurChanged=(action 'onBlurChanged')
+   neverNative=true}}
   <span id="dateResult">{{valueDate}}</span>
 </div>
 

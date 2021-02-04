@@ -1,43 +1,33 @@
 import layout from "../templates/components/mi-number";
 import MobileInputComponentMixin from "../mixins/mobile-input-component";
 import {
-  isTouchDevice
+  isTouchDevice, getWithDefault
 } from "../utils/mobile-utils";
 import configuration from "../configuration";
 
 import {
-  get
-} from '@ember/object';
-import {
+  computed,
+  get,
   set
 } from '@ember/object';
 import {
-  isNone
-} from '@ember/utils';
-import {
+  isEmpty,
+  isNone,
   isPresent
 } from '@ember/utils';
-import {
-  getWithDefault
-} from '@ember/object';
 import Component from '@ember/component';
 import {
-  computed
-} from '@ember/object';
-import {
-  isEmpty
-} from '@ember/utils';
-import {
+  alias,
   and
 } from '@ember/object/computed';
-import $ from 'jquery';
+import $ from 'cash-dom';
 import {
   schedule
 } from '@ember/runloop';
 import {
   inject
 } from '@ember/service';
-import { alias } from '@ember/object/computed';
+import IMask from 'imask';
 
 function groupNumber(nStr) {
   nStr += '';
@@ -61,7 +51,19 @@ export default Component.extend(MobileInputComponentMixin, {
   min: null,
   max: null,
   onValueChanged() {},
+  _inputObject: null,
 
+  didReceiveAttrs() {
+    this._super(...arguments);
+    if (isPresent(this._inputObject)) {
+      let that = this;
+      this._inputObject.inputFocussed = function(parentThis) {
+      	if (isPresent(that._maskObj)) {
+			that._maskObj.updateValue();
+		}
+      }
+    }
+  },
 
   _getDecimalMark() {
     return getWithDefault(this, 'decimalMark', configuration.getNumberConfig().decimalMark);
@@ -152,6 +154,11 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+  /**
+   * returns tuple {newValue: newValue, valueChanged: boolean}
+   * boolean value represents, whether the value was corrected to be within min-max boundaries
+   */
+
   rangeCheckValue(valueArg) {
     let {
       min,
@@ -159,7 +166,10 @@ export default Component.extend(MobileInputComponentMixin, {
     } = this.getProperties('min', 'max');
 
     if (isNone(valueArg)) {
-      return 0;
+      return {
+        newValue: 0,
+        valueChanged: true
+      };
     }
 
     let value = valueArg;
@@ -168,16 +178,28 @@ export default Component.extend(MobileInputComponentMixin, {
     }
 
     if (isNaN(value) && isPresent(min)) {
-      return min;
+      return {
+        newValue: min,
+        valueChanged: true
+      };
     }
 
     if (isPresent(min) && value < min) {
-      return min;
+      return {
+        newValue: min,
+        valueChanged: true
+      };
     }
     if (isPresent(max) && value > max) {
-      return max;
+      return {
+        newValue: max,
+        valueChanged: true
+      };
     }
-    return value;
+    return {
+      newValue: value,
+      valueChanged: false
+    };
   },
 
   stringToFloat(value) {
@@ -186,7 +208,11 @@ export default Component.extend(MobileInputComponentMixin, {
     } else if (value === "-") {
       return "-";
     } else {
-      return parseFloat(value.replace(/[\\.,]/, '.'));
+      let v = parseFloat(value.replace(/[\\.,]/, '.'));
+      if (isNaN(v)) {
+        return null;
+      }
+      return v;
     }
   },
 
@@ -196,42 +222,68 @@ export default Component.extend(MobileInputComponentMixin, {
 
     if (!isTouchDevice()) {
       let $input = $(this.element).find('.desktop-input');
-      $input.inputmask({
-        regex: this._numberRegexPattern(),
-        showMaskOnHover: false,
-        showMaskOnFocus: false,
-        isComplete: function(buffer, opts) {
-          return new RegExp(opts.regex).test(buffer.join(''));
-        }
+
+      var maskOptions = {
+        mask: new RegExp(`^${this._numberRegexPattern()}$`)
+      };
+      var mask = IMask($input[0], maskOptions);
+      this.set('_maskObj', mask);
+
+      $input.on('input.valuechange', () => {
+        this.valueChangedInternal($input.val());
       });
+
+
     }
   },
 
+  willDestroyElement() {
+    this._super(...arguments);
+    if (isPresent(this.get('_maskObj'))) {
+      this.get('_maskObj').destroy();
+    }
+    let $input = $(this.element).find('.desktop-input');
+    $input.off('input.valuechange');
+  },
+
+  valueChangedInternal(newValue) {
+    if (isPresent(newValue) && newValue.match(/.*[\\.,]$/)) {
+      //new value ends with dot or comma - ignore that
+      return;
+    }
+    if (newValue === '') {
+      this.set('value', null);
+      this.get('onValueChanged')(null);
+      return;
+    }
+    // let value =  this.rangeCheckValue(newValue);
+    let value = this.stringToFloat(newValue);
+    this.get('onValueChanged')(value);
+    this.set('value', value);
+    //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
+    //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
+    //  $(this.element).find('input').val(value);
+    //  }
+  },
 
   actions: {
     valueChanged(newValue) {
-      if (isPresent(newValue) && newValue.match(/.*[\\.,]$/)) {
-        //new value ends with dot or comma - ignore that
-        return;
-      }
-      if (newValue === '') {
-        this.set('value', null);
-        this.get('onValueChanged')(null);
-        return;
-      }
-      // let value =  this.rangeCheckValue(newValue);
-      let value = this.stringToFloat(newValue);
-      this.get('onValueChanged')(value);
-      this.set('value', value);
-      //  if (String(value).replace(/[\.,]/, ',') !== String(newValue).replace(/[\.,]/, ',')){
-      //   //value was changed based on "min"/"max" limits - we have to change input's value rendered in HTML
-      //  $(this.element).find('input').val(value);
-      //  }
+      this.valueChangedInternal(newValue);
     },
     checkRange(newValue) {
+      let v = newValue;
       schedule('actions', () => {
-        let value = this.rangeCheckValue(newValue);
-        this.set('value', value);
+        let {
+          newValue,
+          valueChanged
+        } = this.rangeCheckValue(v);
+        this.set('value', newValue);
+        if (valueChanged === true) {
+          if (isPresent(this.get('_maskObj'))) {
+            this.get('_maskObj').updateValue();
+          }
+          this.get('onValueChanged')(newValue);
+        }
       });
     }
   }
