@@ -58,10 +58,10 @@
     "doc": "doc",
     "test": "ember try:each"
   },
-  "dependencies": {
+  "dependencies": {    
     "cash-dom": "^8.1.0",
     "dayjs": "^1.10.3",
-    "ember-auto-import": "^1.2.15",
+    "ember-auto-import": "^1.10.1",
     "ember-cli-babel": "^7.13.0",
     "ember-cli-htmlbars": "^4.0.8",
     "ember-cli-node-assets": "^0.2.2",
