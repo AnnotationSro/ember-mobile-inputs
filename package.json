@@ -1,6 +1,6 @@
 {
   "name": "ember-mobile-inputs",
-  "version": "5.1.4",
+  "version": "5.1.5",
   "description": "Mobile- and Desktop- friendly inputs",
   "scripts": {
     "build": "ember build",
@@ -58,7 +58,7 @@
     "doc": "doc",
     "test": "ember try:each"
   },
-  "dependencies": {    
+  "dependencies": {
     "cash-dom": "^8.1.0",
     "dayjs": "^1.10.3",
     "ember-auto-import": "^1.10.1",
