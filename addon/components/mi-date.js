@@ -18,8 +18,7 @@ import {
 
 import {
   run,
-  scheduleOnce,
-  debounce
+  scheduleOnce
 } from '@ember/runloop';
 import $ from 'cash-dom';
 import {
@@ -42,12 +41,15 @@ export default Component.extend(MobileInputComponentMixin, {
   mobileInputVisible: false,
   showOn: null, //input, button, both, none
   flatpickrCalendar: null,
-
-  onValueChanged() {},
-  onBlurChanged() {},
-  onBlur() {},
+  flatpickOpened: false,
+  onValueChanged() {
+  },
+  onBlurChanged() {
+  },
+  onBlur() {
+  },
   neverNative: undefined,
-  flatpickrSelected:false,
+  flatpickrSelected: false,
 
   willDestroyElement() {
     this._super(...arguments);
@@ -92,12 +94,12 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   },
 
-  runOnValueChanged(value){
+  runOnValueChanged(value) {
     // debounce(this, this.get('onValueChanged'), value, 150);
     this.get('onValueChanged')(value);
   },
 
-  disabledObserver: observer('disabled', function() {
+  disabledObserver: observer('disabled', function () {
     if (this.get('disabled')) {
       let calendar = get(this, 'flatpickrCalendar');
       if (isPresent(calendar)) {
@@ -126,10 +128,10 @@ export default Component.extend(MobileInputComponentMixin, {
       pattern: format,
       placeholderChar: INPUT_MASK_PLACEHOLDER,
 
-      format: function(date) {
+      format: function (date) {
         return dayjs(date).format(format);
       },
-      parse: function(str) {
+      parse: function (str) {
         return dayjs(str, format);
       },
       blocks: {
@@ -163,13 +165,13 @@ export default Component.extend(MobileInputComponentMixin, {
 
     var mask = IMask($input[0], maskOptions);
     mask.on('complete', () => {
-     if (this.get('flatpickrSelected') === true){
-       setTimeout(()=>{
-       this.set('flatpickrSelected', false);
-     }, 500);
+      if (this.get('flatpickrSelected') === true) {
+        setTimeout(() => {
+          this.set('flatpickrSelected', false);
+        }, 500);
 
-       return;
-   }
+        return;
+      }
       let date = maskOptions.parse(this.get('_maskObj').value);
       this.runOnValueChanged(date.toDate());
     })
@@ -186,7 +188,7 @@ export default Component.extend(MobileInputComponentMixin, {
 
   },
 
-  isNeverNative: computed('neverNative', function() {
+  isNeverNative: computed('neverNative', function () {
     return getWithDefault(this, 'neverNative', configuration.getDateConfig().neverNative);
   }),
 
@@ -200,13 +202,16 @@ export default Component.extend(MobileInputComponentMixin, {
     flatpickrConfig.locale = this._getLocale();
     flatpickrConfig.disableMobile = this.get('isNeverNative');
 
-    flatpickrConfig.onChange = function(selectedDates) {
-     if (that.get('flatpickrSelected') === true){
-       that.set('flatpickrSelected', false);
-       return;
-   }
-     that.set('flatpickrSelected', true);
-      run(function() {
+    flatpickrConfig.onChange = function (selectedDates) {
+      if (that.get('flatpickOpened') !== true) {
+        return;
+      }
+      if (that.get('flatpickrSelected') === true) {
+        that.set('flatpickrSelected', false);
+        return;
+      }
+      that.set('flatpickrSelected', true);
+      run(function () {
         that.set('disableMaskChange', true);
         set(that, 'value', selectedDates[0]);
         that.get('_maskObj').updateValue();
@@ -226,11 +231,20 @@ export default Component.extend(MobileInputComponentMixin, {
     let options = this.get('options');
     if (isPresent(options) && isPresent(options.defaultDateOnOpen)) {
       flatpickrConfig.onOpen = (selectedDates, dateStr, instance) => {
+        this.set('flatpickOpened', true);
         if (isNone(this.get('desktopValue'))) {
           instance.jumpToDate(options.defaultDateOnOpen);
         }
       };
+    } else {
+      flatpickrConfig.onOpen = () => {
+        this.set('flatpickOpened', true);
+      };
     }
+
+    flatpickrConfig.onClose = () => {
+      this.set('flatpickOpened', false);
+    };
 
     let flatpickrInstance = new window.flatpickr($input[0], flatpickrConfig);
     set(this, 'flatpickrCalendar', flatpickrInstance);
@@ -248,7 +262,7 @@ export default Component.extend(MobileInputComponentMixin, {
         this.initFlatpickr();
       }
 
-      run.scheduleOnce('afterRender', this, function() {
+      run.scheduleOnce('afterRender', this, function () {
         let {
           calendarButtonClass
         } = configuration.getDateConfig();
@@ -261,7 +275,7 @@ export default Component.extend(MobileInputComponentMixin, {
     return getWithDefault(this, 'format', configuration.getDateConfig().format);
   },
 
-  showCalendarButton: computed('showOn', function() {
+  showCalendarButton: computed('showOn', function () {
     let showOn = this._getShowOn();
     if (showOn === 'button' || showOn === 'both') {
       return true;
@@ -270,8 +284,8 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   // eslint-disable-next-line ember/no-on-calls-in-components
-  desktopTextColorObserver: on('init', observer('desktopValue', function() {
-    scheduleOnce('afterRender', this, function() {
+  desktopTextColorObserver: on('init', observer('desktopValue', function () {
+    scheduleOnce('afterRender', this, function () {
       if (isEmpty(get(this, 'desktopValue'))) {
         $(this.element).find('.desktop-input').addClass('desktop-input-empty');
       } else {
