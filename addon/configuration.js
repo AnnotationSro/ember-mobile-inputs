@@ -8,19 +8,19 @@ let CONFIG_PROPERTIES = {
     showOn: 'both',
     neverNative: false,
     useCalendar: true,
-    locale: 'en'
+    locale: 'en',
   },
   number: {
     decimalMark: 'both',
     selectOnClick: false,
-    formatOnDisabled: false
+    formatOnDisabled: false,
   },
   text: {
-    selectOnClick: false
+    selectOnClick: false,
   },
   password: {
-    selectOnClick: false
-  }
+    selectOnClick: false,
+  },
 };
 
 function copy(data) {
@@ -50,5 +50,5 @@ export default {
 
   getConfig() {
     return CONFIG_PROPERTIES;
-  }
+  },
 };

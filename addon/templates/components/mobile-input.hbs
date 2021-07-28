@@ -1,28 +1,28 @@
-{{#component inputComponentType
-  value=value
-  format=format
-  disabled=disabled
-  readonly=readonly
-  showOn=showOn
-  decimalMark=decimalMark
-  min=min max=max
-  formattedPlaceholder=placeholder
-  onValueChanged=onValueChanged
-  selectOnClick=selectOnClick
-  onBlurChanged=onBlurChanged
-  onBlur=onBlur
-  options=options
-  flatpickrOptions=flatpickrOptions
-  autocomplete=autocomplete
-  allowNegative=allowNegative
-  pattern=pattern
-  imaskOptions=imaskOptions
-  dataInput=dataInput
-  neverNative=neverNative
-  mobileType=mobileType
-  onMobileInputVisibleChanged=onMobileInputVisibleChanged
-
-  _inputObject=_inputObject
+{{#component this.inputComponentType
+  value=this.value
+  format=this.format
+  disabled=this.disabled
+  readonly=this.readonly
+  showOn=this.showOn
+  decimalMark=this.decimalMark
+  min=this.min
+  max=this.max
+  formattedPlaceholder=this.placeholder
+  onValueChanged=this.onValueChanged
+  selectOnClick=this.selectOnClick
+  onBlurChanged=this.onBlurChanged
+  onBlur=this.onBlur
+  options=this.options
+  flatpickrOptions=this.flatpickrOptions
+  autocomplete=this.autocomplete
+  allowNegative=this.allowNegative
+  pattern=this.pattern
+  imaskOptions=this.imaskOptions
+  dataInput=this.dataInput
+  neverNative=this.neverNative
+  mobileType=this.mobileType
+  onMobileInputVisibleChanged=this.onMobileInputVisibleChanged
+  _inputObject=this._inputObject
 }}
   {{yield}}
 {{/component}}
