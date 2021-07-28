@@ -1,11 +1,11 @@
 {{html-input
   class="native-input text-input"
-  value=value
+  value=this.value
   type="text"
-  disabled=disabled
-  readonly=readonly
-  placeholder=placeholder
+  disabled=this.disabled
+  readonly=this.readonly
+  placeholder=this.placeholder
   key-up=(action 'onKeyUp')
-  autocomplete=autocomplete
-  dataInput=dataInput
+  autocomplete=this.autocomplete
+  dataInput=this.dataInput
 }}

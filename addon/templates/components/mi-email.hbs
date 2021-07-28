@@ -1,12 +1,12 @@
 {{html-input
   class="native-input
   email-input"
-  value=value
+  value=this.value
   type="email"
-  disabled=disabled
-  readonly=readonly
-  placeholder=placeholder
+  disabled=this.disabled
+  readonly=this.readonly
+  placeholder=this.placeholder
   key-up=(action 'onKeyUp')
-  autocomplete=autocomplete
-  dataInput=dataInput
+  autocomplete=this.autocomplete
+  dataInput=this.dataInput
 }}
