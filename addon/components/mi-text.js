@@ -20,6 +20,7 @@ export default Component.extend(MobileInputComponentMixin, {
 	},
 	oldValue: null,
 	imaskOptions: null,
+  valueString: String,
 
 	init() {
 		this._super(...arguments);
@@ -69,9 +70,10 @@ export default Component.extend(MobileInputComponentMixin, {
 
 	valueObserver: observer('value', function () {
 
+	  this.valueString =  String(this.get('value'));
 			next(this, () => {
 				if (isPresent(this.get('_maskObj'))) {
-					this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.get('value') : "";
+					this.get('_maskObj').unmaskedValue = isPresent(this.get('value')) ? this.valueString : "";
 				}
 			});
 
