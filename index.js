@@ -7,8 +7,7 @@ module.exports = {
   name: require('./package').name,
 
   included: function(app) {
-    this._super.included(app);
-
+    this._super.included.apply(this, arguments);
     let appConfig = this.parent.config()['ember-mobile-inputs'];
     let flatpickrLocale = 'uk';
     if (appConfig && appConfig.date && appConfig.date.locale) {
