@@ -160,7 +160,8 @@ export default Component.extend(MobileInputComponentMixin, {
           from: 0,
           to: 59
         }
-      }
+      },
+      lazy: false
     };
 
     var mask = IMask($input[0], maskOptions);
@@ -176,15 +177,6 @@ export default Component.extend(MobileInputComponentMixin, {
       this.runOnValueChanged(date.toDate());
     })
     this.set('_maskObj', mask);
-
-    // $input.inputmask("datetime", {
-    //   "inputFormat": format.toLowerCase(),
-    //   "placeholder": INPUT_MASK_PLACEHOLDER,
-    //   "clearMaskOnLostFocus": true,
-    //   oncomplete() {
-    //     that.get('onValueChanged')(that.get('value'));
-    //   }
-    // });
 
   },
 
@@ -259,7 +251,7 @@ export default Component.extend(MobileInputComponentMixin, {
       }
 
       if (configuration.getDateConfig().useCalendar === true) {
-        this.initFlatpickr();
+        // this.initFlatpickr();
       }
 
       run.scheduleOnce('afterRender', this, function () {
