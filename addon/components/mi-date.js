@@ -251,7 +251,7 @@ export default Component.extend(MobileInputComponentMixin, {
       }
 
       if (configuration.getDateConfig().useCalendar === true) {
-        // this.initFlatpickr();
+        this.initFlatpickr();
       }
 
       run.scheduleOnce('afterRender', this, function () {
