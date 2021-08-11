@@ -138,7 +138,7 @@ export default Component.extend(MobileInputComponentMixin, {
         YYYY: {
           mask: IMask.MaskedRange,
           from: 1900,
-          to: 2500
+          to: 9999
         },
         MM: {
           mask: IMask.MaskedRange,
@@ -161,7 +161,8 @@ export default Component.extend(MobileInputComponentMixin, {
           to: 59
         }
       },
-      lazy: false
+      // lazy: true,  // make placeholder always visible
+      autofix: true  // bound value
     };
 
     var mask = IMask($input[0], maskOptions);
