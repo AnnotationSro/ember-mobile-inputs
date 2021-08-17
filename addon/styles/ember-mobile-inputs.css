@@ -3,6 +3,10 @@
   position: relative;
 }
 
+.ember-mobile-input .date-input .hide-placeholder {
+  color: transparent;
+}
+
 .ember-mobile-input .calendar-button {
   position: absolute;
   right: 0;
