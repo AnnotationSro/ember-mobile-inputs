@@ -42,6 +42,8 @@ export default Component.extend(MobileInputComponentMixin, {
   showOn: null, //input, button, both, none
   flatpickrCalendar: null,
   flatpickOpened: false,
+  oldValue: null,
+
   onValueChanged() {
   },
   onBlurChanged() {
@@ -121,12 +123,26 @@ export default Component.extend(MobileInputComponentMixin, {
   _initDateMask() {
     let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
+    $input.addClass('hide-placeholder');
+    $input.on( 'focus', () => {
+      $input.removeClass('hide-placeholder');
+    })
+    $input.on( 'blur', () => {
+      let inputValue = this.get('_maskObj').value;
+      let regex = /\d+/;
+      if(isEmpty(inputValue.match(regex))) {
+        $input.addClass('hide-placeholder');
+      }
+    })
+
     dayjs.extend(customParseFormat);
 
     var maskOptions = {
       mask: Date,
       pattern: format,
       placeholderChar: INPUT_MASK_PLACEHOLDER,
+      lazy: false,  // make placeholder always visible
+      // autofix: false, // bound value
 
       format: function (date) {
         return dayjs(date).format(format);
@@ -161,8 +177,7 @@ export default Component.extend(MobileInputComponentMixin, {
           to: 59
         }
       },
-      // lazy: true,  // make placeholder always visible
-      autofix: true  // bound value
+
     };
 
     var mask = IMask($input[0], maskOptions);
@@ -176,6 +191,8 @@ export default Component.extend(MobileInputComponentMixin, {
       }
       let date = maskOptions.parse(this.get('_maskObj').value);
       this.runOnValueChanged(date.toDate());
+      set(this, 'oldValue', date.toDate());
+
     })
     this.set('_maskObj', mask);
 
@@ -221,22 +238,31 @@ export default Component.extend(MobileInputComponentMixin, {
       assign(flatpickrConfig, flatpickrOptions);
     }
 
-    let options = this.get('options');
-    if (isPresent(options) && isPresent(options.defaultDateOnOpen)) {
-      flatpickrConfig.onOpen = (selectedDates, dateStr, instance) => {
-        this.set('flatpickOpened', true);
-        if (isNone(this.get('desktopValue'))) {
-          instance.jumpToDate(options.defaultDateOnOpen);
+    flatpickrConfig.onOpen = (selectedDates, dateStr, instance) => {
+      let inputValue = that.get('_maskObj').value;
+      // NOT VALID DATE
+      if(inputValue.indexOf(INPUT_MASK_PLACEHOLDER) > -1) {
+        let options = that.get('options');
+        let dateToJump = new Date();
+        if (isPresent(options) && isPresent(options.defaultDateOnOpen) && isNone(this.get('desktopValue'))) {
+          dateToJump = options.defaultDateOnOpen;
+        } else if(isPresent(that.oldValue)) {
+          dateToJump = that.oldValue;
         }
-      };
-    } else {
-      flatpickrConfig.onOpen = () => {
-        this.set('flatpickOpened', true);
-      };
+        instance.jumpToDate(dateToJump);
+        set(that, 'value', dateToJump);
+        // this.get('_maskObj').unmaskedValue = dateToJump;
+        that.get('_maskObj').updateValue();
+      } else {
+        set(that, 'oldValue', selectedDates[0]);
+      }
+
+      this.set('flatpickOpened', true);
     }
 
     flatpickrConfig.onClose = () => {
       this.set('flatpickOpened', false);
+      this.flatpickrCalendar.destroy();
     };
 
     let flatpickrInstance = new window.flatpickr($input[0], flatpickrConfig);
@@ -249,10 +275,6 @@ export default Component.extend(MobileInputComponentMixin, {
 
       if (!this.get('disabled')) {
         this._initDateMask();
-      }
-
-      if (configuration.getDateConfig().useCalendar === true) {
-        this.initFlatpickr();
       }
 
       run.scheduleOnce('afterRender', this, function () {
@@ -336,6 +358,9 @@ export default Component.extend(MobileInputComponentMixin, {
   actions: {
     actionCalendarButton() {
       if ((this._getShowOn() === 'button') || (this._getShowOn() === 'both')) {
+        if (configuration.getDateConfig().useCalendar === true) {
+          this.initFlatpickr();
+        }
         let calendar = get(this, 'flatpickrCalendar');
         if (isPresent(calendar)) {
           calendar.open();
