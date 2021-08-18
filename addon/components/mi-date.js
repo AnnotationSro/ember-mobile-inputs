@@ -33,6 +33,7 @@ import * as customParseFormat from "dayjs/plugin/customParseFormat";
 import IMask from 'imask';
 
 const INPUT_MASK_PLACEHOLDER = '_';
+const PLACEHOLDER_REGEX = /\d+/;
 
 export default Component.extend(MobileInputComponentMixin, {
   layout,
@@ -55,7 +56,9 @@ export default Component.extend(MobileInputComponentMixin, {
 
   willDestroyElement() {
     this._super(...arguments);
-    this.flatpickrCalendar.destroy();
+    if(this.flatpickrCalendar !== null){
+      this.flatpickrCalendar.destroy();
+    }
     let $input = $(this.element).find('.desktop-input');
     $input.remove();
 
@@ -120,19 +123,26 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+  initPlaceHolder($input, value) {
+    if(isEmpty(value.match(PLACEHOLDER_REGEX))) {
+      $input.addClass('hide-placeholder');
+    }
+  },
+
   _initDateMask() {
     let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
-    $input.addClass('hide-placeholder');
+    let inputValue = $input.val();
+    this.initPlaceHolder($input, inputValue)
+    if(isEmpty(inputValue.match(PLACEHOLDER_REGEX))) {
+      $input.addClass('hide-placeholder');
+    }
     $input.on( 'focus', () => {
       $input.removeClass('hide-placeholder');
     })
     $input.on( 'blur', () => {
-      let inputValue = this.get('_maskObj').value;
-      let regex = /\d+/;
-      if(isEmpty(inputValue.match(regex))) {
-        $input.addClass('hide-placeholder');
-      }
+      let inputMaskValue = this.get('_maskObj').value;
+      this.initPlaceHolder($input, inputMaskValue)
     })
 
     dayjs.extend(customParseFormat);
