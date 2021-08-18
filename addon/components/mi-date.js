@@ -33,7 +33,7 @@ import * as customParseFormat from "dayjs/plugin/customParseFormat";
 import IMask from 'imask';
 
 const INPUT_MASK_PLACEHOLDER = '_';
-const regexForNumbers = /\d+/;
+const PLACEHOLDER_REGEX = /\d+/;
 
 export default Component.extend(MobileInputComponentMixin, {
   layout,
@@ -124,7 +124,7 @@ export default Component.extend(MobileInputComponentMixin, {
   }),
 
   initPlaceHolder($input, value) {
-    if(isEmpty(value.match(regexForNumbers))) {
+    if(isEmpty(value.match(PLACEHOLDER_REGEX))) {
       $input.addClass('hide-placeholder');
     }
   },
@@ -134,7 +134,7 @@ export default Component.extend(MobileInputComponentMixin, {
     let $input = $(this.element).find('.desktop-input');
     let inputValue = $input.val();
     this.initPlaceHolder($input, inputValue)
-    if(isEmpty(inputValue.match(regexForNumbers))) {
+    if(isEmpty(inputValue.match(PLACEHOLDER_REGEX))) {
       $input.addClass('hide-placeholder');
     }
     $input.on( 'focus', () => {
