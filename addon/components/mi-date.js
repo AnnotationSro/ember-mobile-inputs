@@ -33,6 +33,7 @@ import * as customParseFormat from "dayjs/plugin/customParseFormat";
 import IMask from 'imask';
 
 const INPUT_MASK_PLACEHOLDER = '_';
+const regexForNumbers = /\d+/;
 
 export default Component.extend(MobileInputComponentMixin, {
   layout,
@@ -122,12 +123,18 @@ export default Component.extend(MobileInputComponentMixin, {
     }
   }),
 
+  initPlaceHolder($input, value) {
+    if(isEmpty(value.match(regexForNumbers))) {
+      $input.addClass('hide-placeholder');
+    }
+  },
+
   _initDateMask() {
     let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
     let inputValue = $input.val();
-    let regex = /\d+/;
-    if(isEmpty(inputValue.match(regex))) {
+    this.initPlaceHolder($input, inputValue)
+    if(isEmpty(inputValue.match(regexForNumbers))) {
       $input.addClass('hide-placeholder');
     }
     $input.on( 'focus', () => {
@@ -135,9 +142,7 @@ export default Component.extend(MobileInputComponentMixin, {
     })
     $input.on( 'blur', () => {
       let inputMaskValue = this.get('_maskObj').value;
-      if(isEmpty(inputMaskValue.match(regex))) {
-        $input.addClass('hide-placeholder');
-      }
+      this.initPlaceHolder($input, inputMaskValue)
     })
 
     dayjs.extend(customParseFormat);
