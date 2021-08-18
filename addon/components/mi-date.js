@@ -55,7 +55,9 @@ export default Component.extend(MobileInputComponentMixin, {
 
   willDestroyElement() {
     this._super(...arguments);
-    this.flatpickrCalendar.destroy();
+    if(this.flatpickrCalendar !== null){
+      this.flatpickrCalendar.destroy();
+    }
     let $input = $(this.element).find('.desktop-input');
     $input.remove();
 
@@ -123,14 +125,17 @@ export default Component.extend(MobileInputComponentMixin, {
   _initDateMask() {
     let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
-    $input.addClass('hide-placeholder');
+    let inputValue = $input.val();
+    let regex = /\d+/;
+    if(isEmpty(inputValue.match(regex))) {
+      $input.addClass('hide-placeholder');
+    }
     $input.on( 'focus', () => {
       $input.removeClass('hide-placeholder');
     })
     $input.on( 'blur', () => {
-      let inputValue = this.get('_maskObj').value;
-      let regex = /\d+/;
-      if(isEmpty(inputValue.match(regex))) {
+      let inputMaskValue = this.get('_maskObj').value;
+      if(isEmpty(inputMaskValue.match(regex))) {
         $input.addClass('hide-placeholder');
       }
     })
