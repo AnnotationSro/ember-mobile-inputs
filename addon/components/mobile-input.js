@@ -1,30 +1,25 @@
 import $ from 'cash-dom';
-import {
-  alias
-} from '@ember/object/computed';
+import { alias } from '@ember/object/computed';
 import { computed, set } from '@ember/object';
-import {
-  inject
-} from '@ember/service';
+import { inject } from '@ember/service';
 import { isNone, isPresent } from '@ember/utils';
-import {
-  scheduleOnce,
-  run
-} from '@ember/runloop';
+import { scheduleOnce, run } from '@ember/runloop';
 import Component from '@ember/component';
 import Ember from 'ember';
 
 import { getWithDefault } from '../utils/mobile-utils';
-import configuration from "../configuration";
-import layout from "../templates/components/mobile-input";
-
+import configuration from '../configuration';
+import layout from '../templates/components/mobile-input';
 
 export default Component.extend({
-
   classNameBindings: ['getClassNames'],
   attributeBindings: ['data-custom'],
-  getClassNames: computed('disabled', function() {
-    let cls = `ember-mobile-input ember-mobile-input-${getWithDefault(this, 'type', 'text')}`;
+  getClassNames: computed('disabled', function () {
+    let cls = `ember-mobile-input ember-mobile-input-${getWithDefault(
+      this,
+      'type',
+      'text'
+    )}`;
     if (this.get('disabled')) {
       cls += ' disabled';
     }
@@ -85,44 +80,43 @@ export default Component.extend({
     return selectOnClick;
   },
 
-  didInsertElement: function() {
+  didInsertElement: function () {
     this._super(...arguments);
 
     let $input = $(this.element).find('input');
     this.set('_inputObject', {});
 
-    if (this._getSelectOnClick() === true || isPresent(this.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
+    if (
+      this._getSelectOnClick() === true ||
+      isPresent(this.get('onBlurChanged')) ||
+      configuration.getConfig().eventOnBlurChanged === true
+    ) {
       let that = this;
-      $input.on(`focus.ember-mobile-input--${this.elementId}`, function() {
-
-        if (isPresent(that.get('_inputObject.inputFocussed'))){
+      $input.on(`focus.ember-mobile-input--${this.elementId}`, function () {
+        if (isPresent(that.get('_inputObject.inputFocussed'))) {
           that._inputObject.inputFocussed(that);
         }
 
         if (that._getSelectOnClick() === true) {
-
           setTimeout(() => {
             try {
               this.setSelectionRange(0, this.value.length);
             } catch (e) {
               //this does not work on email input: "The input element's type ('email') does not support selection."
             }
-
           });
         }
 
-        if (isPresent(that.get('onBlurChanged')) || configuration.getConfig().eventOnBlurChanged === true) {
+        if (
+          isPresent(that.get('onBlurChanged')) ||
+          configuration.getConfig().eventOnBlurChanged === true
+        ) {
           that.set('valueOnFocus', that.get('value'));
         }
-
-
       });
 
-
       this.prepareForBlur();
-
     }
-
   },
 
   prepareForBlur() {
@@ -130,22 +124,30 @@ export default Component.extend({
     let that = this;
     var onBlur = () => {
       if (that.get('value') !== that.get('valueOnFocus')) {
-
         if (isPresent(that.get('onBlurChanged'))) {
           //call the callback only if it exists - otherwise callback will be called and event will be fired as well
-          that.get('onBlurChanged')(that.get('value'), that.get('valueOnFocus'));
+          that.get('onBlurChanged')(
+            that.get('value'),
+            that.get('valueOnFocus')
+          );
         } else {
           if (configuration.getConfig().eventOnBlurChanged === true) {
-            that.get('mobileInputEventBus').publish('blurChanged', that.get('value'), that.get('valueOnFocus'), that.element);
+            that
+              .get('mobileInputEventBus')
+              .publish(
+                'blurChanged',
+                that.get('value'),
+                that.get('valueOnFocus'),
+                that.element
+              );
           }
         }
-
       }
 
       if (typeof that.get('onBlur') === 'function') {
         that.get('onBlur')();
       }
-    }
+    };
 
     if (isPresent(that.get('onClick'))) {
       let that = this;
@@ -166,10 +168,7 @@ export default Component.extend({
           this.initBlurListener($mobileInput, onBlur);
         });
       }, 1000);
-
-
     });
-
   },
 
   initBlurListener($input, onBlur = () => {}) {
@@ -186,7 +185,10 @@ export default Component.extend({
           return;
         }
         this.set('_initBlurListenerInitialized', false);
-        this.get('mobileInputEventBus').publish('mobileInputVisibleChanged', false);
+        this.get('mobileInputEventBus').publish(
+          'mobileInputVisibleChanged',
+          false
+        );
         $($input).off('blur.ember-mobile-inputs-blur');
         setTimeout(() => {
           this.prepareForBlur();
@@ -194,11 +196,10 @@ export default Component.extend({
       });
 
       onBlur();
-
     });
   },
 
-  willDestroyElement: function() {
+  willDestroyElement: function () {
     this._super(...arguments);
     let $input = $(this.element).find('input');
     $input.off(`click.ember-mobile-input--${this.elementId}`);
@@ -229,7 +230,7 @@ export default Component.extend({
         set(this, 'inputComponentType', 'mi-mobile');
         break;
       default:
-        Ember.Logger.error(`Unknown ember-mobile-inputs type: ${inputType}`);
+        console.error(`Unknown ember-mobile-inputs type: ${inputType}`);
     }
-  }
+  },
 });
