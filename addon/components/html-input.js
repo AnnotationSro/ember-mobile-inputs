@@ -1,7 +1,5 @@
-import TextField from '@ember/component/text-field';
-import {
-  isNone
-} from '@ember/utils';
+import { TextField } from '@ember/legacy-built-in-components';
+import { isNone } from '@ember/utils';
 
 export default TextField.extend({
   dataInput: null,
@@ -12,7 +10,6 @@ export default TextField.extend({
   },
 
   initDataAttributes() {
-
     let dataInput = this.get('dataInput');
     let dataInputJSON = JSON.parse(dataInput);
     if (isNone(dataInput)) {
@@ -25,6 +22,5 @@ export default TextField.extend({
       }
       this.element.dataset[key] = dataInputJSON[key];
     }
-
-  }
+  },
 });

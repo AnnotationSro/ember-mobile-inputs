@@ -7,17 +7,17 @@
 
 <h4>Custom mobile input</h4>
 <div>
-  {{#mobile-input type="custom" mobileType="number" value=val onMobileInputVisibleChanged=(action 'onMobileInputVisibleChanged')}}
-    <input value="ja som input"> {{val}}
+  {{#mobile-input type="custom" mobileType="number" value=this.val onMobileInputVisibleChanged=(action 'onMobileInputVisibleChanged')}}
+    <input value="ja som input"> {{this.val}}
   {{/mobile-input}}
 </div>
 
 <h2>Email</h2>
 <div>
   {{mobile-input id="emailInput"
-  dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=valueEmail disabled=disabled
+  dataInput='{"a":1, "b":2}' selectOnClick=true type='email' value=this.valueEmail disabled=this.disabled
   placeholder="Enter email here" onBlurChanged2=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
-  <span id="emailResult">{{valueEmail}}</span>
+  <span id="emailResult">{{this.valueEmail}}</span>
 </div>
 
 <button {{action 'toggleDisabled'}}>Toggle disabled</button>
@@ -26,82 +26,82 @@
 <div id="test"></div>
 <h4>Default settings (comma and dot are allowed as decimal mark)</h4>
 <div>
-  {{mobile-input id="numberInput" dataInput='{"a":1, "b":2}' type='number' value=valueNumber disabled=disabled
+  {{mobile-input id="numberInput" dataInput='{"a":1, "b":2}' type='number' value=this.valueNumber disabled=this.disabled
   onValueChanged=(action 'valueChanged') data-custom="world"}}
-  <span id="numberResult">{{valueNumber}}</span>
+  <span id="numberResult">{{this.valueNumber}}</span>
 </div>
 
 <h4>Default settings (comma and dot are allowed as decimal mark) with min=0, max=10</h4>
 <div>
-  {{mobile-input id="minMaxNumberInput" type='number' value=valueNumber disabled=disabled min=0 max=10 onBlur=(action 'onBlur')}}
-  <span id="minMaxNumberResult">{{minMaxValueNumber}}</span>
+  {{mobile-input id="minMaxNumberInput" type='number' value=this.valueNumber disabled=this.disabled min=0 max=10 onBlur=(action 'onBlur')}}
+  <span id="minMaxNumberResult">{{this.minMaxValueNumber}}</span>
 </div>
 
 <h4>Value set from controller</h4>
 <div>
-  {{mobile-input id="numberInputController" type='number' value=valueNumberController disabled=disabled placeholder="Some number here"}}
-  <span id="numberControllerResult">{{valueNumberController}}</span>
+  {{mobile-input id="numberInputController" type='number' value=this.valueNumberController disabled=this.disabled placeholder="Some number here"}}
+  <span id="numberControllerResult">{{this.valueNumberController}}</span>
   <button {{action 'actionSetNumer'}}>Set value</button>
 </div>
 
 <h4>With comma decimal mark</h4>
 <div>
-  {{mobile-input id="numberInputComma" type='number' value=numberResultComma disabled=disabled decimalMark='comma' placeholder="Some number here"}}
-  <span id="numberResultComma">{{numberResultComma}}</span>
+  {{mobile-input id="numberInputComma" type='number' value=this.numberResultComma disabled=this.disabled decimalMark='comma' placeholder="Some number here"}}
+  <span id="numberResultComma">{{this.numberResultComma}}</span>
 </div>
 
 <h4>With dot decimal mark</h4>
 <div>
-  {{mobile-input id="numberInputDot" type='number' value=numberResultDot disabled=disabled decimalMark='dot' placeholder="Some number here"}}
-  <span id="numberResultDot">{{numberResultDot}}</span>
+  {{mobile-input id="numberInputDot" type='number' value=this.numberResultDot disabled=this.disabled decimalMark='dot' placeholder="Some number here"}}
+  <span id="numberResultDot">{{this.numberResultDot}}</span>
 </div>
 
 <h4>Do not change model for null value</h4>
 <div>
-  {{mobile-input id="numberInputNull" selectOnClick=true type='number' value=nullValue disabled=disabled decimalMark='both' min=10 max=50 onBlurChanged=(action 'onBlurChanged')}}
-  <span id="numberResultNull">{{nullValue}}</span>
+  {{mobile-input id="numberInputNull" selectOnClick=true type='number' value=this.nullValue disabled=this.disabled decimalMark='both' min=10 max=50 onBlurChanged=(action 'onBlurChanged')}}
+  <span id="numberResultNull">{{this.nullValue}}</span>
 </div>
 
 <h4>Decimal values ony (decimalMark='none')</h4>
 <div>
-  {{mobile-input id="numberInputDecimalOnly" type='number' decimalMark='none' value=valueNumberDecimal disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
-  <span id="numberResultDecimalOnly">{{valueNumberDecimal}}</span>
+  {{mobile-input id="numberInputDecimalOnly" type='number' decimalMark='none' value=this.valueNumberDecimal disabled=this.disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
+  <span id="numberResultDecimalOnly">{{this.valueNumberDecimal}}</span>
 </div>
 
 <h4>Only positive numbers (allowNegative=false)</h4>
 <div>
-  {{mobile-input id="numberInputPositiveOnly" type='number' allowNegative=false value=valueNumberPositive disabled=disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
-  <span id="numberResultPositiveOnly">{{valueNumberPositive}}</span>
+  {{mobile-input id="numberInputPositiveOnly" type='number' allowNegative=false value=this.valueNumberPositive disabled=this.disabled onValueChanged=(action 'valueChanged') data-custom="world"}}
+  <span id="numberResultPositiveOnly">{{this.valueNumberPositive}}</span>
 </div>
 
 <h2>Text</h2>
 <div>
-  {{mobile-input id="textInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='text' value=valueText
-  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
-  <span id="textResult">{{valueText}}</span>
+  {{mobile-input id="textInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='text' value=this.valueText
+  disabled=this.disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="textResult">{{this.valueText}}</span>
 </div>
 
 
 <h4>Text with regex</h4>s
 <div>
-  {{mobile-input id="textInputR" imaskOptions=imaskOptions2 selectOnClick=true type='text' value=valueTextR
-  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'valueChangedR')}}
-  <span id="textResult">{{valueTextR}}</span>
+  {{mobile-input id="textInputR" imaskOptions=this.imaskOptions2 selectOnClick=true type='text' value=this.valueTextR
+  disabled=this.disabled placeholder="Some text here" onBlurChanged=(action 'valueChangedR')}}
+  <span id="textResult">{{this.valueTextR}}</span>
   <button {{action 'actionSetRegexValue'}}>Set value</button>
 </div>
 
 <h4>Text with regex (5 digits)</h4>
 <div>
-  {{mobile-input id="textInputRegex" pattern="[0-9]{0,5}" selectOnClick=true type='text' value=valueRegexText
-  disabled=disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
-  <span id="textRegexResult">{{valueRegexText}}</span>
+  {{mobile-input id="textInputRegex" pattern="[0-9]{0,5}" selectOnClick=true type='text' value=this.valueRegexText
+  disabled=this.disabled placeholder="Some text here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="textRegexResult">{{this.valueRegexText}}</span>
 </div>
 
 <h2>Password</h2>
 <div>
-  {{mobile-input id="passInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='password' value=valuePass
-   disabled=disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
-  <span id="passResult">{{valuePass}}</span>
+  {{mobile-input id="passInput" dataInput='{"a":1, "b":2}' selectOnClick=true type='password' value=this.valuePass
+   disabled=this.disabled placeholder="Enter password here" onBlurChanged=(action 'onBlurChanged') onValueChanged=(action 'valueChanged')}}
+  <span id="passResult">{{this.valuePass}}</span>
 </div>
 
 
@@ -109,71 +109,71 @@
 
 <h4>Opens calendar on button click or input focus</h4>
 <div>
-  {{mobile-input id="dateInput" dataInput='{"a":1, "b":2}' type='date' value=valueDate disabled=disabled
+  {{mobile-input id="dateInput" dataInput='{"a":1, "b":2}' type='date' value=this.valueDate disabled=this.disabled
   onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
-  <span id="dateResult">{{valueDate}}</span>
+  <span id="dateResult">{{this.valueDate}}</span>
 </div>
 
 <h4>Opens calendar on date 1.1.1980</h4>
 <div>
-  {{mobile-input id="dateInputOpen" type='date' value=valueDate disabled=disabled options=optionsDateOpen
+  {{mobile-input id="dateInputOpen" type='date' value=this.valueDate disabled=this.disabled options=this.optionsDateOpen
   onValueChanged=(action 'valueChanged') onBlurChanged=(action 'onBlurChanged')}}
-  <span id="dateResult">{{valueDate}}</span>
+  <span id="dateResult">{{this.valueDate}}</span>
 </div>
 
 <h4>Never use native datepicker</h4>
 <div>
   {{mobile-input id="dateInputNeverNative" dataInput='{"a":1, "b":2}'
-   type='date' value=valueDate disabled=disabled  onValueChanged=(action 'valueChanged')
+   type='date' value=this.valueDate disabled=this.disabled  onValueChanged=(action 'valueChanged')
    onBlurChanged=(action 'onBlurChanged')
    neverNative=true}}
-  <span id="dateResult">{{valueDate}}</span>
+  <span id="dateResult">{{this.valueDate}}</span>
 </div>
 
 <h4>Opens calendar only on button click</h4>
 <div>
-  {{mobile-input id="dateInputButton" type='date' value=valueDateButton disabled=disabled showOn="button"}}
-  <span id="dateResultButton">{{valueDateButton}}</span>
+  {{mobile-input id="dateInputButton" type='date' value=this.valueDateButton disabled=this.disabled showOn="button"}}
+  <span id="dateResultButton">{{this.valueDateButton}}</span>
 </div>
 
 <h4>Opens calendar only on input focus</h4>
 <div>
-  {{mobile-input id="dateInputOnly" type='date' value=valueDateInput disabled=disabled showOn="input"}}
-  <span id="dateResultInput">{{valueDateInput}}</span>
+  {{mobile-input id="dateInputOnly" type='date' value=this.valueDateInput disabled=this.disabled showOn="input"}}
+  <span id="dateResultInput">{{this.valueDateInput}}</span>
 </div>
 
 <h3>Custom format Y-m-d</h3>
 <div>
-  {{mobile-input id="customDateInput" type='date' value=valueDateFormat format='Y-m-d' disabled=disabled}}
-  <span id="customDateResult">{{valueDateFormat}}</span>
+  {{mobile-input id="customDateInput" type='date' value=this.valueDateFormat format='Y-m-d' disabled=this.disabled}}
+  <span id="customDateResult">{{this.valueDateFormat}}</span>
 </div>
 
 <h2>Different variations</h2>
 showOn="input"
 <div>
-  {{mobile-input id="inputDateInput" type='date' value=valueDateInput showOn="input" disabled=disabled}}
-  {{valueDateInput}}
+  {{mobile-input id="inputDateInput" type='date' value=this.valueDateInput showOn="input" disabled=this.disabled}}
+  {{this.valueDateInput}}
 </div>
 
 showOn="button"
 <div>
-  {{mobile-input id="buttonDateInput" type='date' value=valueDateButton showOn="button" disabled=disabled}}
-  {{valueDateButton}}
+  {{mobile-input id="buttonDateInput" type='date' value=this.valueDateButton showOn="button" disabled=this.disabled}}
+  {{this.valueDateButton}}
 </div>
 
 showOn="both"
 <div>
-  {{mobile-input id="bothDateInput" type='date' value=valueDateBoth showOn="both" disabled=disabled}}
-  {{valueDateBoth}}
+  {{mobile-input id="bothDateInput" type='date' value=this.valueDateBoth showOn="both" disabled=this.disabled}}
+  {{this.valueDateBoth}}
 </div>
 
 showOn="none"
 <div>
-  {{mobile-input id="noneDateInput" type='date' value=valueDateNone showOn="none" disabled=disabled}}
-  {{valueDateNone}}
+  {{mobile-input id="noneDateInput" type='date' value=this.valueDateNone showOn="none" disabled=this.disabled}}
+  {{this.valueDateNone}}
 </div>
 
 <h4>Calendar with custom properties (e.g. maxDate set)</h4>
 <div>
-  {{mobile-input id="dateInputProperties" type='date' disabled=disabled flatpickrOptions=dateOptions showOn="both"}}
+  {{mobile-input id="dateInputProperties" type='date' disabled=this.disabled flatpickrOptions=this.dateOptions showOn="both"}}
 </div>
