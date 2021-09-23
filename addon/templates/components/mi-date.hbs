@@ -1,19 +1,20 @@
 {{#if (and this.mobileInputVisible (not this.isNeverNative))}}
-  {{html-input
-    class="native-input date-input"
-    value=this.mobileValue
-    type="date"
-    min="1970-01-01"
-    max="9999-01-01"
-    disabled=this.disabled
-    readonly=this.readonly
-    autocomplete=this.autocomplete
-    dataInput=this.dataInput
-  }}
+  <HtmlInput
+    @class="native-input date-input"
+    @value={{this.mobileValue}}
+    @type="date"
+    @min="1970-01-01"
+    @max="9999-01-01"
+    @disabled={{this.disabled}}
+    @readonly={{this.readonly}}
+    @autocomplete={{this.autocomplete}}
+    @dataInput={{this.dataInput}}
+  ></HtmlInput>
 {{else}}
 
   <div class="date-input" {{action 'inputClicked' bubbles=false}} role="button">
-    {{html-input class="desktop-input" value=this.desktopValue disabled=this.disabled autocomplete=this.autocomplete dataInput=this.dataInput}}
+    <HtmlInput @class="desktop-input" @value={{this.desktopValue}} @disabled={{this.disabled}} 
+    @autocomplete={{this.autocomplete}} @dataInput={{this.dataInput}}></HtmlInput>
     {{#if this.showCalendarButton}}
       <button class="calendar-button" disabled={{this.disabled}} {{action 'actionCalendarButton'}} tabindex="-1"><i class={{this.calendarClass}}></i></button>
     {{/if}}

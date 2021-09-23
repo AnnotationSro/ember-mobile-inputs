@@ -1,11 +1,11 @@
-{{html-input
-  class="native-input text-input"
-  value=this.value
-  type="text"
-  disabled=this.disabled
-  readonly=this.readonly
-  placeholder=this.placeholder
-  key-up=(action 'onKeyUp')
-  autocomplete=this.autocomplete
-  dataInput=this.dataInput
-}}
+<HtmlInput
+  @class="native-input text-input"
+  @value={{this.value}}
+  @type="text"
+  @disabled={{this.disabled}}
+  @readonly={{this.readonly}}
+  @placeholder={{this.placeholder}}
+  @keyUp={{action 'onKeyUp'}}
+  @autocomplete={{this.autocomplete}}
+  @dataInput={{this.dataInput}}
+></HtmlInput>

@@ -1,21 +1,38 @@
 {{#if this.showFormatDisabledInput}}
-  <input class="desktop-input" value={{this.formatOnDisabledValue}} disabled="true">
+  <input
+    class='desktop-input'
+    value={{this.formatOnDisabledValue}}
+    disabled='true'
+  />
 {{else}}
   {{#if this.mobileInputVisible}}
-    {{html-input class="native-input number-input" dataInput=this.dataInput value=this.desktopValue type="number" readonly=this.readonly disabled=this.disabled placeholder=this.placeholder min=this.min max=this.max autocomplete=this.autocomplete pattern="[0-9]*"}}
+    <HtmlInput
+      @class='native-input number-input'
+      @dataInput={{this.dataInput}}
+      @value={{this.desktopValue}}
+      @type='number'
+      @readonly={{this.readonly}}
+      @disabled={{this.disabled}}
+      @placeholder={{this.placeholder}}
+      @min={{this.min}}
+      @max={{this.max}}
+      @autocomplete={{this.autocomplete}}
+      @pattern='[0-9]*'
+    ></HtmlInput>
   {{else}}
-    <span {{action "inputClicked"}} role="button">
-      <input class="desktop-input"
-      value={{this.desktopValue}}
-      disabled={{this.disabled}}
-      readonly={{this.readonly}}
-      placeholder={{this.placeholder}}
-      min={{this.min}}
-      max={{this.max}}
-      onblur={{action "checkRange" value="target.value"}}
-      autocomplete={{this.autocomplete}}
-      pattern="[0-9,\.]*"
-      >
+    <span {{action 'inputClicked'}} role='button'>
+      <input
+        class='desktop-input'
+        value={{this.desktopValue}}
+        disabled={{this.disabled}}
+        readonly={{this.readonly}}
+        placeholder={{this.placeholder}}
+        min={{this.min}}
+        max={{this.max}}
+        onblur={{action 'checkRange' value='target.value'}}
+        autocomplete={{this.autocomplete}}
+        pattern='[0-9,\\.]*'
+      />
     </span>
   {{/if}}
 {{/if}}
