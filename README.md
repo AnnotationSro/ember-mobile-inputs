@@ -15,7 +15,6 @@ So what this addon does? On mobile (touch) devices it makes use of HTML5 power (
 * input type **text** - well just a simple input, nothing fancy here
 * input type **date** - masked input with the ability to customize the format + [Flatpickr](https://flatpickr.js.org) calendar popup + nice calendar button
 
-Requires Ember >= 2.15.0 because of Ember.assign - or [use a shim](https://github.com/shipshapecode/ember-assign-polyfill)
 
 # Install
 
@@ -23,7 +22,7 @@ Requires Ember >= 2.15.0 because of Ember.assign - or [use a shim](https://githu
 ember install ember-mobile-inputs
 ```
 
-This addon uses JQuery, so do not forget to add it to your application via [ember-jquery](https://github.com/emberjs/ember-jquery).
+**Since this addon depends on ember-auto-import 2, any app that uses ember-advanced-combobox also needs to depend on ember-auto-import 2.**
 
 # Usage
 
