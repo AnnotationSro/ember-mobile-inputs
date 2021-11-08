@@ -201,9 +201,6 @@ export default Component.extend(MobileInputComponentMixin, {
     flatpickrConfig.disableMobile = this.get('isNeverNative');
 
     flatpickrConfig.onChange = function (selectedDates) {
-      if (that.get('flatpickOpened') !== true) {
-        return;
-      }
       if (that.get('flatpickrSelected') === true) {
         that.set('flatpickrSelected', false);
         return;
