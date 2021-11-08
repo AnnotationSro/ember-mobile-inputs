@@ -253,8 +253,8 @@ export default Component.extend(MobileInputComponentMixin, {
     };
 
     flatpickrConfig.onClose = () => {
-      this.set('flatpickOpened', false);
       setTimeout(() => {
+        this.set('flatpickOpened', false);
         this.flatpickrCalendar.destroy();
       }, 100);
     };
