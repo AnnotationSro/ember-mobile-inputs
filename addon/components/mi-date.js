@@ -242,8 +242,6 @@ export default Component.extend(MobileInputComponentMixin, {
           dateToJump = that.oldValue;
         }
         instance.jumpToDate(dateToJump);
-        set(that, 'value', dateToJump);
-        // this.get('_maskObj').unmaskedValue = dateToJump;
         that.get('_maskObj').updateValue();
       } else {
         set(that, 'oldValue', selectedDates[0]);
