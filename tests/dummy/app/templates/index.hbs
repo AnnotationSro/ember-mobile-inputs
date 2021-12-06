@@ -175,5 +175,6 @@ showOn="none"
 
 <h4>Calendar with custom properties (e.g. maxDate set)</h4>
 <div>
-  {{mobile-input id="dateInputProperties" type='date' disabled=this.disabled flatpickrOptions=this.dateOptions showOn="both"}}
+  {{mobile-input id="dateInputProperties" type='date' value=this.valueDateDisabled disabled=this.disabled flatpickrOptions=this.dateOptions showOn="both"}}
+  {{this.valueDateDisabled}}
 </div>
