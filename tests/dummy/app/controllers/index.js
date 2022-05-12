@@ -1,11 +1,6 @@
 import Controller from '@ember/controller';
-import {
-  inject
-} from '@ember/service';
-import {
-  isPresent
-} from '@ember/utils';
-import * as dayjs from "dayjs";
+import { inject } from '@ember/service';
+import { isPresent } from '@ember/utils';
 
 export default Controller.extend({
   valueNumber: null,
@@ -24,54 +19,57 @@ export default Controller.extend({
   mobileInputConfiguration: inject('mobile-input-configuration'),
 
   imaskOptions: {
-    mask: '{#}000[aaa]/NIC-`*[**]'
+    mask: '{#}000[aaa]/NIC-`*[**]',
   },
-  imaskOptions2: {mask: '000000{/}0000'},
+  imaskOptions2: { mask: '000000{/}0000' },
 
   val: 123,
   init() {
     this._super(...arguments);
 
-
-
-    this.get('mobileInputEventBus').subscribe('blurChanged', (newValue, oldValue, element) => {
-      window.console.log(`EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`, element);
-    });
+    this.mobileInputEventBus.subscribe(
+      'blurChanged',
+      (newValue, oldValue, element) => {
+        window.console.log(
+          `EVENT: newValue: ${newValue}, oldValue: ${oldValue}, element:`,
+          element
+        );
+      }
+    );
 
     this.set('dateOptions', {
-      maxDate: new Date()
+      maxDate: new Date(),
     });
 
     this.set('optionsDateOpen', {
-      defaultDateOnOpen: dayjs('1980-01-01').toDate()
+      defaultDateOnOpen: new Date('1980-01-01'),
     });
     // this.get('mobileInputConfiguration').setProperty('date.useCalendar', false);
   },
 
   actions: {
+    actionSetNumer() {
+      this.set('valueNumberController', Math.round(Math.random() * 100));
+    },
 
-actionSetNumer(){
-  this.set('valueNumberController', Math.round(Math.random()*100));
-},
-
-    actionSetRegexValue(){
-        this.set('valueTextR', '1234567890');
+    actionSetRegexValue() {
+      this.set('valueTextR', '1234567890');
     },
 
     valueChanged(value) {
       window.console.log(`updated value: ${value}`);
     },
 
-    valueChangedR(v){
+    valueChangedR(v) {
       let birthId = null;
-       if (isPresent(v)) {
-           birthId = String(v);
-           if (!birthId.includes('_') && isPresent(birthId)) {
-               birthId = birthId.replace('/', '');
-           }
-       }
-       console.log('changing value', birthId);
-       this.set('valueTextR', birthId);
+      if (isPresent(v)) {
+        birthId = String(v);
+        if (!birthId.includes('_') && isPresent(birthId)) {
+          birthId = birthId.replace('/', '');
+        }
+      }
+      console.log('changing value', birthId);
+      this.set('valueTextR', birthId);
     },
 
     toggleDisabled() {
@@ -86,6 +84,6 @@ actionSetNumer(){
     },
     onMobileInputVisibleChanged(value) {
       window.console.log('onMobileInputVisibleChanged', value);
-    }
-  }
+    },
+  },
 });
