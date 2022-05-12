@@ -4,14 +4,12 @@ import { isTouchDevice, getWithDefault } from '../utils/mobile-utils';
 import configuration from '../configuration';
 import { get, set, observer, computed } from '@ember/object';
 import { isNone, isEmpty, isPresent } from '@ember/utils';
-
 import { run, scheduleOnce } from '@ember/runloop';
 import $ from 'cash-dom';
 import { assign } from '@ember/polyfills';
 import Component from '@ember/component';
 import { on } from '@ember/object/evented';
-import * as dayjs from 'dayjs';
-import * as customParseFormat from 'dayjs/plugin/customParseFormat';
+import { format, isValid, parse, toDate } from 'date-fns';
 import IMask from 'imask';
 
 const INPUT_MASK_PLACEHOLDER = '_';
@@ -41,8 +39,8 @@ export default Component.extend(MobileInputComponentMixin, {
     let $input = $(this.element).find('.desktop-input');
     $input.remove();
 
-    if (isPresent(this.get('_maskObj'))) {
-      this.get('_maskObj').destroy();
+    if (isPresent(this._maskObj)) {
+      this._maskObj.destroy();
     }
   },
 
@@ -59,9 +57,9 @@ export default Component.extend(MobileInputComponentMixin, {
 
   _parseFormat(configFormat) {
     let maskFormat = configFormat;
-    maskFormat = maskFormat.replace('d', 'DD');
+    maskFormat = maskFormat.replace('d', 'dd');
     maskFormat = maskFormat.replace('m', 'MM');
-    maskFormat = maskFormat.replace('Y', 'YYYY');
+    maskFormat = maskFormat.replace('Y', 'yyyy');
     return maskFormat;
   },
 
@@ -80,18 +78,18 @@ export default Component.extend(MobileInputComponentMixin, {
 
   runOnValueChanged(value) {
     // debounce(this, this.get('onValueChanged'), value, 150);
-    this.get('onValueChanged')(value);
+    this.onValueChanged(value);
   },
 
   disabledObserver: observer('disabled', function () {
-    if (this.get('disabled')) {
-      let calendar = get(this, 'flatpickrCalendar');
+    if (this.disabled) {
+      let calendar = this.flatpickrCalendar;
       if (isPresent(calendar)) {
         calendar.close();
       }
-      if (isNone(get(this, 'value'))) {
-        if (isPresent(this.get('_maskObj'))) {
-          this.get('_maskObj').destroy();
+      if (isNone(this.value)) {
+        if (isPresent(this._maskObj)) {
+          this._maskObj.destroy();
           this.set('_maskObj', null);
         }
       }
@@ -107,7 +105,7 @@ export default Component.extend(MobileInputComponentMixin, {
   },
 
   _initDateMask() {
-    let format = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
+    let dateFormat = this._parseFormat(this._getDateFormat()); //parse flatpickr format to correct format for Date Mask
     let $input = $(this.element).find('.desktop-input');
     let inputValue = $input.val();
     this.initPlaceHolder($input, inputValue);
@@ -115,30 +113,31 @@ export default Component.extend(MobileInputComponentMixin, {
       $input.addClass('hide-placeholder');
     }
     $input.on('focus', () => {
+      if (this._getShowOn() === 'both' || this._getShowOn() === 'input') {
+        this.initFlatpickr();
+      }
       $input.removeClass('hide-placeholder');
     });
     $input.on('blur', () => {
-      let inputMaskValue = this.get('_maskObj').value;
+      let inputMaskValue = this._maskObj.value;
       this.initPlaceHolder($input, inputMaskValue);
     });
 
-    dayjs.extend(customParseFormat);
-
-    var maskOptions = {
+    const maskOptions = {
       mask: Date,
-      pattern: format,
+      pattern: dateFormat,
       placeholderChar: INPUT_MASK_PLACEHOLDER,
       lazy: false, // make placeholder always visible
       // autofix: false, // bound value
 
       format: function (date) {
-        return dayjs(date).format(format);
+        return format(new Date(date), dateFormat);
       },
       parse: function (str) {
-        return dayjs(str, format);
+        return parse(str, dateFormat, new Date());
       },
       blocks: {
-        YYYY: {
+        yyyy: {
           mask: IMask.MaskedRange,
           from: 1900,
           to: 9999,
@@ -148,7 +147,7 @@ export default Component.extend(MobileInputComponentMixin, {
           from: 1,
           to: 12,
         },
-        DD: {
+        dd: {
           mask: IMask.MaskedRange,
           from: 1,
           to: 31,
@@ -166,18 +165,18 @@ export default Component.extend(MobileInputComponentMixin, {
       },
     };
 
-    var mask = IMask($input[0], maskOptions);
+    const mask = IMask($input[0], maskOptions);
     mask.on('complete', () => {
-      if (this.get('flatpickrSelected') === true) {
+      if (this.flatpickrSelected === true) {
         setTimeout(() => {
           this.set('flatpickrSelected', false);
         }, 500);
 
         return;
       }
-      let date = maskOptions.parse(this.get('_maskObj').value);
-      this.runOnValueChanged(date.toDate());
-      set(this, 'oldValue', date.toDate());
+      let date = maskOptions.parse(this._maskObj.value);
+      this.runOnValueChanged(date);
+      set(this, 'oldValue', date);
     });
     this.set('_maskObj', mask);
   },
@@ -198,7 +197,7 @@ export default Component.extend(MobileInputComponentMixin, {
     flatpickrConfig.dateFormat = this._getDateFormat();
     flatpickrConfig.allowInput = true;
     flatpickrConfig.locale = this._getLocale();
-    flatpickrConfig.disableMobile = this.get('isNeverNative');
+    flatpickrConfig.disableMobile = this.isNeverNative;
 
     flatpickrConfig.onChange = function (selectedDates) {
       if (that.get('flatpickOpened') !== true) {
@@ -221,7 +220,7 @@ export default Component.extend(MobileInputComponentMixin, {
       flatpickrConfig.clickOpens = false;
     }
 
-    let flatpickrOptions = this.get('flatpickrOptions');
+    let flatpickrOptions = this.flatpickrOptions;
     if (isPresent(flatpickrOptions)) {
       assign(flatpickrConfig, flatpickrOptions);
     }
@@ -235,7 +234,7 @@ export default Component.extend(MobileInputComponentMixin, {
         if (
           isPresent(options) &&
           isPresent(options.defaultDateOnOpen) &&
-          isNone(this.get('desktopValue'))
+          isNone(this.desktopValue)
         ) {
           dateToJump = options.defaultDateOnOpen;
         } else if (isPresent(that.oldValue)) {
@@ -262,8 +261,9 @@ export default Component.extend(MobileInputComponentMixin, {
   },
 
   didInsertElement() {
-    if (!isTouchDevice() || this.get('isNeverNative') === true) {
-      if (!this.get('disabled')) {
+    this._super(...arguments);
+    if (!isTouchDevice() || this.isNeverNative === true) {
+      if (!this.disabled) {
         this._initDateMask();
       }
 
@@ -291,7 +291,7 @@ export default Component.extend(MobileInputComponentMixin, {
     'init',
     observer('desktopValue', function () {
       scheduleOnce('afterRender', this, function () {
-        if (isEmpty(get(this, 'desktopValue'))) {
+        if (isEmpty(this.desktopValue)) {
           $(this.element)
             .find('.desktop-input')
             .addClass('desktop-input-empty');
@@ -306,20 +306,21 @@ export default Component.extend(MobileInputComponentMixin, {
 
   desktopValue: computed('value', {
     get() {
-      let value = get(this, 'value');
+      let value = this.value;
       if (isNone(value)) {
         return null;
       }
 
       let momentFormat = this._getDayjsFormat();
-      return dayjs(value).format(momentFormat);
+      return format(new Date(value), momentFormat);
     },
     set(key, value) {
-      let formattedDate = dayjs(value, this._getDayjsFormat(), true);
-      if (!formattedDate.isValid()) {
+      // let formattedDate = dayjs(value, this._getDayjsFormat(), true);
+      let formattedDate = parse(value, this._getDayjsFormat(), new Date());
+      if (!isValid(formattedDate)) {
         set(this, 'value', null);
       } else {
-        set(this, 'value', formattedDate.toDate());
+        set(this, 'value', toDate(formattedDate));
       }
       return value;
     },
@@ -327,24 +328,25 @@ export default Component.extend(MobileInputComponentMixin, {
 
   mobileValue: computed('value', {
     get() {
-      if (isNone(get(this, 'value'))) {
+      if (isNone(this.value)) {
         return null;
       }
 
-      return dayjs(get(this, 'value')).format('YYYY-MM-DD');
+      return format(this.value, 'yyyy-MM-dd');
+      // return dayjs(this.value).format('YYYY-MM-DD');
     },
     set(key, value) {
       if (isNone(value)) {
         return value;
       }
-      let formattedDate = dayjs(value, 'YYYY-MM-DD', true);
-      if (!formattedDate.isValid()) {
+      let formattedDate = parse(value, 'yyyy-MM-dd', new Date());
+      if (!isValid(formattedDate)) {
         set(this, 'value', null);
       } else {
-        set(this, 'value', formattedDate.toDate());
+        set(this, 'value', toDate(formattedDate));
       }
       set(this, 'mobileInputService.mobileInputVisible', false);
-      this.get('onValueChanged')(this.get('value'));
+      this.onValueChanged(this.value);
       return value;
     },
   }),
@@ -355,7 +357,7 @@ export default Component.extend(MobileInputComponentMixin, {
         if (configuration.getDateConfig().useCalendar === true) {
           this.initFlatpickr();
         }
-        let calendar = get(this, 'flatpickrCalendar');
+        let calendar = this.flatpickrCalendar;
         if (isPresent(calendar)) {
           calendar.open();
         }
